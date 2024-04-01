@@ -26,16 +26,22 @@ class IniciarActivity : AppCompatActivity() {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener{
                     if (it.isSuccessful){
                         irPortada(it.result?.user?.email ?: "",ProviderType.BASIC)
+
+                        val intent = Intent(this, RestaurantesActivity::class.java)
+                        startActivity(intent)
+
                     }else{
                         alerta()
                     }
                 }
             }
+
         }
 
         binding.btnVolver.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            onBackPressed()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 
