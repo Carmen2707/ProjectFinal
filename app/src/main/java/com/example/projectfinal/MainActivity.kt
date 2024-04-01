@@ -4,6 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.projectfinal.databinding.PruebaBinding
+
+
+enum class ProviderType{
+    BASIC
+}
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: PruebaBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,5 +23,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btnRegistrar.setOnClickListener{
+            val intent = Intent(this, RegistrarActivity::class.java)
+//evita que pasemos de nuevo a la activity login
+            intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
     }
 }
