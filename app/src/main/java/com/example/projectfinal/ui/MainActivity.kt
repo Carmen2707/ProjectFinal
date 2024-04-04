@@ -1,8 +1,10 @@
-package com.example.projectfinal
+package com.example.projectfinal.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.projectfinal.IniciarActivity
+import com.example.projectfinal.RegistrarActivity
 import com.example.projectfinal.databinding.PruebaBinding
 
 

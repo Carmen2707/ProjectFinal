@@ -5,7 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import com.example.projectfinal.databinding.ActivityIniciarBinding
-import com.example.projectfinal.databinding.ActivityRegistrarBinding
+import com.example.projectfinal.ui.MainActivity
+import com.example.projectfinal.ui.ProviderType
 import com.google.firebase.auth.FirebaseAuth
 
 class IniciarActivity : AppCompatActivity() {
@@ -18,14 +19,14 @@ class IniciarActivity : AppCompatActivity() {
 
 
         binding.btnIniciar.setOnClickListener {
-            val emailEditText = binding.etEmail.editText // Obtiene la instancia de TextInputEditText
-            val email = emailEditText?.text.toString() // Obtiene el texto del TextInputEditText
-            val passwordEditText = binding.etPassword.editText // Obtiene la instancia de TextInputEditText
-            val password = passwordEditText?.text.toString() // Obtiene el texto del TextInputEditText
+            val emailEditText = binding.etEmail.editText
+            val email = emailEditText?.text.toString()
+            val passwordEditText = binding.etPassword.editText
+            val password = passwordEditText?.text.toString()
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener{
                     if (it.isSuccessful){
-                        irPortada(it.result?.user?.email ?: "",ProviderType.BASIC)
+                        irPortada(it.result?.user?.email ?: "", ProviderType.BASIC)
 
                         val intent = Intent(this, RestaurantesActivity::class.java)
                         startActivity(intent)

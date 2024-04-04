@@ -15,7 +15,8 @@
         android:text="Nuestros restaurantes"
         android:textColor="@color/black"
         android:textSize="24sp"
-        android:padding="20dp"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toTopOf="@id/rvCategorias"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -24,13 +25,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCategorias"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRestaurantes"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/rvRestaurantes"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRestaurantes" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRestaurantes"
+
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,5 +1,13 @@
 package com.example.projectfinal
 
-data class Restaurante(val nombre:String, val direccion:String, val horario:String, val contacto:Int,
-                       val categoria:Categorias, val seleccionada:Boolean = false) {
+data class Restaurante(
+    val nombre: String? = null,
+    val direccion: String? = null,
+    val horario: String? = null,
+    val contacto: Long? = null,
+    val imagen: String? = null,
+    val categoria: String? = null,
+    var seleccionada: Boolean
+) {
+
 }
