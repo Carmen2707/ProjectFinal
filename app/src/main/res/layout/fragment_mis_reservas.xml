@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellow"
-    tools:context=".MisReservasActivity">
+    tools:context=".ui.reserva.MisReservasFragment">
 
     <TextView
         android:id="@+id/tvMisReservas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mis Reservas"
-        android:textSize="24sp"
         android:fontFamily="@font/dunkin"
-        android:textColor="@color/black"
         android:padding="20dp"
+        android:text="Mis Reservas"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/rvReservas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,10 +23,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReservas"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMisReservas"/>
+        app:layout_constraintTop_toBottomOf="@id/tvMisReservas" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

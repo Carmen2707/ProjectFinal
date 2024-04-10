@@ -1,13 +1,16 @@
-package com.example.projectfinal
+package com.example.projectfinal.ui.restaurante
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.projectfinal.R
+import com.example.projectfinal.data.model.Restaurante
 
 class RestauranteAdapter(private val restaurantes: MutableList<Restaurante>) :
     RecyclerView.Adapter<RestauranteViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestauranteViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_restaurante, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_restaurante, parent, false)
         return RestauranteViewHolder(view)
 
     }

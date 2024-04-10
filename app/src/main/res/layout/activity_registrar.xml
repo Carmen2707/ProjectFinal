@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellow"
-    tools:context=".RegistrarActivity">
+    tools:context=".ui.RegistrarActivity">
+
     <ImageButton
         android:id="@+id/btnVolver"
         android:layout_width="wrap_content"
@@ -40,8 +41,8 @@
         android:fontFamily="@font/rocko"
         android:padding="20dp"
         android:text="Crea tu cuenta con tu correo electrónico y contraseña para empezar a gestionar tus nuevas reseñas."
-        android:textSize="20sp"
         android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -62,8 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:padding="2dp"
             android:fontFamily="@font/rocko"
+            android:padding="2dp"
             android:text="Introduce tu nombre:"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -142,8 +143,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.224"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etEmail"
-        />
+            app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etPassword"

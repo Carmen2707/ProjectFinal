@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellow"
-    tools:context=".IniciarActivity">
+    tools:context=".ui.IniciarActivity">
 
     <ImageButton
         android:id="@+id/btnVolver"
@@ -41,8 +41,8 @@
         android:fontFamily="@font/rocko"
         android:padding="20dp"
         android:text="Inicia sesión con tu correo electrónico y contraseña para ver tus reservas o hacer una nueva."
-        android:textSize="20sp"
         android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -56,7 +56,7 @@
 
         android:layout_height="550dp"
         android:background="@drawable/rectangle_2"
-        app:layout_constraintBottom_toBottomOf="parent" >
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/tvEmail"
@@ -82,13 +82,13 @@
             android:autofillHints="emailAddress"
             android:ems="16"
             android:hint="Correo electrónico"
-            app:startIconDrawable="@drawable/arroba"
-
             android:inputType="textEmailAddress"
-            app:startIconContentDescription="Correo electrónico"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvEmail">
+            app:layout_constraintTop_toBottomOf="@id/tvEmail"
+            app:startIconContentDescription="Correo electrónico"
+            app:startIconDrawable="@drawable/arroba">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -100,7 +100,7 @@
             android:id="@+id/tvContraseña"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-android:layout_marginTop="30dp"
+            android:layout_marginTop="30dp"
             android:fontFamily="@font/rocko"
             android:padding="2dp"
             android:text="Introduce tu contraseña:"
@@ -122,10 +122,10 @@ android:layout_marginTop="30dp"
             android:inputType="textPassword"
             app:helperText="8 caracteres"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvOlvidar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvContraseña"
-            app:layout_constraintBottom_toTopOf="@id/tvOlvidar"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -153,9 +153,9 @@ android:layout_marginTop="30dp"
             android:layout_height="wrap_content"
             android:layout_margin="60dp"
             android:backgroundTint="@color/yellow"
+            android:fontFamily="@font/rocko"
             android:padding="10dp"
             android:text="Iniciar sesión"
-            android:fontFamily="@font/rocko"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"

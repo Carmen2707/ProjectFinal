@@ -1,13 +1,14 @@
-package com.example.projectfinal
+package com.example.projectfinal.ui.restaurante
 
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.projectfinal.R
+import com.example.projectfinal.data.model.Restaurante
 
 class RestauranteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val ivRestaurante: ImageView = view.findViewById(R.id.ivRestaurante)
@@ -25,7 +26,7 @@ class RestauranteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         tvNombreRestaurante.text = restaurante.nombre
         tvDireccionRestaurante.text = restaurante.direccion
         tvHorarioRestaurante.text = restaurante.horario
-        tvContactoRestaurante.text= restaurante.contacto.toString()
+        tvContactoRestaurante.text = restaurante.contacto.toString()
 
         Log.d("RestauranteViewHolder", "Nombre: ${restaurante.nombre}")
         Log.d("RestauranteViewHolder", "Dirección: ${restaurante.direccion}")

@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- frame_1 colors -->
+    <!-- frame_1 colors -->
 
-	<color name="colorPrimary">#FFFFFF</color>
-	<color name="colorPrimaryDark">#FFFFFF</color>
-	<color name="colorAccent">#FFCC17</color>
-	<color name="purple_200">#FFCC17</color>
-	<color name="purple_500">#FFCC17</color>
-	<color name="purple_700">#FF3700B3</color>
-	<color name="teal_200">#FF03DAC5</color>
-	<color name="gray">#B1B1B1</color>
-	<color name="black">#FF000000</color>
-	<color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="colorAccent">#FFCC17</color>
+    <color name="purple_200">#FFCC17</color>
+    <color name="purple_500">#FFCC17</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="gray">#B1B1B1</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
 
-	<color name="yellow">#FFCC17</color>
-	<color name="app_reservas_color">#FFFFFF</color>
-	<color name="rectangle_6_color">#699BF7</color>
-	<color name="sign_up_color">#FF0000</color>
+    <color name="yellow">#FFCC17</color>
+    <color name="yellow_dark">#C69F13</color>
+    <color name="app_reservas_color">#FFFFFF</color>
+    <color name="rectangle_6_color">#699BF7</color>
+    <color name="sign_up_color">#FF0000</color>
 </resources>

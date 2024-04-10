@@ -1,4 +1,4 @@
-package com.example.projectfinal
+package com.example.projectfinal.data.model
 
 data class Restaurante(
     val nombre: String? = null,

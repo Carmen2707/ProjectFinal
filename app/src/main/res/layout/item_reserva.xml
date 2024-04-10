@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/viewContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/viewContainer"
     android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="16dp"
     app:cardBackgroundColor="@color/white"
@@ -21,33 +21,32 @@
             android:id="@+id/tvNombreRestaurante"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="La Ristobottega"
             android:fontFamily="@font/dunkin"
-            android:textColor="@color/black"
-            />
+            android:text="La Ristobottega"
+            android:textColor="@color/black" />
+
         <TextView
             android:id="@+id/tvNumPersonas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Numero de personas: 2"
             android:fontFamily="@font/dunkin"
-            android:textColor="@color/black"
-            />
+            android:text="Numero de personas: 2"
+            android:textColor="@color/black" />
+
         <TextView
             android:id="@+id/tvFecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="14/3/2024"
             android:fontFamily="@font/dunkin"
-            android:textColor="@color/black"
-            />
+            android:text="14/3/2024"
+            android:textColor="@color/black" />
+
         <TextView
             android:id="@+id/tvObservaciones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Soy alérgica a los frutos secos"
             android:fontFamily="@font/dunkin"
-            android:textColor="@color/black"
-            />
+            android:text="Soy alérgica a los frutos secos"
+            android:textColor="@color/black" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
