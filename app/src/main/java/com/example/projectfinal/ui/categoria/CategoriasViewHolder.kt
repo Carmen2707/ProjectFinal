@@ -14,9 +14,9 @@ class CategoriasViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val tvNombreCategoria: TextView = view.findViewById(R.id.tvNombreCategoria)
     fun render(categorias: Categorias, onItemSelected: (Int) -> Unit) {
         val color = if (categorias.seleccionada) {
-            R.color.white
-        } else {
             R.color.gray
+        } else {
+            R.color.white
         }
         viewContainer.setCardBackgroundColor(ContextCompat.getColor(viewContainer.context, color))
         itemView.setOnClickListener { onItemSelected(layoutPosition) }

@@ -1,6 +1,6 @@
 package com.example.projectfinal.ui.categoria
 
-sealed class Categorias(var seleccionada: Boolean = true) {
+sealed class Categorias(var seleccionada: Boolean = false) {
     object Italiano : Categorias()
     object Indio : Categorias()
     object China : Categorias()

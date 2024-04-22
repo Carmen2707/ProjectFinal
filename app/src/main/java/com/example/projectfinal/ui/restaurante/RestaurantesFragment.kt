@@ -15,6 +15,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import dagger.hilt.android.AndroidEntryPoint
 
+//TODO: GUARDAR RESTAURANTES EN ROOM
 @AndroidEntryPoint
 class RestaurantesFragment : Fragment() {
     private var email: String? = null
@@ -22,7 +23,10 @@ class RestaurantesFragment : Fragment() {
 
     private lateinit var binding: FragmentRestaurantesBinding
     private lateinit var categoriaAdapter: CategoriaAdapter
-    private var lista = mutableListOf<Restaurante>()
+    private lateinit var restauranteAdapter: RestauranteAdapter
+
+    private var listaOriginal = mutableListOf<Restaurante>()
+    private var listaFiltrada = mutableListOf<Restaurante>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,9 +50,17 @@ class RestaurantesFragment : Fragment() {
     // Método para actualizar categorías
     private fun actualizarCategorias(position: Int) {
         categorias[position].seleccionada = !categorias[position].seleccionada
+        Log.d("RestaurantesFragment", "Categoría seleccionada: ${categorias[position].javaClass.simpleName}, Estado: ${categorias[position].seleccionada}")
         categoriaAdapter.notifyItemChanged(position)
+        filtrarRestaurantes()
     }
 
+
+  /*  private fun onItemSelected(position: Int) {
+        listaOriginal[position].seleccionada = !listaOriginal[position].seleccionada
+        categoriaAdapter.notifyItemChanged(position)
+        filtrarRestaurantes()
+    }*/
     // Método para obtener los datos de los restaurantes desde Firebase
     private fun obtenerDatos() {
         /** bdref = FirebaseDatabase.getInstance().getReference("restaurantes")
@@ -75,7 +87,7 @@ class RestaurantesFragment : Fragment() {
         }
         })**/
 
-
+      //  listaOriginal.clear()
         var nombre: String
         var direccion: String
         var horario: String
@@ -94,27 +106,47 @@ class RestaurantesFragment : Fragment() {
                 imagen = document.data.get("imagen") as String
                 categoria = document.data.get("categoria") as String
                 seleccionada = document.data.get("seleccionada") as Boolean
-                restaurante = Restaurante(
-                    nombre,
-                    direccion,
-                    horario,
-                    contacto,
-                    imagen,
-                    categoria,
-                    seleccionada
-                )
+                    restaurante = Restaurante(
+                        nombre,
+                        direccion,
+                        horario,
+                        contacto,
+                        imagen,
+                        categoria,
+                        seleccionada
+                    )
 
-                lista.add(restaurante)
+                listaOriginal.add(restaurante)
+
             }
-            binding.rvRestaurantes.adapter = RestauranteAdapter(lista)
+
+          /*  binding.rvRestaurantes.adapter = RestauranteAdapter(listaOriginal){ position -> onItemSelected(position)}
+            filtrarRestaurantes()*/
+            restauranteAdapter.notifyDataSetChanged()
         }.addOnFailureListener { error ->
             Log.e("FirebaseError", error.message.toString())
         }
 
     }
+    private fun filtrarRestaurantes() {
+        listaFiltrada.clear()
+        val selectedCategories = categorias.filter { it.seleccionada }
+        if (selectedCategories.isEmpty()) {
+            listaFiltrada.addAll(listaOriginal)
+        } else {
+            for (restaurante in listaOriginal) {
+                if (selectedCategories.any { it.toString().contains(restaurante.categoria, ignoreCase = true) }) {
+                    listaFiltrada.add(restaurante)
+                }
+            }
+        }
+        restauranteAdapter.restaurantes = listaFiltrada
+        restauranteAdapter.notifyDataSetChanged()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentRestaurantesBinding.bind(view)
 
         // Configurar el adaptador de categorías
         categoriaAdapter =
@@ -122,15 +154,18 @@ class RestaurantesFragment : Fragment() {
         binding.rvCategorias.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rvCategorias.adapter = categoriaAdapter
+
+        // Configurar el RecyclerView de restaurantes
+        restauranteAdapter = RestauranteAdapter(listaOriginal, )
+        binding.rvRestaurantes.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.rvRestaurantes.setHasFixedSize(true)
+        binding.rvRestaurantes.adapter = restauranteAdapter
+
         // Obtener los datos de los restaurantes desde Firebase
         obtenerDatos()
-        // Configurar el RecyclerView de restaurantes
-       // binding.rvRestaurantes.adapter = RestauranteAdapter(lista)
-        binding.rvRestaurantes.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.rvRestaurantes.setHasFixedSize(true)
-
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

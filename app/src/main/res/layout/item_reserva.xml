@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/viewContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,44 +10,126 @@
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="16dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:gravity="left"
-        android:orientation="vertical">
+        android:layout_margin="10dp">
 
+        <TextView
+            android:id="@+id/tvTituloRestaurante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/rocko"
+            android:text="Restaurante:"
+            android:textColor="@color/black"
+            android:layout_margin="5dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tvTituloPersonas"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvNombreRestaurante"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/dunkin"
+
+            android:layout_marginTop="5dp"
+
+            android:fontFamily="@font/rocko"
             android:text="La Ristobottega"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.041"
+            app:layout_constraintStart_toEndOf="@+id/tvTituloRestaurante"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTituloPersonas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/rocko"
+            android:text="Numero de personas:"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+
+            app:layout_constraintBottom_toTopOf="@+id/tvTituloFecha"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTituloRestaurante" />
 
         <TextView
             android:id="@+id/tvNumPersonas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/dunkin"
-            android:text="Numero de personas: 2"
-            android:textColor="@color/black" />
+
+            android:layout_marginTop="10dp"
+
+
+            android:fontFamily="@font/rocko"
+            android:text="2"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.019"
+            app:layout_constraintStart_toEndOf="@+id/tvTituloPersonas"
+            app:layout_constraintTop_toBottomOf="@+id/tvNombreRestaurante" />
+
+        <TextView
+            android:id="@+id/tvTituloFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/rocko"
+            android:text="Día y hora:"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+
+            app:layout_constraintBottom_toTopOf="@+id/tvTituloObservaciones"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTituloPersonas" />
 
         <TextView
             android:id="@+id/tvFecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/dunkin"
+
+            android:layout_marginTop="11dp"
+            android:fontFamily="@font/rocko"
             android:text="14/3/2024"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.023"
+            app:layout_constraintStart_toEndOf="@id/tvTituloFecha"
+            app:layout_constraintTop_toBottomOf="@+id/tvNumPersonas" />
+
+        <TextView
+            android:id="@+id/tvTituloObservaciones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/rocko"
+            android:text="Observaciones:"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTituloFecha" />
 
         <TextView
             android:id="@+id/tvObservaciones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/dunkin"
+            android:fontFamily="@font/rocko"
             android:text="Soy alérgica a los frutos secos"
-            android:textColor="@color/black" />
-    </LinearLayout>
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.153"
+            app:layout_constraintStart_toEndOf="@id/tvTituloObservaciones"
+            app:layout_constraintTop_toBottomOf="@+id/tvFecha"
+            app:layout_constraintVertical_bias="0.625" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

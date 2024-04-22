@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
 
-class RestauranteAdapter(private val restaurantes: MutableList<Restaurante>) :
+class RestauranteAdapter(var restaurantes: MutableList<Restaurante>/*, private val onItemSelected: (Int) -> Unit*/) :
     RecyclerView.Adapter<RestauranteViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestauranteViewHolder {
         val view =
