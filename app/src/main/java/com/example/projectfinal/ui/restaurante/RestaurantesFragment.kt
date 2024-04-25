@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectfinal.ui.categoria.CategoriaAdapter
-import com.example.projectfinal.ui.categoria.Categorias
+import com.example.projectfinal.data.model.Categorias
+import com.example.projectfinal.data.model.Favorito
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentRestaurantesBinding
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 //TODO: GUARDAR RESTAURANTES EN ROOM
@@ -27,7 +28,9 @@ class RestaurantesFragment : Fragment() {
 
     private var listaOriginal = mutableListOf<Restaurante>()
     private var listaFiltrada = mutableListOf<Restaurante>()
-
+    private val viewModel: RestauranteViewModel by viewModels()
+    // Obtener el ID del usuario actual (puede variar según cómo manejes la autenticación)
+    val userId = FirebaseAuth.getInstance().currentUser?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,82 +55,26 @@ class RestaurantesFragment : Fragment() {
         categorias[position].seleccionada = !categorias[position].seleccionada
         Log.d("RestaurantesFragment", "Categoría seleccionada: ${categorias[position].javaClass.simpleName}, Estado: ${categorias[position].seleccionada}")
         categoriaAdapter.notifyItemChanged(position)
+
+        // Filtrar los restaurantes nuevamente
         filtrarRestaurantes()
+
+
     }
 
 
-  /*  private fun onItemSelected(position: Int) {
+
+    /*  private fun onItemSelected(position: Int) {
         listaOriginal[position].seleccionada = !listaOriginal[position].seleccionada
         categoriaAdapter.notifyItemChanged(position)
         filtrarRestaurantes()
     }*/
-    // Método para obtener los datos de los restaurantes desde Firebase
-    private fun obtenerDatos() {
-        /** bdref = FirebaseDatabase.getInstance().getReference("restaurantes")
-        bdref.addValueEventListener(object : ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-        if (snapshot.exists()) {
-        for (restauranteSnapshot in snapshot.children) {
-        val restaurante = restauranteSnapshot.getValue(Restaurante::class.java)
-        if (!lista.contains(restaurante)) {
-        lista.add(restaurante!!)
-        }
-        }
-
-
-        binding.rvRestaurantes.adapter = RestauranteAdapter(lista)
-        } else {
-        Log.d("RestaurantesActivity", "No se encontraron datos en la base de datos")
-        }
-        }
-
-
-        override fun onCancelled(error: DatabaseError) {
-        Log.e("RestaurantesActivity", "Error al obtener datos: ${error.message}")
-        }
-        })**/
-
-      //  listaOriginal.clear()
-        var nombre: String
-        var direccion: String
-        var horario: String
-        var contacto: Long
-        var imagen: String
-        var categoria: String
-        var seleccionada: Boolean
-        var restaurante: Restaurante
-        val db = Firebase.firestore
-        db.collection("restaurantes").get().addOnSuccessListener { result ->
-            for (document in result) {
-                nombre = document.data.get("nombre") as String
-                direccion = document.data.get("direccion") as String
-                horario = document.data.get("horario") as String
-                contacto = document.data.get("contacto") as Long
-                imagen = document.data.get("imagen") as String
-                categoria = document.data.get("categoria") as String
-                seleccionada = document.data.get("seleccionada") as Boolean
-                    restaurante = Restaurante(
-                        nombre,
-                        direccion,
-                        horario,
-                        contacto,
-                        imagen,
-                        categoria,
-                        seleccionada
-                    )
-
-                listaOriginal.add(restaurante)
-
-            }
-
-          /*  binding.rvRestaurantes.adapter = RestauranteAdapter(listaOriginal){ position -> onItemSelected(position)}
-            filtrarRestaurantes()*/
-            restauranteAdapter.notifyDataSetChanged()
-        }.addOnFailureListener { error ->
-            Log.e("FirebaseError", error.message.toString())
-        }
-
+    private fun esChecked(restaurante: Restaurante, isChecked: Boolean) {
+        restaurante.favorito = isChecked
+        viewModel.actualizarFavorito(restaurante, isChecked)
     }
+
+
     private fun filtrarRestaurantes() {
         listaFiltrada.clear()
         val selectedCategories = categorias.filter { it.seleccionada }
@@ -156,16 +103,30 @@ class RestaurantesFragment : Fragment() {
         binding.rvCategorias.adapter = categoriaAdapter
 
         // Configurar el RecyclerView de restaurantes
-        restauranteAdapter = RestauranteAdapter(listaOriginal, )
-        binding.rvRestaurantes.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.rvRestaurantes.setHasFixedSize(true)
+        restauranteAdapter = RestauranteAdapter(listaOriginal) { restaurante, isChecked ->
+            esChecked(restaurante, isChecked)
+        }
+
+        binding.rvRestaurantes.layoutManager = LinearLayoutManager(context)
         binding.rvRestaurantes.adapter = restauranteAdapter
 
-        // Obtener los datos de los restaurantes desde Firebase
-        obtenerDatos()
+       // viewModel.obtenerDatos()
+
+        viewModel.getFavoritos(userId).observe(viewLifecycleOwner) { favoritos ->
+            listaOriginal.forEach { restaurante ->
+                // Marcar el checkbox si el restaurante está en la lista de favoritos
+                restaurante.isChecked = favoritos.any { it.restauranteId == restaurante.id }
+            }
+            restauranteAdapter.notifyDataSetChanged()
+        }
+
     }
 
-
+    /*override fun onDestroyView() {
+        super.onDestroyView()
+        // Detener la observación del ViewModel cuando el fragmento se destruya
+        viewModel.restaurantesBD.removeObservers(viewLifecycleOwner)
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

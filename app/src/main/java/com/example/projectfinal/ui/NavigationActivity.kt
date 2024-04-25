@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.projectfinal.R
 import com.example.projectfinal.databinding.ActivityNavigationBinding
-import com.example.projectfinal.fragments.FavoritosFragment
+import com.example.projectfinal.ui.favorito.FavoritosFragment
 import com.example.projectfinal.ui.reserva.MisReservasFragment
 import com.example.projectfinal.ui.restaurante.RestaurantesFragment
 import dagger.hilt.android.AndroidEntryPoint

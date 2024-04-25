@@ -1,10 +1,12 @@
 package com.example.projectfinal.di
 
 import android.content.SharedPreferences
+import com.example.projectfinal.data.repository.RepositoryFavorito
 import com.example.projectfinal.data.repository.ReservaRepository
 import com.example.projectfinal.data.repository.ReservaRepositoyImp
 import com.example.projectfinal.data.repository.UsuarioRepository
 import com.example.projectfinal.data.repository.UsuarioRepositoryImp
+import com.example.projectfinal.room.DAO
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
@@ -38,5 +40,9 @@ object RepositoryModule {
         gson: Gson
     ): UsuarioRepository {
         return UsuarioRepositoryImp (auth,database,appPreferences,gson)
+    }
+    @Provides
+    fun provideRepositoryFavorito(favoritoDao: DAO): RepositoryFavorito {
+        return RepositoryFavorito(favoritoDao)
     }
 }

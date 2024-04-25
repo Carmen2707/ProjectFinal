@@ -1,4 +1,4 @@
-package com.example.projectfinal.ui.categoria
+package com.example.projectfinal.data.model
 
 sealed class Categorias(var seleccionada: Boolean = false) {
     object Italiano : Categorias()

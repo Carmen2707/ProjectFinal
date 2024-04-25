@@ -1,18 +1,20 @@
-package com.example.projectfinal.fragments
+package com.example.projectfinal.ui.favorito
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectfinal.R
+import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentFavoritosBinding
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.projectfinal.databinding.FragmentRestaurantesBinding
+import com.example.projectfinal.ui.restaurante.RestauranteViewModel
+import com.google.firebase.auth.FirebaseAuth
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FavoritosFragment : Fragment() {
@@ -21,21 +23,36 @@ class FavoritosFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var binding: FragmentFavoritosBinding
-
+    private lateinit var favoritosAdapter: FavoritosAdapter // Define tu adaptador de favoritos aquí
+    private var listaFavoritos = mutableListOf<Restaurante>()
+    private val viewModel: RestauranteViewModel by viewModels()
+    val userId = FirebaseAuth.getInstance().currentUser?.uid
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (userId != null) {
+            viewModel.getFavoritos(userId).observe(viewLifecycleOwner) { favoritos ->
+                // Actualizar el RecyclerView con la lista de favoritos
+                favoritosAdapter.favoritos = favoritos
+                favoritosAdapter.notifyDataSetChanged()
+            }
+        }
 
 
     }
+   /* private fun cargarListaFavoritos() {
+        viewModel.getFavoritos(viewModel.getCurrentUserId()).observe(viewLifecycleOwner) { favoritos ->
+            listaFavoritos.clear()
+            listaFavoritos.addAll(favoritos)
+            favoritosAdapter.actualizarFavoritos(listaFavoritos)
+        }
 
+    }*/
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,8 +75,7 @@ class FavoritosFragment : Fragment() {
         fun newInstance(param1: String, param2: String) =
             FavoritosFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
                 }
             }
     }

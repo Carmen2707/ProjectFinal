@@ -84,9 +84,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvHorarioRestaurante" />
 
-        <Button
+        <CheckBox
+            android:id="@+id/cbFavorito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:button="@drawable/checkbox"
+            android:scaleX="0.50"
+            android:scaleY="0.50"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

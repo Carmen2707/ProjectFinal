@@ -2,6 +2,7 @@ package com.example.projectfinal.ui.restaurante
 
 import android.util.Log
 import android.view.View
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 
@@ -10,13 +11,13 @@ import com.bumptech.glide.Glide
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
 
-class RestauranteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class RestauranteViewHolder(view: View, private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit) : RecyclerView.ViewHolder(view) {
     private val ivRestaurante: ImageView = view.findViewById(R.id.ivRestaurante)
     private val tvNombreRestaurante: TextView = view.findViewById(R.id.tvNombreRestaurante)
     private val tvDireccionRestaurante: TextView = view.findViewById(R.id.tvDireccionRestaurante)
     private val tvHorarioRestaurante: TextView = view.findViewById(R.id.tvHorarioRestaurante)
     private val tvContactoRestaurante: TextView = view.findViewById(R.id.tvContactoRestaurante)
-
+    private val checkBox: CheckBox = view.findViewById(R.id.cbFavorito)
     fun render(restaurante: Restaurante) {
         Log.d("RestauranteViewHolder", "Cargando imagen desde URL: ${restaurante.imagen}")
 
@@ -28,9 +29,6 @@ class RestauranteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         tvHorarioRestaurante.text = restaurante.horario
         tvContactoRestaurante.text = restaurante.contacto.toString()
 
-        Log.d("RestauranteViewHolder", "Nombre: ${restaurante.nombre}")
-        Log.d("RestauranteViewHolder", "Dirección: ${restaurante.direccion}")
-        Log.d("RestauranteViewHolder", "Horario: ${restaurante.horario}")
-        Log.d("RestauranteViewHolder", "Contacto: ${restaurante.contacto}")
+
     }
 }
