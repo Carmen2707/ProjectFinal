@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.projectfinal.R
-import com.example.projectfinal.data.model.Favorito
 import com.example.projectfinal.data.model.Restaurante
 
 class FavoritosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

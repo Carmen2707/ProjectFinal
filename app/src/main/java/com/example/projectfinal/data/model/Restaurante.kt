@@ -14,5 +14,6 @@ data class Restaurante(
     val contacto: Long? = null,
     val imagen: String? = null,
     val categoria: String,
-    var favoritos: List<Restaurante>? = null
+    var favorito: Boolean? = null,
+    var userId: String? = null
 )

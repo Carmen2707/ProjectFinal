@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectfinal.ui.categoria.CategoriaAdapter
 import com.example.projectfinal.data.model.Categorias
-import com.example.projectfinal.data.model.Favorito
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentRestaurantesBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -26,7 +26,7 @@ class RestaurantesFragment : Fragment() {
     private lateinit var categoriaAdapter: CategoriaAdapter
     private lateinit var restauranteAdapter: RestauranteAdapter
 
-    private var listaOriginal = mutableListOf<Restaurante>()
+    private var listaOriginal = MutableLiveData<List<Restaurante>>()
     private var listaFiltrada = mutableListOf<Restaurante>()
     private val viewModel: RestauranteViewModel by viewModels()
     // Obtener el ID del usuario actual (puede variar según cómo manejes la autenticación)
@@ -94,7 +94,18 @@ class RestaurantesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRestaurantesBinding.bind(view)
-
+        viewModel.obtenerDatos()
+        listaOriginal = viewModel.restaurantesBD
+        binding.rvRestaurantes.layoutManager = LinearLayoutManager(context)
+        // Observar los cambios en la lista de restaurantes desde el ViewModel
+        viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
+            listaOriginal.clear()
+            listaOriginal.addAll(restaurantes)
+            restauranteAdapter = RestauranteAdapter(listaOriginal) { restaurante, isChecked ->
+                esChecked(restaurante, isChecked)
+            }
+            binding.rvRestaurantes.adapter = restauranteAdapter
+        }
         // Configurar el adaptador de categorías
         categoriaAdapter =
             CategoriaAdapter(categorias) { position -> actualizarCategorias(position) }
@@ -102,23 +113,27 @@ class RestaurantesFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rvCategorias.adapter = categoriaAdapter
 
-        // Configurar el RecyclerView de restaurantes
+/*
+        // Dentro del método onViewCreated en RestaurantesFragment
         restauranteAdapter = RestauranteAdapter(listaOriginal) { restaurante, isChecked ->
             esChecked(restaurante, isChecked)
         }
 
+
         binding.rvRestaurantes.layoutManager = LinearLayoutManager(context)
-        binding.rvRestaurantes.adapter = restauranteAdapter
+        binding.rvRestaurantes.adapter = restauranteAdapter*/
 
-       // viewModel.obtenerDatos()
 
-        viewModel.getFavoritos(userId).observe(viewLifecycleOwner) { favoritos ->
-            listaOriginal.forEach { restaurante ->
-                // Marcar el checkbox si el restaurante está en la lista de favoritos
-                restaurante.isChecked = favoritos.any { it.restauranteId == restaurante.id }
+
+       /* if (userId != null) {
+            viewModel.getFavoritos(userId).observe(viewLifecycleOwner) { favoritos ->
+                listaOriginal.forEach { restaurante ->
+                    // Marcar el checkbox si el restaurante está en la lista de favoritos
+                    restaurante.isChecked = favoritos.any { it.restauranteId == restaurante.id }
+                }
+                restauranteAdapter.notifyDataSetChanged()
             }
-            restauranteAdapter.notifyDataSetChanged()
-        }
+        }*/
 
     }
 

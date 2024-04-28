@@ -4,10 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.projectfinal.data.model.Favorito
 import com.example.projectfinal.data.model.Restaurante
 
-@Database(entities = [Restaurante::class, Favorito::class], version = 1, exportSchema = false)
+@Database(entities = [Restaurante::class], version = 1, exportSchema = false)
 abstract class RestaurantesBD : RoomDatabase() {
     abstract fun getAppDao(): DAO
 

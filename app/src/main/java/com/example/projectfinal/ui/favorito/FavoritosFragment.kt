@@ -1,6 +1,7 @@
 package com.example.projectfinal.ui.favorito
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,7 @@ class FavoritosFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var binding: FragmentFavoritosBinding
-    private lateinit var favoritosAdapter: FavoritosAdapter // Define tu adaptador de favoritos aquí
+    private var favoritosAdapter: FavoritosAdapter? = null // Define tu adaptador de favoritos aquí
     private var listaFavoritos = mutableListOf<Restaurante>()
     private val viewModel: RestauranteViewModel by viewModels()
     val userId = FirebaseAuth.getInstance().currentUser?.uid
@@ -35,17 +36,30 @@ class FavoritosFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentFavoritosBinding.bind(view)
+        favoritosAdapter = FavoritosAdapter(listaFavoritos)
         if (userId != null) {
             viewModel.getFavoritos(userId).observe(viewLifecycleOwner) { favoritos ->
-                // Actualizar el RecyclerView con la lista de favoritos
-                favoritosAdapter.favoritos = favoritos
-                favoritosAdapter.notifyDataSetChanged()
+                listaFavoritos.clear() // Limpiar la lista existente
+                listaFavoritos.addAll(favoritos) // Agregar los favoritos obtenidos del ViewModel
+
+                // Verificar si favoritosAdapter es null antes de asignarle una nueva instancia
+                if (favoritosAdapter == null) {
+                    favoritosAdapter = FavoritosAdapter(listaFavoritos)
+                    binding.rvFavoritos.adapter = favoritosAdapter
+                } else {
+                    favoritosAdapter?.notifyDataSetChanged()
+                }
+
+                Log.d("dkdkdkd", favoritos.toString())
             }
         }
 
-
+        binding.rvFavoritos.layoutManager = LinearLayoutManager(context)
     }
-   /* private fun cargarListaFavoritos() {
+
+
+    /* private fun cargarListaFavoritos() {
         viewModel.getFavoritos(viewModel.getCurrentUserId()).observe(viewLifecycleOwner) { favoritos ->
             listaFavoritos.clear()
             listaFavoritos.addAll(favoritos)
@@ -58,7 +72,9 @@ class FavoritosFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favoritos, container, false)
+        binding = FragmentFavoritosBinding.inflate(inflater, container, false)
+        // Retorna la vista inflada por el binding
+        return binding.root
     }
 
     companion object {
