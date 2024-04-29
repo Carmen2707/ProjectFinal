@@ -20,6 +20,7 @@ interface DAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(restaurante: MutableList<Restaurante>)
 
-    @Query("SELECT * FROM restaurantesBD WHERE favorito = 1")
-    fun getFavoritos(): List<Restaurante>
+    @Query("SELECT * FROM restaurantesBD WHERE favorito = 1 AND userId = :userId")
+    fun getFavoritos(userId: String): LiveData<List<Restaurante>>
+
 }

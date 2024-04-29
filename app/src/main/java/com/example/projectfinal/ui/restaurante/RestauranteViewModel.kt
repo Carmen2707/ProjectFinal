@@ -30,23 +30,16 @@ class RestauranteViewModel @Inject constructor(
         get() = _listaFavoritos
    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
     init {
-        // Obtener los favoritos del usuario actual cuando se crea el ViewModel
-        getCurrentUserId().let {
-            _listaFavoritos.value = getFavoritos()
-        }
+        obtenerDatos() // Llama a la función para obtener los datos una vez que se inicializa el ViewModel
     }
+
     fun actualizarFavorito(restaurante: Restaurante, isChecked: Boolean) {
         viewModelScope.launch {
             restaurante.favorito = isChecked
-         //   restaurante.userId = getCurrentUserId() // Establecer el ID del usuario actual en el restaurante
-            dao.actualizarRestaurante(restaurante) // Actualizar el restaurante en la base de datos
-
-            // Actualizar la lista de favoritos si el restaurante se marca como favorito
-            if (isChecked) {
-                _listaFavoritos.value = _listaFavoritos.value?.plus(restaurante)
-            } else {
-                _listaFavoritos.value = _listaFavoritos.value?.filter { it.id != restaurante.id }
-            }
+            restaurante.userId = userId
+            dao.actualizarRestaurante(restaurante) // Actualizar el estado de favorito en la base de datos
+          //  _restaurantesBD.postValue(dao.getAll())
+            obtenerDatos()
         }
     }
 
@@ -58,8 +51,8 @@ class RestauranteViewModel @Inject constructor(
     }
 
     // Método para obtener los favoritos del usuario actual
-    fun getFavoritos(): List<Restaurante> {
-        return dao.getFavoritos()
+    fun getFavoritos(userId:String): LiveData<List<Restaurante>> {
+        return dao.getFavoritos(userId)
     }
 
     // Método para obtener los datos de los restaurantes desde Firebase
@@ -124,8 +117,13 @@ class RestauranteViewModel @Inject constructor(
 
             }
             viewModelScope.launch {
-                dao.insertAll(listaRestaurantes)
-                _restaurantesBD.postValue(dao.getAll())
+               // dao.insertAll(listaRestaurantes)
+              //  _restaurantesBD.postValue(dao.getAll())
+
+                    _restaurantesBD.value = dao.getAll() // Obtén los restaurantes desde la base de datos
+                    // Filtra y obtén solo los favoritos para el usuario actual
+                    _listaFavoritos.value = dao.getFavoritos(userId).value ?: emptyList()
+
             }
         }.addOnFailureListener { error ->
             Log.e("FirebaseError", error.message.toString())

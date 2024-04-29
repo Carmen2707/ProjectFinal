@@ -12,6 +12,7 @@ import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentFavoritosBinding
 import com.example.projectfinal.databinding.FragmentRestaurantesBinding
+import com.example.projectfinal.ui.restaurante.RestauranteAdapter
 import com.example.projectfinal.ui.restaurante.RestauranteViewModel
 import com.google.firebase.auth.FirebaseAuth
 
@@ -37,24 +38,11 @@ class FavoritosFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFavoritosBinding.bind(view)
-        favoritosAdapter = FavoritosAdapter(listaFavoritos)
-
-        if (userId != null) {
-            viewModel.listaFavoritos.observe(viewLifecycleOwner) { favoritos ->
-                listaFavoritos.clear() // Limpiar la lista existente
-                listaFavoritos.addAll(favoritos) // Agregar los favoritos obtenidos del ViewModel
-
-                // Verificar si favoritosAdapter es null antes de asignarle una nueva instancia
-                if (favoritosAdapter == null) {
-                    favoritosAdapter = FavoritosAdapter(listaFavoritos)
-                    binding.rvFavoritos.adapter = favoritosAdapter
-                } else {
-                    favoritosAdapter?.notifyDataSetChanged()
-                }
-
-                Log.d("dkdkdkd", favoritos.toString())
-            }
+        viewModel.listaFavoritos.observe(viewLifecycleOwner) { restaurantes ->
+            favoritosAdapter = FavoritosAdapter(restaurantes)
+            binding.rvFavoritos.adapter = favoritosAdapter
         }
+
 
         binding.rvFavoritos.layoutManager = LinearLayoutManager(context)
     }

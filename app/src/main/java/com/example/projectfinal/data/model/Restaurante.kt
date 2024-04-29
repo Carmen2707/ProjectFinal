@@ -15,5 +15,5 @@ data class Restaurante(
     val imagen: String? = null,
     val categoria: String,
     var favorito: Boolean? = null,
-   // var userId: String? = null
+    var userId: String? = null
 )
