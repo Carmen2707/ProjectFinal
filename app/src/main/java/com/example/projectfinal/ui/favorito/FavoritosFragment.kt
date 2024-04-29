@@ -38,8 +38,9 @@ class FavoritosFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFavoritosBinding.bind(view)
         favoritosAdapter = FavoritosAdapter(listaFavoritos)
+
         if (userId != null) {
-            viewModel.getFavoritos(userId).observe(viewLifecycleOwner) { favoritos ->
+            viewModel.listaFavoritos.observe(viewLifecycleOwner) { favoritos ->
                 listaFavoritos.clear() // Limpiar la lista existente
                 listaFavoritos.addAll(favoritos) // Agregar los favoritos obtenidos del ViewModel
 

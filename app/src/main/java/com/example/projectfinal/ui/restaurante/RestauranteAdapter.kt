@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
 
-class RestauranteAdapter(var restaurantes: MutableList<Restaurante>, private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit/*, private val onItemSelected: (Int) -> Unit*/) :
+class RestauranteAdapter(var restaurantes: List<Restaurante>, private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit/*, private val onItemSelected: (Int) -> Unit*/) :
     RecyclerView.Adapter<RestauranteViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestauranteViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_restaurante, parent, false)

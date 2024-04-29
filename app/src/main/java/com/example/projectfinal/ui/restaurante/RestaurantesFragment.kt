@@ -27,7 +27,7 @@ class RestaurantesFragment : Fragment() {
     private lateinit var restauranteAdapter: RestauranteAdapter
 
     private var listaOriginal = MutableLiveData<List<Restaurante>>()
-    private var listaFiltrada = mutableListOf<Restaurante>()
+    private var listaFiltrada = MutableLiveData<List<Restaurante>>()
     private val viewModel: RestauranteViewModel by viewModels()
     // Obtener el ID del usuario actual (puede variar según cómo manejes la autenticación)
     val userId = FirebaseAuth.getInstance().currentUser?.uid
@@ -76,32 +76,21 @@ class RestaurantesFragment : Fragment() {
 
 
     private fun filtrarRestaurantes() {
-        listaFiltrada.clear()
-        val selectedCategories = categorias.filter { it.seleccionada }
-        if (selectedCategories.isEmpty()) {
-            listaFiltrada.addAll(listaOriginal)
-        } else {
-            for (restaurante in listaOriginal) {
-                if (selectedCategories.any { it.toString().contains(restaurante.categoria, ignoreCase = true) }) {
-                    listaFiltrada.add(restaurante)
-                }
-            }
+        listaFiltrada.value = listaOriginal.value?.filter { restaurante ->
+            categorias.any { it.seleccionada && restaurante.categoria.equals(it.toString(), ignoreCase = true) }
         }
-        restauranteAdapter.restaurantes = listaFiltrada
-        restauranteAdapter.notifyDataSetChanged()
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRestaurantesBinding.bind(view)
         viewModel.obtenerDatos()
-        listaOriginal = viewModel.restaurantesBD
+        //listaOriginal = viewModel.restaurantesBD
         binding.rvRestaurantes.layoutManager = LinearLayoutManager(context)
         // Observar los cambios en la lista de restaurantes desde el ViewModel
         viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
-            listaOriginal.clear()
-            listaOriginal.addAll(restaurantes)
-            restauranteAdapter = RestauranteAdapter(listaOriginal) { restaurante, isChecked ->
+            restauranteAdapter = RestauranteAdapter(restaurantes) { restaurante, isChecked ->
                 esChecked(restaurante, isChecked)
             }
             binding.rvRestaurantes.adapter = restauranteAdapter
@@ -112,6 +101,7 @@ class RestaurantesFragment : Fragment() {
         binding.rvCategorias.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rvCategorias.adapter = categoriaAdapter
+
 
 /*
         // Dentro del método onViewCreated en RestaurantesFragment

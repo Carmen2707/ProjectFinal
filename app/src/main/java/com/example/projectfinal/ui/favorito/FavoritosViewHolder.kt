@@ -1,6 +1,7 @@
 package com.example.projectfinal.ui.favorito
 
 import android.view.View
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ class FavoritosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val tvDireccionRestaurante: TextView = itemView.findViewById(R.id.tvDireccionRestaurante)
     private val tvHorarioRestaurante: TextView = itemView.findViewById(R.id.tvHorarioRestaurante)
     private val tvContactoRestaurante: TextView = itemView.findViewById(R.id.tvContactoRestaurante)
-
+    val checkBox: CheckBox = itemView.findViewById(R.id.cbFavorito)
     fun bind(restaurante: Restaurante) {
         Glide.with(itemView.context)
             .load(restaurante.imagen)

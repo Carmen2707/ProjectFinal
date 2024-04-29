@@ -12,7 +12,7 @@ import com.example.projectfinal.data.model.Restaurante
 @Dao
 interface DAO {
     @Query("SELECT * FROM restaurantesBD")
-    fun getAll(): LiveData<List<Restaurante>>
+    fun getAll(): List<Restaurante>
 
 
     @Update
@@ -20,6 +20,6 @@ interface DAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(restaurante: MutableList<Restaurante>)
 
-    @Query("SELECT * FROM restaurantesBD WHERE favorito = 1 and userId = :userId")
-    fun getFavoritos(userId:String): LiveData<List<Restaurante>>
+    @Query("SELECT * FROM restaurantesBD WHERE favorito = 1")
+    fun getFavoritos(): List<Restaurante>
 }
