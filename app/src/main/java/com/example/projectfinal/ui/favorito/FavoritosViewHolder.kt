@@ -24,6 +24,7 @@ class FavoritosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         tvDireccionRestaurante.text = restaurante.direccion
         tvHorarioRestaurante.text = restaurante.horario
         tvContactoRestaurante.text = restaurante.contacto.toString()
-
+        // Actualizar el estado del CheckBox
+        checkBox.isChecked = restaurante.favorito ?: false
     }
 }

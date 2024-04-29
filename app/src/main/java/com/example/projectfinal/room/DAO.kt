@@ -21,6 +21,6 @@ interface DAO {
     fun insertAll(restaurante: MutableList<Restaurante>)
 
     @Query("SELECT * FROM restaurantesBD WHERE favorito = 1 AND userId = :userId")
-    fun getFavoritos(userId: String): LiveData<List<Restaurante>>
+    fun getFavoritos(userId: String): List<Restaurante>
 
 }

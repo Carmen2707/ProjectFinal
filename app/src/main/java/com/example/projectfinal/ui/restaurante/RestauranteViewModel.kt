@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.projectfinal.data.model.Categorias
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.data.repository.RepositoryFavorito
 import com.example.projectfinal.room.DAO
@@ -28,9 +29,25 @@ class RestauranteViewModel @Inject constructor(
     val _listaFavoritos = MutableLiveData<List<Restaurante>>()
     val listaFavoritos: LiveData<List<Restaurante>>
         get() = _listaFavoritos
+
+    val _listaFiltrados = MutableLiveData<List<Restaurante>>()
+    val listaFiltrados: LiveData<List<Restaurante>>
+        get() = _listaFiltrados
+
    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
     init {
         obtenerDatos() // Llama a la función para obtener los datos una vez que se inicializa el ViewModel
+    }
+    fun filtrarRestaurantesPorCategoria(categoriasSeleccionadas: List<Categorias>) {
+        val restaurantesFiltrados = mutableListOf<Restaurante>()
+
+        for (restaurante in _restaurantesBD.value ?: emptyList()) {
+            if (categoriasSeleccionadas.isEmpty() || categoriasSeleccionadas.any { it.toString() == restaurante.categoria }) {
+                restaurantesFiltrados.add(restaurante)
+            }
+        }
+
+        _listaFiltrados.value = restaurantesFiltrados
     }
 
     fun actualizarFavorito(restaurante: Restaurante, isChecked: Boolean) {
@@ -41,18 +58,6 @@ class RestauranteViewModel @Inject constructor(
           //  _restaurantesBD.postValue(dao.getAll())
             obtenerDatos()
         }
-    }
-
-
-    fun getCurrentUserId(): String {
-        // Aquí debes implementar la lógica para obtener el ID del usuario actual
-        // Por ejemplo, podrías usar FirebaseAuth para obtener el ID del usuario actual
-        return FirebaseAuth.getInstance().currentUser?.uid ?: ""
-    }
-
-    // Método para obtener los favoritos del usuario actual
-    fun getFavoritos(userId:String): LiveData<List<Restaurante>> {
-        return dao.getFavoritos(userId)
     }
 
     // Método para obtener los datos de los restaurantes desde Firebase
@@ -122,8 +127,10 @@ class RestauranteViewModel @Inject constructor(
 
                     _restaurantesBD.value = dao.getAll() // Obtén los restaurantes desde la base de datos
                     // Filtra y obtén solo los favoritos para el usuario actual
-                    _listaFavoritos.value = dao.getFavoritos(userId).value ?: emptyList()
+                    _listaFavoritos.value = dao.getFavoritos(userId)
 
+                Log.e("FirebaseError", userId)
+                Log.e("FirebaseError", _listaFavoritos.value.toString())
             }
         }.addOnFailureListener { error ->
             Log.e("FirebaseError", error.message.toString())

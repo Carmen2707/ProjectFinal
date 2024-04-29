@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
 
-class FavoritosAdapter (var favoritos: List<Restaurante>) :
+class FavoritosAdapter (var favoritos: List<Restaurante>, private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit) :
     RecyclerView.Adapter<FavoritosViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritosViewHolder {
@@ -18,6 +18,10 @@ class FavoritosAdapter (var favoritos: List<Restaurante>) :
     override fun onBindViewHolder(holder: FavoritosViewHolder, position: Int) {
         val restaurante = favoritos[position]
         holder.bind(restaurante)
+        holder.checkBox.isChecked = restaurante.favorito == true
+        holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            onFavoritoChangeListener(restaurante, isChecked)
+        }
     }
 
     override fun getItemCount(): Int {

@@ -56,10 +56,13 @@ class RestaurantesFragment : Fragment() {
         Log.d("RestaurantesFragment", "Categoría seleccionada: ${categorias[position].javaClass.simpleName}, Estado: ${categorias[position].seleccionada}")
         categoriaAdapter.notifyItemChanged(position)
 
-        // Filtrar los restaurantes nuevamente
-        filtrarRestaurantes()
-
-
+        val categoriasSeleccionadas = categorias.filter { it.seleccionada }
+        if (categoriasSeleccionadas.isEmpty()) {
+            // Si no se selecciona ninguna categoría, mostrar todos los restaurantes
+            viewModel.listaFiltrarPorCategoria(categoriasSeleccionadas)
+        } else {
+            viewModel.filtrarRestaurantesPorCategoria(categoriasSeleccionadas)
+        }
     }
 
 
@@ -75,21 +78,17 @@ class RestaurantesFragment : Fragment() {
     }
 
 
-    private fun filtrarRestaurantes() {
-        listaFiltrada.value = listaOriginal.value?.filter { restaurante ->
-            categorias.any { it.seleccionada && restaurante.categoria.equals(it.toString(), ignoreCase = true) }
-        }
-    }
+
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRestaurantesBinding.bind(view)
-        viewModel.obtenerDatos()
-        //listaOriginal = viewModel.restaurantesBD
+
         binding.rvRestaurantes.layoutManager = LinearLayoutManager(context)
         // Observar los cambios en la lista de restaurantes desde el ViewModel
-        viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
+        viewModel.listaFiltrados.observe(viewLifecycleOwner) { restaurantes ->
             restauranteAdapter = RestauranteAdapter(restaurantes) { restaurante, isChecked ->
                 esChecked(restaurante, isChecked)
             }

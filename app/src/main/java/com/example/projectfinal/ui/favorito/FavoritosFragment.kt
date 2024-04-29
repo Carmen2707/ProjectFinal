@@ -39,15 +39,21 @@ class FavoritosFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFavoritosBinding.bind(view)
         viewModel.listaFavoritos.observe(viewLifecycleOwner) { restaurantes ->
-            favoritosAdapter = FavoritosAdapter(restaurantes)
+            favoritosAdapter = FavoritosAdapter(restaurantes) { restaurante, isChecked ->
+                esChecked(restaurante, isChecked)
+            }
             binding.rvFavoritos.adapter = favoritosAdapter
+            Log.e("Firebase", restaurantes.toString())
         }
 
 
         binding.rvFavoritos.layoutManager = LinearLayoutManager(context)
     }
 
-
+    private fun esChecked(restaurante: Restaurante, isChecked: Boolean) {
+        restaurante.favorito = isChecked
+        viewModel.actualizarFavorito(restaurante, isChecked)
+    }
     /* private fun cargarListaFavoritos() {
         viewModel.getFavoritos(viewModel.getCurrentUserId()).observe(viewLifecycleOwner) { favoritos ->
             listaFavoritos.clear()
