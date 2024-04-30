@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectfinal.R
@@ -27,7 +28,7 @@ class FavoritosFragment : Fragment() {
     private lateinit var binding: FragmentFavoritosBinding
     private var favoritosAdapter: FavoritosAdapter? = null // Define tu adaptador de favoritos aquí
     private var listaFavoritos = mutableListOf<Restaurante>()
-    private val viewModel: RestauranteViewModel by viewModels()
+    private val viewModel: RestauranteViewModel by activityViewModels()
     val userId = FirebaseAuth.getInstance().currentUser?.uid
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

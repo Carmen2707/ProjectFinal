@@ -74,6 +74,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation("com.google.firebase:firebase-firestore:24.11.1")
     //Dagger Hilt
     val hiltVersion = "2.48.1"
     kapt("com.google.dagger:hilt-compiler:${hiltVersion}")

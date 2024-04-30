@@ -54,9 +54,11 @@ class RestauranteViewModel @Inject constructor(
         viewModelScope.launch {
             restaurante.favorito = isChecked
             restaurante.userId = userId
-            dao.actualizarRestaurante(restaurante) // Actualizar el estado de favorito en la base de datos
-          //  _restaurantesBD.postValue(dao.getAll())
-            obtenerDatos()
+            dao.actualizarRestaurante(restaurante)
+          //  _listaFavoritos.value = dao.getFavoritos(userId)
+            viewModelScope.launch {
+                _listaFavoritos.value = dao.getFavoritos(userId)
+            }
         }
     }
 
@@ -119,16 +121,17 @@ class RestauranteViewModel @Inject constructor(
                     favorito
                 )
                 listaRestaurantes.add(restaurante)
+                dao.insertAll(listaRestaurantes)
 
             }
             viewModelScope.launch {
-               // dao.insertAll(listaRestaurantes)
-              //  _restaurantesBD.postValue(dao.getAll())
+              //  dao.insertAll(listaRestaurantes)
+                _restaurantesBD.postValue(dao.getAll())
 
-                    _restaurantesBD.value = dao.getAll() // Obtén los restaurantes desde la base de datos
                     // Filtra y obtén solo los favoritos para el usuario actual
-                    _listaFavoritos.value = dao.getFavoritos(userId)
 
+
+                Log.e("kjdsoidh", _restaurantesBD.value.toString())
                 Log.e("FirebaseError", userId)
                 Log.e("FirebaseError", _listaFavoritos.value.toString())
             }

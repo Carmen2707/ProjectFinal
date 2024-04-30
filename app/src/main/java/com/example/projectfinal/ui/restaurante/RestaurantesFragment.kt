@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +29,7 @@ class RestaurantesFragment : Fragment() {
 
     private var listaOriginal = MutableLiveData<List<Restaurante>>()
     private var listaFiltrada = MutableLiveData<List<Restaurante>>()
-    private val viewModel: RestauranteViewModel by viewModels()
+    private val viewModel: RestauranteViewModel by activityViewModels()
     // Obtener el ID del usuario actual (puede variar según cómo manejes la autenticación)
     val userId = FirebaseAuth.getInstance().currentUser?.uid
 
@@ -59,7 +60,12 @@ class RestaurantesFragment : Fragment() {
         val categoriasSeleccionadas = categorias.filter { it.seleccionada }
         if (categoriasSeleccionadas.isEmpty()) {
             // Si no se selecciona ninguna categoría, mostrar todos los restaurantes
-            viewModel.listaFiltrarPorCategoria(categoriasSeleccionadas)
+            viewModel.listaFiltrados.observe(viewLifecycleOwner) { restaurantes ->
+                restauranteAdapter = RestauranteAdapter(restaurantes) { restaurante, isChecked ->
+                    esChecked(restaurante, isChecked)
+                }
+
+            }
         } else {
             viewModel.filtrarRestaurantesPorCategoria(categoriasSeleccionadas)
         }
@@ -75,6 +81,11 @@ class RestaurantesFragment : Fragment() {
     private fun esChecked(restaurante: Restaurante, isChecked: Boolean) {
         restaurante.favorito = isChecked
         viewModel.actualizarFavorito(restaurante, isChecked)
+        // Si el restaurante no está marcado como favorito, establecer isChecked en false
+        val isFavorite = restaurante.favorito ?: false
+        if (!isFavorite) {
+            restauranteAdapter.notifyDataSetChanged()
+        }
     }
 
 
@@ -88,12 +99,14 @@ class RestaurantesFragment : Fragment() {
 
         binding.rvRestaurantes.layoutManager = LinearLayoutManager(context)
         // Observar los cambios en la lista de restaurantes desde el ViewModel
-        viewModel.listaFiltrados.observe(viewLifecycleOwner) { restaurantes ->
+        viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
             restauranteAdapter = RestauranteAdapter(restaurantes) { restaurante, isChecked ->
                 esChecked(restaurante, isChecked)
             }
             binding.rvRestaurantes.adapter = restauranteAdapter
+            restauranteAdapter.notifyDataSetChanged()
         }
+
         // Configurar el adaptador de categorías
         categoriaAdapter =
             CategoriaAdapter(categorias) { position -> actualizarCategorias(position) }
