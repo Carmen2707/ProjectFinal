@@ -6,4 +6,5 @@ import com.example.projectfinal.data.model.Usuario
 interface UsuarioRepository {
     fun storeSession(id: String, result: (Usuario?) -> Unit)
     fun getCurrentUser():LiveData<Usuario?>
+
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/restaurantesFragment">
+
+    <fragment
+        android:id="@+id/restaurantesFragment"
+        android:name="com.example.projectfinal.ui.restaurante.RestaurantesFragment"
+        android:label="fragment_restaurantes"
+        tools:layout="@layout/fragment_restaurantes" >
+        <action
+            android:id="@+id/action_restaurantesFragment_to_formularioFragment"
+            app:destination="@id/formularioFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/formularioFragment"
+        android:name="com.example.projectfinal.ui.formulario.FormularioFragment"
+        android:label="fragment_anadir_reserva"
+        tools:layout="@layout/fragment_anadir_reserva" >
+        <argument
+            android:name="restauranteNombre"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/misReservasFragment"
+        android:name="com.example.projectfinal.ui.reserva.MisReservasFragment"
+        android:label="fragment_mis_reservas"
+        tools:layout="@layout/fragment_mis_reservas" >
+        <action
+            android:id="@+id/action_misReservasFragment_to_formularioFragment"
+            app:destination="@id/formularioFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritosFragment"
+        android:name="com.example.projectfinal.ui.favorito.FavoritosFragment"
+        android:label="fragment_favoritos"
+        tools:layout="@layout/fragment_favoritos" />
+    <activity
+        android:id="@+id/iniciarActivity"
+        android:name="com.example.projectfinal.ui.IniciarActivity"
+        android:label="activity_iniciar"
+        tools:layout="@layout/activity_iniciar" />
+    <activity
+        android:id="@+id/registrarActivity"
+        android:name="com.example.projectfinal.ui.RegistrarActivity"
+        android:label="activity_registrar"
+        tools:layout="@layout/activity_registrar" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.projectfinal.ui.MainActivity"
+        android:label="MainActivity" />
+</navigation>

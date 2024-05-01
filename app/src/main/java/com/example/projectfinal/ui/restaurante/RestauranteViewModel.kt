@@ -35,6 +35,7 @@ class RestauranteViewModel @Inject constructor(
         get() = _listaFiltrados
 
    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+
     init {
         obtenerDatos() // Llama a la función para obtener los datos una vez que se inicializa el ViewModel
     }

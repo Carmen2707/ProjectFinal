@@ -5,24 +5,28 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectfinal.UsuarioViewModel
 import com.example.projectfinal.databinding.FragmentMisReservasBinding
 
 import com.example.projectfinal.util.UiState
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.firestore
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MisReservasFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private lateinit var binding: FragmentMisReservasBinding
     val viewModelReserva: ReservaViewModel by viewModels()
     val viewModelUsuario: UsuarioViewModel by viewModels()
-    val adapter by lazy { ReservaAdapter() }
+    val adapter = ReservaAdapter()
+    private val db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -62,6 +66,40 @@ class MisReservasFragment : Fragment() {
         binding.rvReservas.adapter = adapter
         binding.rvReservas.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+        // Configura un Listener para los botones en cada elemento del RecyclerView
+        adapter.setOnItemClickListener(object : ReservaAdapter.OnItemClickListener {
+            override fun onEditarClick(position: Int) {
+                // Lógica para el clic en el botón de editar
+                Log.d("MiFragmento", "Botón Editar clickeado en la posición: $position")
+
+                val reserva = adapter.getItemAtPosition(position)
+                findNavController().navigate(MisReservasFragmentDirections.actionMisReservasFragmentToFormularioFragment(restauranteNombre = reserva.restaurante))
+            }
+
+            override fun onBorrarClick(position: Int) {
+                // Lógica para el clic en el botón de borrar
+                Log.d("MiFragmento", "Botón Borrar clickeado en la posición: $position")
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setMessage("¿Seguro que quieres eliminar esta reserva?")
+                builder.setPositiveButton("Si") { dialog, _ ->
+                    val reserva = adapter.getItemAtPosition(position)
+                    val usuario = viewModelUsuario.getSession()
+                    viewModelReserva.borrarReserva()
+
+
+                    dialog.dismiss()
+                }
+                builder.setNegativeButton("Cancelar") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                builder.setCancelable(false)
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+
+            }
+
+        })
     }
 
 
@@ -76,23 +114,5 @@ class MisReservasFragment : Fragment() {
         return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MisReservasFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MisReservasFragment().apply {
-                arguments = Bundle().apply {
-                  //  putString(ARG_PARAM1, param1)
-                 //   putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 }

@@ -20,12 +20,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
+            android:layout_margin="5dp"
+            android:layout_marginStart="4dp"
             android:fontFamily="@font/rocko"
             android:text="Restaurante:"
             android:textColor="@color/black"
-            android:layout_margin="5dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/tvTituloPersonas"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,14 +49,13 @@
             android:id="@+id/tvTituloPersonas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_margin="5dp"
+            android:layout_marginStart="4dp"
             android:fontFamily="@font/rocko"
             android:text="Numero de personas:"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:layout_margin="5dp"
 
-            app:layout_constraintBottom_toTopOf="@+id/tvTituloFecha"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTituloRestaurante" />
 
@@ -64,14 +64,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
 
 
             android:fontFamily="@font/rocko"
             android:text="2"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.019"
+            app:layout_constraintHorizontal_bias="0.048"
             app:layout_constraintStart_toEndOf="@+id/tvTituloPersonas"
             app:layout_constraintTop_toBottomOf="@+id/tvNombreRestaurante" />
 
@@ -86,7 +86,6 @@
             android:textStyle="bold"
             android:layout_margin="5dp"
 
-            app:layout_constraintBottom_toTopOf="@+id/tvTituloObservaciones"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTituloPersonas" />
 
@@ -95,12 +94,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="11dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/rocko"
             android:text="14/3/2024"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.023"
+            app:layout_constraintHorizontal_bias="0.046"
             app:layout_constraintStart_toEndOf="@id/tvTituloFecha"
             app:layout_constraintTop_toBottomOf="@+id/tvNumPersonas" />
 
@@ -108,28 +107,48 @@
             android:id="@+id/tvTituloObservaciones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_margin="5dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="12dp"
             android:fontFamily="@font/rocko"
             android:text="Observaciones:"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:layout_margin="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTituloFecha" />
 
         <TextView
             android:id="@+id/tvObservaciones"
+            android:layout_width="230dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/rocko"
+            android:text="Soy alérgica a los frutos secosfffffffffffffffffffffffffff"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@id/tvTituloObservaciones"
+            app:layout_constraintTop_toBottomOf="@+id/tvFecha" />
+
+        <ImageButton
+            android:id="@+id/btnBorrar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/rocko"
-            android:text="Soy alérgica a los frutos secos"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@null"
+
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.153"
-            app:layout_constraintStart_toEndOf="@id/tvTituloObservaciones"
-            app:layout_constraintTop_toBottomOf="@+id/tvFecha"
-            app:layout_constraintVertical_bias="0.625" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/basura" />
+
+        <ImageButton
+            android:id="@+id/btnEditar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginEnd="28dp"
+
+            android:background="@null"
+            app:layout_constraintEnd_toStartOf="@+id/btnBorrar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/editar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

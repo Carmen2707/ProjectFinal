@@ -1,21 +1,25 @@
 package com.example.projectfinal.ui.restaurante
-
+import androidx.appcompat.app.AppCompatActivity
+import android.R
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.projectfinal.ui.categoria.CategoriaAdapter
 import com.example.projectfinal.data.model.Categorias
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentRestaurantesBinding
+import com.example.projectfinal.ui.categoria.CategoriaAdapter
+import com.example.projectfinal.ui.formulario.FormularioFragment
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+
 
 //TODO: GUARDAR RESTAURANTES EN ROOM
 @AndroidEntryPoint
@@ -61,9 +65,13 @@ class RestaurantesFragment : Fragment() {
         if (categoriasSeleccionadas.isEmpty()) {
             // Si no se selecciona ninguna categoría, mostrar todos los restaurantes
             viewModel.listaFiltrados.observe(viewLifecycleOwner) { restaurantes ->
-                restauranteAdapter = RestauranteAdapter(restaurantes) { restaurante, isChecked ->
-                    esChecked(restaurante, isChecked)
-                }
+                restauranteAdapter = RestauranteAdapter(
+                    restaurantes,
+                    { restaurante, isChecked -> esChecked(restaurante, isChecked) },
+                    { restaurante -> onItemSelected(restaurante) }
+                )
+
+
 
             }
         } else {
@@ -73,11 +81,10 @@ class RestaurantesFragment : Fragment() {
 
 
 
-    /*  private fun onItemSelected(position: Int) {
-        listaOriginal[position].seleccionada = !listaOriginal[position].seleccionada
-        categoriaAdapter.notifyItemChanged(position)
-        filtrarRestaurantes()
-    }*/
+      private fun onItemSelected(restaurante: Restaurante) {
+
+          findNavController().navigate(RestaurantesFragmentDirections.actionRestaurantesFragmentToFormularioFragment(restauranteNombre = restaurante.nombre))
+    }
     private fun esChecked(restaurante: Restaurante, isChecked: Boolean) {
         restaurante.favorito = isChecked
         viewModel.actualizarFavorito(restaurante, isChecked)
@@ -100,9 +107,12 @@ class RestaurantesFragment : Fragment() {
         binding.rvRestaurantes.layoutManager = LinearLayoutManager(context)
         // Observar los cambios en la lista de restaurantes desde el ViewModel
         viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
-            restauranteAdapter = RestauranteAdapter(restaurantes) { restaurante, isChecked ->
-                esChecked(restaurante, isChecked)
-            }
+            restauranteAdapter = RestauranteAdapter(
+                restaurantes,
+                { restaurante, isChecked -> esChecked(restaurante, isChecked) },
+                { restaurante -> onItemSelected(restaurante) }
+            )
+
             binding.rvRestaurantes.adapter = restauranteAdapter
             restauranteAdapter.notifyDataSetChanged()
         }
@@ -155,17 +165,4 @@ class RestaurantesFragment : Fragment() {
         return binding.root
     }
 
-    companion object {
-        const val email = "email"
-        const val nombre = "nombre"
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RestaurantesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(email, email)
-                    putString(nombre, nombre)
-                }
-            }
-    }
 }

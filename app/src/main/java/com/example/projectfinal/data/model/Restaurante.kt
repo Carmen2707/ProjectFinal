@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Restaurante(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val nombre: String? = null,
+    val nombre: String,
     val direccion: String? = null,
     val horario: String? = null,
     val contacto: Long? = null,

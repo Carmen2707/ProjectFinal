@@ -18,9 +18,8 @@ class RestauranteViewHolder(view: View, private val onFavoritoChangeListener: (R
     private val tvHorarioRestaurante: TextView = view.findViewById(R.id.tvHorarioRestaurante)
     private val tvContactoRestaurante: TextView = view.findViewById(R.id.tvContactoRestaurante)
     val checkBox: CheckBox = view.findViewById(R.id.cbFavorito)
-    private lateinit var restaurante: Restaurante
 
-    fun render(restaurante: Restaurante) {
+    fun render(restaurante: Restaurante, onClickListener: (Restaurante) -> Unit ) {
         Log.d("RestauranteViewHolder", "Cargando imagen desde URL: ${restaurante.imagen}")
 
         Glide.with(itemView.context)
@@ -33,6 +32,8 @@ class RestauranteViewHolder(view: View, private val onFavoritoChangeListener: (R
 
         // Actualizar el estado del CheckBox
         checkBox.isChecked = restaurante.favorito ?: false
-
+        itemView.setOnClickListener {
+            onClickListener(restaurante)
+        }
     }
 }
