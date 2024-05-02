@@ -56,13 +56,18 @@ class RestauranteViewModel @Inject constructor(
             restaurante.favorito = isChecked
             restaurante.userId = userId
             dao.actualizarRestaurante(restaurante)
-          //  _listaFavoritos.value = dao.getFavoritos(userId)
-            viewModelScope.launch {
+
                 _listaFavoritos.value = dao.getFavoritos(userId)
-            }
+
         }
     }
-
+     fun actualizarListaRestaurantes(favoritos: List<Restaurante>) {
+        val listaRestaurantes = restaurantesBD.value.orEmpty().toMutableList()
+        for (restaurante in listaRestaurantes) {
+            restaurante.favorito = favoritos.any { it.id == restaurante.id }
+        }
+        _restaurantesBD.value = listaRestaurantes
+    }
     // Método para obtener los datos de los restaurantes desde Firebase
      fun obtenerDatos() {
         /** bdref = FirebaseDatabase.getInstance().getReference("restaurantes")
