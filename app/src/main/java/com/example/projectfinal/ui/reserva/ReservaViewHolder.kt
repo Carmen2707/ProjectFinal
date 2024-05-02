@@ -26,12 +26,10 @@ class ReservaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 
     fun render(reserva: Reserva) {
-       tvNombreRestaurante.text = reserva.restaurante.toString()
+       tvNombreRestaurante.text = reserva.restaurante
         tvFecha.text = reserva.fecha.toString()
         tvNumPersonas.text = reserva.personas.toString()
        tvObservaciones.text = reserva.observaciones
-        // También puedes agregar un click listener si lo necesitas
-        //  itemView.setOnClickListener { onItemClick(reserva) }
 
     }
 }

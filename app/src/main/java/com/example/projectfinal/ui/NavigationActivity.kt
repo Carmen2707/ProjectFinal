@@ -39,7 +39,6 @@ class NavigationActivity : AppCompatActivity() {
                 R.id.navigation_home -> remplazarFragments(RestaurantesFragment())
                 R.id.navigation_favoritos -> remplazarFragments(FavoritosFragment())
                 R.id.navigation_mis_reservas -> remplazarFragments(MisReservasFragment())
-                R.id.navigation_formulario -> remplazarFragments(FormularioFragment())
 
                 // Agregar más casos según sea necesario para otras opciones del menú
                 else -> {

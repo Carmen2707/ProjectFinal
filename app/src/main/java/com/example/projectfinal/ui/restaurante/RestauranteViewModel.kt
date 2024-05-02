@@ -39,17 +39,28 @@ class RestauranteViewModel @Inject constructor(
     init {
         obtenerDatos() // Llama a la función para obtener los datos una vez que se inicializa el ViewModel
     }
-    fun filtrarRestaurantesPorCategoria(categoriasSeleccionadas: List<Categorias>) {
+    fun filtrarRestaurantesPorCategoria(categoriasSeleccionadas: MutableList<Categorias>) {
         val restaurantesFiltrados = mutableListOf<Restaurante>()
 
-        for (restaurante in _restaurantesBD.value ?: emptyList()) {
-            if (categoriasSeleccionadas.isEmpty() || categoriasSeleccionadas.any { it.toString() == restaurante.categoria }) {
-                restaurantesFiltrados.add(restaurante)
+        val listaRestaurantes = _restaurantesBD.value
+
+        // Verificar si la lista de restaurantes no es nula y no está vacía
+        if (listaRestaurantes != null && listaRestaurantes.isNotEmpty()) {
+            // Iterar sobre cada restaurante en la lista de restaurantes
+            for (restaurante in listaRestaurantes) {
+                // Verificar si el restaurante tiene alguna de las categorías seleccionadas
+                if (categoriasSeleccionadas.any { it.javaClass.simpleName == restaurante.categoria }) {
+                    // Si se cumple la condición de filtrado, agregar el restaurante a la lista de restaurantes filtrados
+                    restaurantesFiltrados.add(restaurante)
+                }
             }
+            Log.e("rest", restaurantesFiltrados.toString())
         }
 
-        _listaFiltrados.value = restaurantesFiltrados
+        _listaFiltrados.postValue(restaurantesFiltrados)
+        Log.e("ssj", _listaFiltrados.value.toString())
     }
+
 
     fun actualizarFavorito(restaurante: Restaurante, isChecked: Boolean) {
         viewModelScope.launch {
