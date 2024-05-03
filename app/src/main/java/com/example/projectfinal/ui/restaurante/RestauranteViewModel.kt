@@ -65,9 +65,9 @@ class RestauranteViewModel @Inject constructor(
     fun actualizarFavorito(restaurante: Restaurante, isChecked: Boolean) {
         viewModelScope.launch {
             restaurante.favorito = isChecked
-            restaurante.userId = userId
-            dao.actualizarRestaurante(restaurante)
-
+               restaurante.userId = userId
+               dao.actualizarRestaurante(restaurante)
+                _restaurantesBD.value = dao.getAll()
                 _listaFavoritos.value = dao.getFavoritos(userId)
 
         }
@@ -77,7 +77,7 @@ class RestauranteViewModel @Inject constructor(
         for (restaurante in listaRestaurantes) {
             restaurante.favorito = favoritos.any { it.id == restaurante.id }
         }
-        _restaurantesBD.value = listaRestaurantes
+        _listaFavoritos.value = listaRestaurantes
     }
     // Método para obtener los datos de los restaurantes desde Firebase
      fun obtenerDatos() {

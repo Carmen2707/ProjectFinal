@@ -1,5 +1,7 @@
 package com.example.projectfinal.data.model
 
+
+
 sealed class Categorias(var seleccionada: Boolean = false) {
     object Italiano : Categorias()
     object Indio : Categorias()
