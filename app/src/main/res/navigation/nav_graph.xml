@@ -19,12 +19,12 @@
         android:name="com.example.projectfinal.ui.formulario.FormularioFragment"
         android:label="fragment_anadir_reserva"
         tools:layout="@layout/fragment_anadir_reserva" >
-        <argument
-            android:name="restauranteNombre"
-            app:argType="string" />
         <action
             android:id="@+id/action_formularioFragment_to_restaurantesFragment"
             app:destination="@id/restaurantesFragment" />
+        <argument
+            android:name="restauranteNombre"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/misReservasFragment"
@@ -34,9 +34,6 @@
         <action
             android:id="@+id/action_misReservasFragment_to_formularioFragment"
             app:destination="@id/formularioFragment" />
-        <argument
-            android:name="restauranteNombre"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/favoritosFragment"

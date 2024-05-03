@@ -40,4 +40,8 @@ class ReservaViewModel @Inject constructor( val repository: ReservaRepository) :
     fun borrarReserva() {
         db.collection("reservas").document(FirebaseAuth.getInstance().currentUser?.email ?: "").delete()
     }
+
+    fun addReserva(reserva: Reserva) {
+        repository.addReserva(reserva)
+    }
 }

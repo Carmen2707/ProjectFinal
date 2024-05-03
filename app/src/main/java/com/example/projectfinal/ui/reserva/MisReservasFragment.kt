@@ -70,12 +70,12 @@ class MisReservasFragment : Fragment() {
         // Configura un Listener para los botones en cada elemento del RecyclerView
         adapter.setOnItemClickListener(object : ReservaAdapter.OnItemClickListener {
             override fun onEditarClick(position: Int) {
-                // Lógica para el clic en el botón de editar
-                Log.d("MiFragmento", "Botón Editar clickeado en la posición: $position")
-
                 val reserva = adapter.getItemAtPosition(position)
-                findNavController().navigate(MisReservasFragmentDirections.actionMisReservasFragmentToFormularioFragment(restauranteNombre = reserva.restaurante))
+                val action = MisReservasFragmentDirections.actionMisReservasFragmentToFormularioFragment(restauranteNombre = reserva.restaurante)
+                findNavController().navigate(action)
+
             }
+
 
             override fun onBorrarClick(position: Int) {
                 // Lógica para el clic en el botón de borrar

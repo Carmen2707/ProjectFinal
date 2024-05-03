@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -36,9 +37,9 @@ class NavigationActivity : AppCompatActivity() {
 
             when (menuItem.itemId) {
                 // Ir a la activity de home
-                R.id.navigation_home -> remplazarFragments(RestaurantesFragment())
-                R.id.navigation_favoritos -> remplazarFragments(FavoritosFragment())
-                R.id.navigation_mis_reservas -> remplazarFragments(MisReservasFragment())
+                R.id.navigation_home -> findNavController(R.id.frame_layout).navigate(R.id.restaurantesFragment)
+                R.id.navigation_favoritos -> findNavController(R.id.frame_layout).navigate(R.id.favoritosFragment)
+                R.id.navigation_mis_reservas -> findNavController(R.id.frame_layout).navigate(R.id.misReservasFragment)
 
                 // Agregar más casos según sea necesario para otras opciones del menú
                 else -> {

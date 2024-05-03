@@ -2,7 +2,9 @@ package com.example.projectfinal.ui
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projectfinal.R
@@ -17,15 +19,15 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.installations.installations
 
 class IniciarActivity : AppCompatActivity() {
-
+    private lateinit var prefs: SharedPreferences
     private lateinit var binding: ActivityIniciarBinding
     private val GOOGLE_SIGN_IN = 100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityIniciarBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
+        prefs=getSharedPreferences("app", MODE_PRIVATE)
+        establecerValoresSiExisten()
         binding.btnIniciar.setOnClickListener {
             val emailEditText = binding.etEmail.editText
             val email = emailEditText?.text.toString()
@@ -36,7 +38,7 @@ class IniciarActivity : AppCompatActivity() {
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
                             irPortada(it.result?.user?.email ?: "", ProviderType.BASIC)
-
+                            guardarPreferencias(email,password)
                             val intent = Intent(this, NavigationActivity::class.java)
                             startActivity(intent)
 
@@ -84,6 +86,31 @@ class IniciarActivity : AppCompatActivity() {
          }catch (e:ApiException){
              alerta()
          }
+        }
+    }
+
+    private fun establecerValoresSiExisten(){
+        val email=prefs.getString("email","")
+        val password=prefs.getString("password","")
+        val recordar=prefs.getBoolean("recordar",false)
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+            binding.etEmailEditText.setText(email)
+            binding.etPasswordEditText.setText(password)
+            binding.cbRecordar.isChecked=recordar
+        }
+    }
+
+    private fun guardarPreferencias(email: String,password: String){
+        val editor=prefs!!.edit()
+        if (binding.cbRecordar!!.isChecked){
+            editor.putString("email",email)
+            editor.putString("password",password)
+            editor.putBoolean("recordar",true)
+            editor.apply()
+        }else{
+            editor.clear()
+            editor.putBoolean("recordar",false)
+            editor.apply()
         }
     }
 /*    private fun session() {

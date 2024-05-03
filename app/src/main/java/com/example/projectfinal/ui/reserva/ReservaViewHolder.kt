@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Reserva
 import com.example.projectfinal.ui.restaurante.RestauranteViewModel
-import com.example.projectfinal.ui.restaurante.RestaurantesFragmentDirections
 
 class ReservaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val tvNombreRestaurante: TextView = view.findViewById(R.id.tvNombreRestaurante)

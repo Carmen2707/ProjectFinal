@@ -91,6 +91,7 @@
             app:startIconDrawable="@drawable/arroba">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmailEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
@@ -121,31 +122,29 @@
             android:hint="Contraseña"
             android:inputType="textPassword"
             app:helperText="8 caracteres"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tvOlvidar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvContraseña"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPasswordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="62dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/tvOlvidar"
+        <CheckBox
+            android:id="@+id/cbRecordar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Recordar usuario"
+            app:layout_constraintBottom_toTopOf="@+id/btnGoogle"
             android:fontFamily="@font/rocko"
-            android:padding="2dp"
-            android:text="¿Has olvidado la contraseña?"
-            android:textColor="@color/black"
-            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.759"
+            app:layout_constraintHorizontal_bias="0.208"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.952" />
 
         <Button
             android:id="@id/btnIniciar"

@@ -37,8 +37,17 @@ class ReservaRepositoyImp (val database: FirebaseFirestore,
         }
     }
 
-    override fun addReserva(reserva: Reserva, result: (UiState<Pair<Reserva, String>>) -> Unit) {
-        TODO("Not yet implemented")
+    override fun addReserva(reserva: Reserva) {
+        val document = database.collection("reservas").document()
+        reserva.usuario = document.id
+        document
+            .set(reserva)
+            .addOnSuccessListener {
+                Log.i("FIRE", "datos insertados correctamente")
+            }
+            .addOnFailureListener {
+                    error -> Log.e("FirebaseError", error.message.toString())
+            }
     }
 
     override fun updateReserva(reserva: Reserva, result: (UiState<String>) -> Unit) {

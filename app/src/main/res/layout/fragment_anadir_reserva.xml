@@ -136,6 +136,8 @@
         app:startIconDrawable="@drawable/perfil">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tfEditTextNombre"
+
             android:layout_width="300dp"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -166,6 +168,7 @@
         app:startIconDrawable="@drawable/calendario">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tfEditTextFecha"
             android:layout_width="300dp"
             android:layout_height="wrap_content" />
 
@@ -196,6 +199,8 @@
         app:startIconDrawable="@drawable/hora">
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/tfEditTextHora"
+
         android:layout_width="300dp"
         android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -223,6 +228,8 @@
         app:layout_constraintTop_toBottomOf="@+id/tvObservacion">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tfEditTextObservacion"
+
             android:layout_width="300dp"
             android:layout_height="99dp" />
     </com.google.android.material.textfield.TextInputLayout>
