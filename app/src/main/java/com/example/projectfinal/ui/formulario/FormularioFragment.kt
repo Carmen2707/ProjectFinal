@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.projectfinal.R
@@ -14,7 +15,10 @@ import com.example.projectfinal.databinding.FragmentAnadirReservaBinding
 import com.example.projectfinal.databinding.FragmentMisReservasBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 @AndroidEntryPoint
 class FormularioFragment : Fragment() {
@@ -40,19 +44,23 @@ class FormularioFragment : Fragment() {
         binding = FragmentAnadirReservaBinding.bind(view)
         binding.tvTitulo.text = args.restauranteNombre
         binding.btnCerrar.setOnClickListener {
-            requireParentFragment().findNavController().navigate(FormularioFragmentDirections.actionFormularioFragmentToRestaurantesFragment())
+            requireActivity().supportFragmentManager.popBackStack()
         }
-        binding.tfFecha.setOnClickListener {
-          /*  val c = Calendar.getInstance()
 
-            // on below line we are getting
-            // our day, month and year.
+        var valor = 0
+        binding.btnAumentar.setOnClickListener {
+            binding.cantidad.text = (++valor).toString()
+        }
+        binding.btnDisminuir.setOnClickListener {
+            binding.cantidad.text = (--valor).toString()
+        }
+
+        binding.tfFecha.setOnClickListener {
+            val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
 
-            // on below line we are creating a
-            // variable for date picker dialog.
             val datePickerDialog = DatePickerDialog(
                 // on below line we are passing context.
                 requireContext(),
@@ -60,19 +68,15 @@ class FormularioFragment : Fragment() {
                     // on below line we are setting
                     // date to our edit text.
                     val dat = (dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
-                    binding.tfEditTextFecha.setText(dat)
+                    binding.tfFecha.setText(dat)
                 },
-                // on below line we are passing year, month
-                // and day for the selected date in our date picker.
                 year,
                 month,
                 day
             )
-            // at last we are calling show
-            // to display our date picker dialog.
-            datePickerDialog.show()*/
-            var time = ""
-            val currentDateTime = Calendar.getInstance()
+            datePickerDialog.show()
+
+          /* val currentDateTime = Calendar.getInstance()
             val startYear = currentDateTime.get(Calendar.YEAR)
             val startMonth = currentDateTime.get(Calendar.MONTH)
             val startDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
@@ -82,13 +86,36 @@ class FormularioFragment : Fragment() {
                 TimePickerDialog(context, { _, hour, minute ->
                     val pickedDateTime = Calendar.getInstance()
                     pickedDateTime.set(year, month, day, hour, minute)
-                    time = "$year-$month-$day $hour:$minute"
+                    val formattedDateTime = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(pickedDateTime.time)
+                    binding.tfFecha.setText(formattedDateTime)
                 }, startHour, startMinute, false).show()
             }, startYear, startMonth, startDay).show()
-            binding.tfEditTextFecha.setText(time)
+*/
         }
 
+        binding.tfHora.setOnClickListener {
+            val c = Calendar.getInstance()
+            val hour = c.get(Calendar.HOUR_OF_DAY)
+            val minute = c.get(Calendar.MINUTE)
+            val timePickerDialog = TimePickerDialog(
+                requireContext(),
+                { view, hourOfDay, minute ->
+                    binding.tfHora.setText("$hourOfDay:$minute")
+                },
+                hour,
+                minute,
+                false
+            )
+            timePickerDialog.show()
+        }
+
+
     }
+
+
+
+
+
     companion object {
 
         // TODO: Rename and change types and number of parameters

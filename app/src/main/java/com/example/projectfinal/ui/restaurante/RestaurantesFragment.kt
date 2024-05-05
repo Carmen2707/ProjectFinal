@@ -88,7 +88,9 @@ class RestaurantesFragment : Fragment() {
 
     private fun onItemSelected(restaurante: Restaurante) {
        val action = RestaurantesFragmentDirections.actionRestaurantesFragmentToFormularioFragment(restauranteNombre = restaurante.nombre)
-        findNavController().navigate(action)
+        val navController = findNavController()
+
+        navController.navigate(action)
 
     }
 

@@ -13,6 +13,11 @@
         <action
             android:id="@+id/action_restaurantesFragment_to_formularioFragment"
             app:destination="@id/formularioFragment" />
+        <argument
+            android:name="restauranteNombre"
+            app:argType="string" />
+
+
     </fragment>
     <fragment
         android:id="@+id/formularioFragment"

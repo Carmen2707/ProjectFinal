@@ -3,6 +3,7 @@
     <style name="Base.Theme.ProjectFinal" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/yellow</item>
+        <item name="colorSecondary">?android:attr/colorPressedHighlight</item>
     </style>
 
     <style name="Theme.ProjectFinal" parent="Base.Theme.ProjectFinal" />

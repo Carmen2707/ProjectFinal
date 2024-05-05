@@ -122,27 +122,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/marco" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tfNombre"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:hint="Nombre"
-        app:boxBackgroundColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitNombre"
-        app:startIconDrawable="@drawable/perfil">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tfEditTextNombre"
-
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tfNombre"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="Nombre"
+            app:boxBackgroundMode="outline"
 
-    <TextView
+            android:fontFamily="@font/rocko"
+            app:startIconDrawable="@drawable/perfil"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitNombre">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tfEditTextNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:fontFamily="@font/rocko"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
         android:id="@+id/tvTitFecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -155,24 +162,33 @@
         app:layout_constraintHorizontal_bias="0.096"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tfFecha"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="Fecha"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitFecha"
-        app:startIconDrawable="@drawable/calendario">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tfEditTextFecha"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutFecha"
             android:layout_width="300dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="Fecha"
+            app:boxBackgroundMode="outline"
+            app:startIconDrawable="@drawable/calendario"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitFecha">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tfFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fecha"
+                android:inputType="none"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:fontFamily="@font/rocko"
+                android:background="@null"
+                android:focusable="false"
+                android:clickable="true"
+                android:focusableInTouchMode="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/tvHora"
@@ -186,26 +202,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.093"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tfFecha" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFecha" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tfHora"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="Hora"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHora"
-        app:startIconDrawable="@drawable/hora">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutHora"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="Hora"
+            app:boxBackgroundMode="outline"
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/tfEditTextHora"
+            android:fontFamily="@font/rocko"
+            app:startIconDrawable="@drawable/hora"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvHora">
 
-        android:layout_width="300dp"
-        android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tfHora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Hora"
+                android:inputType="none"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:fontFamily="@font/rocko"
+                android:background="@null"
+                android:focusable="false"
+                android:clickable="true"
+                android:focusableInTouchMode="false"/>
 
-    <TextView
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
         android:id="@+id/tvObservacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -217,22 +246,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tfHora" />
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tfObservaciones"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:hint="Sugerencias, alérgenos, detalles de la reserva..."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvObservacion">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tfEditTextObservacion"
-
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutHora" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tfObservaciones"
             android:layout_width="300dp"
-            android:layout_height="99dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="100dp"
+            android:hint="Sugerencias, alérgenos, detalles de la reserva..."
+            app:boxBackgroundMode="outline"
+
+            android:fontFamily="@font/rocko"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvObservacion">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tfEditTextObservacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:fontFamily="@font/rocko"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
