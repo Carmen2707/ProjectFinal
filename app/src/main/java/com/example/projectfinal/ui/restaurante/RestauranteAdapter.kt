@@ -4,15 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
 
-class RestauranteAdapter( private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit, private val onItemSelected: (restaurante: Restaurante) -> Unit) :
-    ListAdapter<Restaurante,RestauranteViewHolder>(RESTAURANTE_COMPARATOR) {
+class RestauranteAdapter(
+    private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit,
+    private val onItemSelected: (restaurante: Restaurante) -> Unit
+) :
+    ListAdapter<Restaurante, RestauranteViewHolder>(RESTAURANTE_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestauranteViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_restaurante, parent, false)
-        return RestauranteViewHolder(view,  onFavoritoChangeListener)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_restaurante, parent, false)
+        return RestauranteViewHolder(view, onFavoritoChangeListener)
     }
 
     override fun getItemCount(): Int = currentList.size
@@ -28,7 +31,7 @@ class RestauranteAdapter( private val onFavoritoChangeListener: (Restaurante, Bo
     }
 
     companion object {
-        val RESTAURANTE_COMPARATOR = object :DiffUtil.ItemCallback<Restaurante>() {
+        val RESTAURANTE_COMPARATOR = object : DiffUtil.ItemCallback<Restaurante>() {
             override fun areItemsTheSame(oldItem: Restaurante, newItem: Restaurante): Boolean {
                 return oldItem == newItem
             }
@@ -39,8 +42,6 @@ class RestauranteAdapter( private val onFavoritoChangeListener: (Restaurante, Bo
 
         }
     }
-
-
 
 
 }

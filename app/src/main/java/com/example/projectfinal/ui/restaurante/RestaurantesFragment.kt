@@ -1,4 +1,5 @@
 package com.example.projectfinal.ui.restaurante
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,17 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.data.model.Categorias
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentRestaurantesBinding
 import com.example.projectfinal.ui.categoria.CategoriaAdapter
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 
 //TODO: GUARDAR RESTAURANTES EN ROOM
@@ -30,6 +28,7 @@ class RestaurantesFragment : Fragment() {
     private lateinit var restauranteAdapter: RestauranteAdapter
     private var recyclerViewPosition = 0
     private val viewModel: RestauranteViewModel by activityViewModels()
+
     // Obtener el ID del usuario actual (puede variar según cómo manejes la autenticación)
     val userId = FirebaseAuth.getInstance().currentUser?.uid
     private var categoriasSeleccionadas = mutableListOf<Categorias>()
@@ -38,11 +37,16 @@ class RestaurantesFragment : Fragment() {
 
 
     }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         // Guardar la posición actual del RecyclerView
-        outState.putInt("recyclerViewPosition", (binding.rvRestaurantes.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition())
+        outState.putInt(
+            "recyclerViewPosition",
+            (binding.rvRestaurantes.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+        )
     }
+
     // Lista de categorías
     private val categorias =
         listOf(
@@ -54,7 +58,10 @@ class RestaurantesFragment : Fragment() {
     // Método para actualizar categorías
     private fun actualizarCategorias(position: Int) {
         categorias[position].seleccionada = !categorias[position].seleccionada
-        Log.d("RestaurantesFragment", "Categoría seleccionada: ${categorias[position].javaClass.simpleName}, Estado: ${categorias[position].seleccionada}")
+        Log.d(
+            "RestaurantesFragment",
+            "Categoría seleccionada: ${categorias[position].javaClass.simpleName}, Estado: ${categorias[position].seleccionada}"
+        )
         categoriaAdapter.notifyItemChanged(position)
 
         val categoriasSeleccionadas = mutableListOf<Categorias>()
@@ -77,17 +84,21 @@ class RestaurantesFragment : Fragment() {
         }
 
     }
+
     override fun onResume() {
         super.onResume()
 
-        (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(recyclerViewPosition)
+        (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(
+            recyclerViewPosition
+        )
 
 
     }
 
 
     private fun onItemSelected(restaurante: Restaurante) {
-       val action = RestaurantesFragmentDirections.actionRestaurantesFragmentToFormularioFragment(restauranteNombre = restaurante.nombre)
+        val action = RestaurantesFragmentDirections.actionRestaurantesFragmentToFormularioFragment( restauranteNombre = restaurante.nombre,
+            nombreUsuario = "", fecha = "", hora = "", personas = 1, observaciones = "", isEdit = false)
         val navController = findNavController()
 
         navController.navigate(action)
@@ -97,16 +108,12 @@ class RestaurantesFragment : Fragment() {
 
     private fun esChecked(restaurante: Restaurante, isChecked: Boolean) {
         viewModel.actualizarFavorito(restaurante, isChecked)
-      /*  recyclerViewPosition = restauranteAdapter.currentList.indexOf(restaurante)
-        println(recyclerViewPosition)
-        if (recyclerViewPosition != RecyclerView.NO_POSITION) {
-            (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(recyclerViewPosition)
-        }*/
+        /*  recyclerViewPosition = restauranteAdapter.currentList.indexOf(restaurante)
+          println(recyclerViewPosition)
+          if (recyclerViewPosition != RecyclerView.NO_POSITION) {
+              (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(recyclerViewPosition)
+          }*/
     }
-
-
-
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -136,7 +143,9 @@ class RestaurantesFragment : Fragment() {
             )
             binding.rvRestaurantes.adapter = restauranteAdapter
             restauranteAdapter.submitList(restaurantes)
-            (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(recyclerViewPosition)
+            (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(
+                recyclerViewPosition
+            )
 
         }
 

@@ -1,9 +1,7 @@
 package com.example.projectfinal.ui.reserva
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Reserva
@@ -23,6 +21,7 @@ class ReservaAdapter() :
     fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservaViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_reserva, parent, false)
@@ -41,11 +40,12 @@ class ReservaAdapter() :
     }
 
     override fun getItemCount(): Int = reservas.size
-    fun updateList(lista: MutableList<Reserva>){
+    fun updateList(lista: MutableList<Reserva>) {
         this.reservas.clear()
         this.reservas.addAll(lista)
         notifyDataSetChanged()
     }
+
     fun getItemAtPosition(position: Int): Reserva {
         return reservas[position]
     }

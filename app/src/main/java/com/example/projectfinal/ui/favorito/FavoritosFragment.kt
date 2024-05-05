@@ -7,16 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentFavoritosBinding
-import com.example.projectfinal.databinding.FragmentRestaurantesBinding
-import com.example.projectfinal.ui.restaurante.RestauranteAdapter
 import com.example.projectfinal.ui.restaurante.RestauranteViewModel
 import com.google.firebase.auth.FirebaseAuth
-
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -55,6 +50,7 @@ class FavoritosFragment : Fragment() {
         restaurante.favorito = isChecked
         viewModel.actualizarFavorito(restaurante, isChecked)
     }
+
     /* private fun cargarListaFavoritos() {
         viewModel.getFavoritos(viewModel.getCurrentUserId()).observe(viewLifecycleOwner) { favoritos ->
             listaFavoritos.clear()

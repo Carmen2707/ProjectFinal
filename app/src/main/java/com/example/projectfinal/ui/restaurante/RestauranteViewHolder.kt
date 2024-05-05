@@ -11,7 +11,10 @@ import com.bumptech.glide.Glide
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
 
-class RestauranteViewHolder(view: View, private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit) : RecyclerView.ViewHolder(view) {
+class RestauranteViewHolder(
+    view: View,
+    private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit
+) : RecyclerView.ViewHolder(view) {
     private val ivRestaurante: ImageView = view.findViewById(R.id.ivRestaurante)
     private val tvNombreRestaurante: TextView = view.findViewById(R.id.tvNombreRestaurante)
     private val tvDireccionRestaurante: TextView = view.findViewById(R.id.tvDireccionRestaurante)
@@ -19,7 +22,7 @@ class RestauranteViewHolder(view: View, private val onFavoritoChangeListener: (R
     private val tvContactoRestaurante: TextView = view.findViewById(R.id.tvContactoRestaurante)
     val checkBox: CheckBox = view.findViewById(R.id.cbFavorito)
 
-    fun render(restaurante: Restaurante, onClickListener: (Restaurante) -> Unit ) {
+    fun render(restaurante: Restaurante, onClickListener: (Restaurante) -> Unit) {
         Log.d("RestauranteViewHolder", "Cargando imagen desde URL: ${restaurante.imagen}")
 
         Glide.with(itemView.context)

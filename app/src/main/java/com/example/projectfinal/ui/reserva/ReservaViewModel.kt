@@ -1,27 +1,21 @@
 package com.example.projectfinal.ui.reserva
 
-import android.app.Application
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.Navigation.findNavController
-import com.example.projectfinal.util.UiState
 import com.example.projectfinal.data.model.Reserva
 import com.example.projectfinal.data.model.Usuario
 import com.example.projectfinal.data.repository.ReservaRepository
+import com.example.projectfinal.util.UiState
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
-import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
-
 import javax.inject.Inject
 
 @HiltViewModel
-class ReservaViewModel @Inject constructor( val repository: ReservaRepository) : ViewModel() {
+class ReservaViewModel @Inject constructor(val repository: ReservaRepository) : ViewModel() {
     private val _reserva = MutableLiveData<UiState<List<Reserva>>>()
     val reserva: LiveData<UiState<List<Reserva>>> get() = _reserva
     private val db = Firebase.firestore
@@ -38,7 +32,8 @@ class ReservaViewModel @Inject constructor( val repository: ReservaRepository) :
     }
 
     fun borrarReserva() {
-        db.collection("reservas").document(FirebaseAuth.getInstance().currentUser?.email ?: "").delete()
+        db.collection("reservas").document(FirebaseAuth.getInstance().currentUser?.email ?: "")
+            .delete()
     }
 
     fun addReserva(reserva: Reserva) {

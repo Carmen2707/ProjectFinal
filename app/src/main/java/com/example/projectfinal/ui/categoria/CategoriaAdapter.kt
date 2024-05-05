@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Categorias
 
-class CategoriaAdapter (
+class CategoriaAdapter(
     private val categorias: List<Categorias>,
     private val onItemSelected: (Int) -> Unit
 ) :

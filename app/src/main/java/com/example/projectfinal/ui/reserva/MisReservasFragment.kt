@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,10 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectfinal.UsuarioViewModel
 import com.example.projectfinal.databinding.FragmentMisReservasBinding
-
 import com.example.projectfinal.util.UiState
 import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,8 +27,8 @@ class MisReservasFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-         //   param1 = it.getString(ARG_PARAM1)
-          //  param2 = it.getString(ARG_PARAM2)
+            //   param1 = it.getString(ARG_PARAM1)
+            //  param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -54,6 +51,7 @@ class MisReservasFragment : Fragment() {
                 is UiState.Loading -> {
 
                 }
+
                 is UiState.Success -> {
                     // Actualizar el adaptador con la lista de reservas
                     adapter.updateList(uiState.data.toMutableList())
@@ -71,7 +69,11 @@ class MisReservasFragment : Fragment() {
         adapter.setOnItemClickListener(object : ReservaAdapter.OnItemClickListener {
             override fun onEditarClick(position: Int) {
                 val reserva = adapter.getItemAtPosition(position)
-                val action = MisReservasFragmentDirections.actionMisReservasFragmentToFormularioFragment(restauranteNombre = reserva.restaurante)
+                val action =
+                    MisReservasFragmentDirections.actionMisReservasFragmentToFormularioFragment(
+                        restauranteNombre = reserva.restaurante, nombreUsuario = reserva.usuario, personas = reserva.personas,
+                        fecha = reserva.fecha, hora = reserva.hora, observaciones = reserva.observaciones, isEdit = true
+                    )
                 findNavController().navigate(action)
 
             }
@@ -83,8 +85,7 @@ class MisReservasFragment : Fragment() {
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setMessage("¿Seguro que quieres eliminar esta reserva?")
                 builder.setPositiveButton("Si") { dialog, _ ->
-                    val reserva = adapter.getItemAtPosition(position)
-                    val usuario = viewModelUsuario.getSession()
+
                     viewModelReserva.borrarReserva()
 
 
@@ -101,7 +102,6 @@ class MisReservasFragment : Fragment() {
 
         })
     }
-
 
 
     override fun onCreateView(

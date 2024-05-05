@@ -26,9 +26,8 @@ object RepositoryModule {
         database: FirebaseFirestore,
         storageReference: StorageReference
     ): ReservaRepository {
-        return ReservaRepositoyImp(database,storageReference)
+        return ReservaRepositoyImp(database, storageReference)
     }
-
 
 
     @Provides
@@ -39,8 +38,9 @@ object RepositoryModule {
         appPreferences: SharedPreferences,
         gson: Gson
     ): UsuarioRepository {
-        return UsuarioRepositoryImp (auth,database,appPreferences,gson)
+        return UsuarioRepositoryImp(auth, database, appPreferences, gson)
     }
+
     @Provides
     fun provideRepositoryFavorito(favoritoDao: DAO): RepositoryFavorito {
         return RepositoryFavorito(favoritoDao)

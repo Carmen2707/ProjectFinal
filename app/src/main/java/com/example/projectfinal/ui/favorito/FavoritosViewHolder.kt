@@ -12,7 +12,8 @@ import com.example.projectfinal.data.model.Restaurante
 class FavoritosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val ivRestaurante: ImageView = itemView.findViewById(R.id.ivRestaurante)
     private val tvNombreRestaurante: TextView = itemView.findViewById(R.id.tvNombreRestaurante)
-    private val tvDireccionRestaurante: TextView = itemView.findViewById(R.id.tvDireccionRestaurante)
+    private val tvDireccionRestaurante: TextView =
+        itemView.findViewById(R.id.tvDireccionRestaurante)
     private val tvHorarioRestaurante: TextView = itemView.findViewById(R.id.tvHorarioRestaurante)
     private val tvContactoRestaurante: TextView = itemView.findViewById(R.id.tvContactoRestaurante)
     val checkBox: CheckBox = itemView.findViewById(R.id.cbFavorito)

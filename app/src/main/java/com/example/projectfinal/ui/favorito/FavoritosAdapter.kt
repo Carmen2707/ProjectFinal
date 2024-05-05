@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
 
-class FavoritosAdapter (var favoritos: List<Restaurante>, private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit) :
+class FavoritosAdapter(
+    var favoritos: List<Restaurante>,
+    private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit
+) :
     RecyclerView.Adapter<FavoritosViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritosViewHolder {

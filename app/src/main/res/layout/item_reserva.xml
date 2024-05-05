@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/viewContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -35,13 +34,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="4dp"
 
             android:fontFamily="@font/rocko"
             android:text="La Ristobottega"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.041"
+            app:layout_constraintHorizontal_bias="0.037"
             app:layout_constraintStart_toEndOf="@+id/tvTituloRestaurante"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,7 +70,7 @@
             android:text="2"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.048"
+            app:layout_constraintHorizontal_bias="0.03"
             app:layout_constraintStart_toEndOf="@+id/tvTituloPersonas"
             app:layout_constraintTop_toBottomOf="@+id/tvNombreRestaurante" />
 
@@ -79,12 +78,12 @@
             android:id="@+id/tvTituloFecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/rocko"
-            android:text="Día y hora:"
+            android:text="Día:"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:layout_margin="5dp"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTituloPersonas" />
@@ -94,14 +93,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
+            android:layout_marginStart="3dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="276dp"
             android:fontFamily="@font/rocko"
             android:text="14/3/2024"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.046"
-            app:layout_constraintStart_toEndOf="@id/tvTituloFecha"
+            app:layout_constraintStart_toEndOf="@+id/tvTituloFecha"
             app:layout_constraintTop_toBottomOf="@+id/tvNumPersonas" />
+
+        <TextView
+            android:id="@+id/tvTituloHora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/rocko"
+            android:text="Hora:"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTituloFecha"/>
+
+        <TextView
+            android:id="@+id/tvHora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="300dp"
+            android:fontFamily="@font/rocko"
+            android:text="14:30"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvTituloHora"
+            app:layout_constraintTop_toBottomOf="@+id/tvFecha" />
 
         <TextView
             android:id="@+id/tvTituloObservaciones"
@@ -115,14 +142,14 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTituloFecha" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTituloHora" />
 
         <TextView
             android:id="@+id/tvObservaciones"
             android:layout_width="230dp"
             android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="28dp"
             android:fontFamily="@font/rocko"
             android:text="Soy alérgica a los frutos secosfffffffffffffffffffffffffff"
             android:textColor="@color/black"

@@ -9,13 +9,10 @@
         android:id="@+id/restaurantesFragment"
         android:name="com.example.projectfinal.ui.restaurante.RestaurantesFragment"
         android:label="fragment_restaurantes"
-        tools:layout="@layout/fragment_restaurantes" >
+        tools:layout="@layout/fragment_restaurantes">
         <action
             android:id="@+id/action_restaurantesFragment_to_formularioFragment"
             app:destination="@id/formularioFragment" />
-        <argument
-            android:name="restauranteNombre"
-            app:argType="string" />
 
 
     </fragment>
@@ -23,19 +20,35 @@
         android:id="@+id/formularioFragment"
         android:name="com.example.projectfinal.ui.formulario.FormularioFragment"
         android:label="fragment_anadir_reserva"
-        tools:layout="@layout/fragment_anadir_reserva" >
-        <action
-            android:id="@+id/action_formularioFragment_to_restaurantesFragment"
-            app:destination="@id/restaurantesFragment" />
+        tools:layout="@layout/fragment_anadir_reserva">
         <argument
             android:name="restauranteNombre"
             app:argType="string" />
+        <argument
+            android:name="nombreUsuario"
+            app:argType="string" />
+        <argument
+            android:name="personas"
+            app:argType="integer" />
+        <argument
+            android:name="fecha"
+            app:argType="string" />
+        <argument
+            android:name="hora"
+            app:argType="string" />
+        <argument
+            android:name="observaciones"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="isEdit"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/misReservasFragment"
         android:name="com.example.projectfinal.ui.reserva.MisReservasFragment"
         android:label="fragment_mis_reservas"
-        tools:layout="@layout/fragment_mis_reservas" >
+        tools:layout="@layout/fragment_mis_reservas">
         <action
             android:id="@+id/action_misReservasFragment_to_formularioFragment"
             app:destination="@id/formularioFragment" />

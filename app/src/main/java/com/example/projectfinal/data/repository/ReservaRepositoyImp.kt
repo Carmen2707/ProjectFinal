@@ -38,8 +38,8 @@ class ReservaRepositoyImp (val database: FirebaseFirestore,
     }
 
     override fun addReserva(reserva: Reserva) {
-        val document = database.collection("reservas").document()
-        reserva.usuario = document.id
+        val document = database.collection("reservas").document(reserva.usuario)
+
         document
             .set(reserva)
             .addOnSuccessListener {

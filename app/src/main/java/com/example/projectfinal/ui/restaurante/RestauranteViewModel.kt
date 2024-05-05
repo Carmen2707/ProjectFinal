@@ -34,11 +34,12 @@ class RestauranteViewModel @Inject constructor(
     val listaFiltrados: LiveData<List<Restaurante>>
         get() = _listaFiltrados
 
-   val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
     init {
         obtenerDatos() // Llama a la función para obtener los datos una vez que se inicializa el ViewModel
     }
+
     fun filtrarRestaurantesPorCategoria(categoriasSeleccionadas: MutableList<Categorias>) {
         val restaurantesFiltrados = mutableListOf<Restaurante>()
 
@@ -65,22 +66,24 @@ class RestauranteViewModel @Inject constructor(
     fun actualizarFavorito(restaurante: Restaurante, isChecked: Boolean) {
         viewModelScope.launch {
             restaurante.favorito = isChecked
-               restaurante.userId = userId
-               dao.actualizarRestaurante(restaurante)
-                _restaurantesBD.value = dao.getAll()
-                _listaFavoritos.value = dao.getFavoritos(userId)
+            restaurante.userId = userId
+            dao.actualizarRestaurante(restaurante)
+            _restaurantesBD.value = dao.getAll()
+            _listaFavoritos.value = dao.getFavoritos(userId)
 
         }
     }
-     fun actualizarListaRestaurantes(favoritos: List<Restaurante>) {
+
+    fun actualizarListaRestaurantes(favoritos: List<Restaurante>) {
         val listaRestaurantes = restaurantesBD.value.orEmpty().toMutableList()
         for (restaurante in listaRestaurantes) {
             restaurante.favorito = favoritos.any { it.id == restaurante.id }
         }
         _listaFavoritos.value = listaRestaurantes
     }
+
     // Método para obtener los datos de los restaurantes desde Firebase
-     fun obtenerDatos() {
+    fun obtenerDatos() {
         /** bdref = FirebaseDatabase.getInstance().getReference("restaurantes")
         bdref.addValueEventListener(object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
@@ -128,7 +131,8 @@ class RestauranteViewModel @Inject constructor(
                 imagen = document.data.get("imagen") as String
                 categoria = document.data.get("categoria") as String
                 favorito = document.data.get("favorito") as Boolean
-                restaurante = Restaurante(id,
+                restaurante = Restaurante(
+                    id,
                     nombre,
                     direccion,
                     horario,
@@ -142,10 +146,10 @@ class RestauranteViewModel @Inject constructor(
 
             }
             viewModelScope.launch {
-              //  dao.insertAll(listaRestaurantes)
+                //  dao.insertAll(listaRestaurantes)
                 _restaurantesBD.postValue(dao.getAll())
 
-                    // Filtra y obtén solo los favoritos para el usuario actual
+                // Filtra y obtén solo los favoritos para el usuario actual
 
 
                 Log.e("kjdsoidh", _restaurantesBD.value.toString())

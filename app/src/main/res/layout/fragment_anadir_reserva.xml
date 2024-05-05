@@ -41,82 +41,83 @@
         android:id="@+id/marco"
         android:layout_width="match_parent"
         android:layout_height="540dp"
-        android:background="@drawable/rectangle_3"
         android:layout_marginTop="20dp"
+        android:background="@drawable/rectangle_3"
         app:layout_constraintTop_toBottomOf="@+id/tvTitulo">
-    <TextView
-        android:id="@+id/tvTitFormPersona"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/rocko"
-        android:text="Número de personas:"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tfNombre" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        app:cardBackgroundColor="@color/yellow"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/btnAumentar"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toEndOf="@+id/btnDisminuir"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitFormPersona">
 
         <TextView
-            android:id="@+id/cantidad"
+            android:id="@+id/tvTitFormPersona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/rocko"
-            android:text="1"
+            android:text="Número de personas:"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tfNombre" />
 
-            app:layout_constraintVertical_bias="0.047" />
-    </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="@color/yellow"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/btnAumentar"
+            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintStart_toEndOf="@+id/btnDisminuir"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitFormPersona">
 
-    <ImageButton
-        android:id="@+id/btnDisminuir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:background="@null"
-        android:src="@drawable/disminuir"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/cardView"
-        app:layout_constraintEnd_toStartOf="@id/cardView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cardView" />
+            <TextView
+                android:id="@+id/cantidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/rocko"
+                android:text="1"
+                android:textColor="@color/black"
+                android:textSize="20sp"
 
-    <ImageButton
-        android:id="@+id/btnAumentar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
-        android:background="@null"
-        android:src="@drawable/aumentar"
-        app:layout_constraintBottom_toBottomOf="@+id/cardView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cardView" />
+                app:layout_constraintVertical_bias="0.047" />
+        </androidx.cardview.widget.CardView>
+
+        <ImageButton
+            android:id="@+id/btnDisminuir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:background="@null"
+            android:src="@drawable/disminuir"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="@+id/cardView"
+            app:layout_constraintEnd_toStartOf="@id/cardView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cardView" />
+
+        <ImageButton
+            android:id="@+id/btnAumentar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="100dp"
+            android:background="@null"
+            android:src="@drawable/aumentar"
+            app:layout_constraintBottom_toBottomOf="@+id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cardView" />
 
 
         <TextView
             android:id="@+id/tvTitNombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/rocko"
             android:text="Nombre:"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.102"
             app:layout_constraintStart_toStartOf="parent"
@@ -127,22 +128,22 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:hint="Nombre"
-            app:boxBackgroundMode="outline"
-
             android:fontFamily="@font/rocko"
-            app:startIconDrawable="@drawable/perfil"
+            android:hint="Nombre"
+
+            app:boxBackgroundMode="outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitNombre">
+            app:layout_constraintTop_toBottomOf="@+id/tvTitNombre"
+            app:startIconDrawable="@drawable/perfil">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tfEditTextNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:fontFamily="@font/rocko"
+                android:inputType="text"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp" />
 
@@ -150,111 +151,113 @@
 
 
         <TextView
-        android:id="@+id/tvTitFecha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/rocko"
-        android:text="Fecha:"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+            android:id="@+id/tvTitFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/rocko"
+            android:text="Fecha:"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.096"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutFecha"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="Fecha"
             app:boxBackgroundMode="outline"
-            app:startIconDrawable="@drawable/calendario"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTitFecha">
+            app:layout_constraintTop_toBottomOf="@id/tvTitFecha"
+            app:startIconDrawable="@drawable/calendario">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tfFecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@null"
+                android:clickable="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:fontFamily="@font/rocko"
                 android:hint="Fecha"
                 android:inputType="none"
                 android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:fontFamily="@font/rocko"
-                android:background="@null"
-                android:focusable="false"
-                android:clickable="true"
-                android:focusableInTouchMode="false" />
+                android:paddingEnd="8dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tvHora"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Hora:"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:fontFamily="@font/rocko"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFecha" />
+        <TextView
+            android:id="@+id/tvHora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/rocko"
+            android:text="Hora:"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.093"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFecha" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutHora"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="Hora"
-            app:boxBackgroundMode="outline"
-
             android:fontFamily="@font/rocko"
-            app:startIconDrawable="@drawable/hora"
+            android:hint="Hora"
+
+            app:boxBackgroundMode="outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvHora">
+            app:layout_constraintTop_toBottomOf="@+id/tvHora"
+            app:startIconDrawable="@drawable/hora">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tfHora"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@null"
+                android:clickable="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:fontFamily="@font/rocko"
                 android:hint="Hora"
                 android:inputType="none"
                 android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:fontFamily="@font/rocko"
-                android:background="@null"
-                android:focusable="false"
-                android:clickable="true"
-                android:focusableInTouchMode="false"/>
+                android:paddingEnd="8dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <TextView
-        android:id="@+id/tvObservacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Observaciones:"
-        android:fontFamily="@font/rocko"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.114"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutHora" />
+            android:id="@+id/tvObservacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/rocko"
+            android:text="Observaciones:"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.114"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutHora" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tfObservaciones"
             android:layout_width="300dp"
             android:layout_height="100dp"
-            android:hint="Sugerencias, alérgenos, detalles de la reserva..."
-            app:boxBackgroundMode="outline"
-
             android:fontFamily="@font/rocko"
+            android:hint="Sugerencias, alérgenos, detalles de la reserva..."
+
+            app:boxBackgroundMode="outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvObservacion">
@@ -263,9 +266,9 @@
                 android:id="@+id/tfEditTextObservacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/rocko"
                 android:inputType="textMultiLine"
                 android:minLines="3"
-                android:fontFamily="@font/rocko"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp" />
 
