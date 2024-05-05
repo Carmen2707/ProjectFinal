@@ -10,6 +10,7 @@ import com.example.projectfinal.data.model.Reserva
 class ReservaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val tvNombreRestaurante: TextView = view.findViewById(R.id.tvNombreRestaurante)
     private val tvFecha: TextView = view.findViewById(R.id.tvFecha)
+    private val tvHora: TextView = view.findViewById(R.id.tvHora)
     private val tvNumPersonas: TextView = view.findViewById(R.id.tvNumPersonas)
     private val tvObservaciones: TextView = view.findViewById(R.id.tvObservaciones)
     val btnEditar: ImageButton = view.findViewById(R.id.btnEditar)
@@ -18,7 +19,8 @@ class ReservaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun render(reserva: Reserva) {
         tvNombreRestaurante.text = reserva.restaurante
-        tvFecha.text = reserva.fecha.toString()
+        tvFecha.text = reserva.fecha
+        tvHora.text = reserva.hora
         tvNumPersonas.text = reserva.personas.toString()
         tvObservaciones.text = reserva.observaciones
 

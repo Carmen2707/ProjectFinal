@@ -30,13 +30,41 @@ class ReservaViewModel @Inject constructor(val repository: ReservaRepository) : 
             Log.e("ReservaViewModel", "No se puede obtener reservas, usuario nulo")
         }
     }
-
-    fun borrarReserva() {
-        db.collection("reservas").document(FirebaseAuth.getInstance().currentUser?.email ?: "")
-            .delete()
+    fun borrarReserva(position: Int, callback: (Boolean) -> Unit) {
+        val uiState = reserva.value
+        if (uiState is UiState.Success) {
+            val reservas = uiState.data.toMutableList()
+            if (position in reservas.indices) {
+                val reservaAEliminar = reservas[position]
+                db.collection("reservas").document(reservaAEliminar.id)
+                    .delete()
+                    .addOnSuccessListener {
+                        // Operación de eliminación exitosa
+                        reservas.removeAt(position) // Eliminar el elemento de la lista local
+                        _reserva.value = UiState.Success(reservas) // Actualizar el estado con la lista modificada
+                        callback(true)
+                    }
+                    .addOnFailureListener { exception ->
+                        // Error al eliminar la reserva
+                        Log.e("ReservaViewModel", "Error al eliminar reserva", exception)
+                        callback(false)
+                    }
+            } else {
+                // La posición está fuera de los límites de la lista de reservas
+                callback(false)
+            }
+        } else {
+            // El UiState actual no es un estado de éxito
+            callback(false)
+        }
     }
+
 
     fun addReserva(reserva: Reserva) {
         repository.addReserva(reserva)
+    }
+
+    fun actualizarReserva(reserva: Reserva) {
+        repository.updateReserva(reserva)
     }
 }

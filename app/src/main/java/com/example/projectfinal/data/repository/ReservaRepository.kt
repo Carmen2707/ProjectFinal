@@ -8,6 +8,6 @@ interface ReservaRepository {
 
     fun getReservas(usuario: Usuario?, result: (UiState<List<Reserva>>) -> Unit)
     fun addReserva(reserva: Reserva)
-    fun updateReserva(reserva: Reserva, result: (UiState<String>) -> Unit)
+    fun updateReserva(reserva: Reserva)
     fun deleteReserva(reserva: Reserva, result: (UiState<String>) -> Unit)
 }

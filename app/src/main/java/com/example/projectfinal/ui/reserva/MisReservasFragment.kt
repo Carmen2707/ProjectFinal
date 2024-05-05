@@ -14,6 +14,7 @@ import com.example.projectfinal.UsuarioViewModel
 import com.example.projectfinal.databinding.FragmentMisReservasBinding
 import com.example.projectfinal.util.UiState
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -71,7 +72,7 @@ class MisReservasFragment : Fragment() {
                 val reserva = adapter.getItemAtPosition(position)
                 val action =
                     MisReservasFragmentDirections.actionMisReservasFragmentToFormularioFragment(
-                        restauranteNombre = reserva.restaurante, nombreUsuario = reserva.usuario, personas = reserva.personas,
+                        restauranteNombre = reserva.restaurante,id = reserva.id, nombreUsuario = reserva.usuario, personas = reserva.personas,
                         fecha = reserva.fecha, hora = reserva.hora, observaciones = reserva.observaciones, isEdit = true
                     )
                 findNavController().navigate(action)
@@ -85,10 +86,14 @@ class MisReservasFragment : Fragment() {
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setMessage("¿Seguro que quieres eliminar esta reserva?")
                 builder.setPositiveButton("Si") { dialog, _ ->
-
-                    viewModelReserva.borrarReserva()
-
-
+                    viewModelReserva.borrarReserva(position) { success ->
+                        if (success) {
+                            adapter.notifyItemRemoved(position)
+                        } else {
+                            // Maneja el caso de que la eliminación falle, si es necesario
+                            // Por ejemplo, puedes mostrar un mensaje de error
+                        }
+                    }
                     dialog.dismiss()
                 }
                 builder.setNegativeButton("Cancelar") { dialog, _ ->

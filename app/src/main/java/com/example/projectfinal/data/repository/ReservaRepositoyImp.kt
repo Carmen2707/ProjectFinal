@@ -38,8 +38,8 @@ class ReservaRepositoyImp (val database: FirebaseFirestore,
     }
 
     override fun addReserva(reserva: Reserva) {
-        val document = database.collection("reservas").document(reserva.usuario)
-
+        val document = database.collection("reservas").document()
+        reserva.id = document.id
         document
             .set(reserva)
             .addOnSuccessListener {
@@ -50,8 +50,18 @@ class ReservaRepositoyImp (val database: FirebaseFirestore,
             }
     }
 
-    override fun updateReserva(reserva: Reserva, result: (UiState<String>) -> Unit) {
-        TODO("Not yet implemented")
+    override fun updateReserva(reserva: Reserva) {
+        val document = database.collection("reservas").document(reserva.id)
+        Log.e("id", reserva.id)
+        document
+            .set(reserva)
+            .addOnSuccessListener {
+                Log.i("ReservaRepository", "Reserva actualizada correctamente")
+            }
+            .addOnFailureListener { exception ->
+                Log.e("ReservaRepository", "Error al actualizar la reserva", exception)
+            }
+
     }
 
     override fun deleteReserva(reserva: Reserva, result: (UiState<String>) -> Unit) {

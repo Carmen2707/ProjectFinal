@@ -15,6 +15,10 @@ import com.example.projectfinal.data.model.Reserva
 import com.example.projectfinal.databinding.FragmentAnadirReservaBinding
 import com.example.projectfinal.ui.reserva.ReservaViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 import java.util.Date
@@ -124,15 +128,10 @@ class FormularioFragment : Fragment() {
             timePickerDialog.show()
         }
 
-
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        val userEmail = currentUser?.email
-        Log.e("email", userEmail ?: "Usuario no autenticado")
-
         binding.btnGuardar.setOnClickListener {
             val observaciones = binding.tfEditTextObservacion.text.toString()
 
-            val reserva = Reserva(
+            val reserva = Reserva( args.id,
                 binding.tfFecha.text.toString(),
                 binding.tfHora.text.toString(),
                 FirebaseAuth.getInstance().currentUser?.email ?: "" ,
@@ -140,17 +139,31 @@ class FormularioFragment : Fragment() {
                 valor,
                 args.restauranteNombre
             )
-            viewModel.addReserva(reserva = reserva)
 
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setMessage("Reserva realizada correctamente")
-            builder.setPositiveButton("Aceptar") { dialog, _ ->
+            if (args.isEdit) {
+                viewModel.actualizarReserva(reserva)
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setMessage("Reserva actualizada correctamente")
+                builder.setPositiveButton("Aceptar") { dialog, _ ->
 
-                dialog.dismiss()
-                requireActivity().supportFragmentManager.popBackStack()
+                    dialog.dismiss()
+                    requireActivity().supportFragmentManager.popBackStack()
+                }
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+            } else {
+                viewModel.addReserva(reserva = reserva)
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setMessage("Reserva realizada correctamente")
+                builder.setPositiveButton("Aceptar") { dialog, _ ->
+
+                    dialog.dismiss()
+                    requireActivity().supportFragmentManager.popBackStack()
+                }
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
             }
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
+
         }
     }
 

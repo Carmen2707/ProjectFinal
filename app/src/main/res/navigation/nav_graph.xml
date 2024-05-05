@@ -43,6 +43,9 @@
         <argument
             android:name="isEdit"
             app:argType="boolean" />
+        <argument
+            android:name="id"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/misReservasFragment"
