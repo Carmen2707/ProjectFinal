@@ -9,7 +9,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
-/*
+
 @Entity(tableName = "favoritos")
 data class Favorito(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
@@ -22,4 +22,4 @@ data class Favorito(
     val imagen: String? = null,
     val categoria: String? = null,
 )
-*/
+

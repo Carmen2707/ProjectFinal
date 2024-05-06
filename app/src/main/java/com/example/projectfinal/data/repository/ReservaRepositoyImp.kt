@@ -10,9 +10,8 @@ import com.example.projectfinal.util.FireStoreCollection
 import com.example.projectfinal.util.FireStoreDocumentField
 import com.google.firebase.firestore.Query
 
-class ReservaRepositoyImp (val database: FirebaseFirestore,
-                           val storageReference: StorageReference): ReservaRepository {
-    override fun getReservas(usuario: Usuario?, result: (UiState<List<Reserva>>) -> Unit) {
+class ReservaRepositoyImp (val database: FirebaseFirestore): ReservaRepository {
+    override fun cargarReservas(usuario: Usuario?, result: (UiState<List<Reserva>>) -> Unit) {
         if (usuario != null) {
             database.collection(FireStoreCollection.RESERVA)
                 .whereEqualTo(FireStoreDocumentField.USER_ID, usuario.email)
@@ -64,8 +63,27 @@ class ReservaRepositoyImp (val database: FirebaseFirestore,
 
     }
 
-    override fun deleteReserva(reserva: Reserva, result: (UiState<String>) -> Unit) {
-        TODO("Not yet implemented")
+
+    override fun borrarReserva(position: Int, reservas: List<Reserva>, callback: (Boolean) -> Unit) {
+        if (position in reservas.indices) {
+            val reservaAEliminar = reservas[position]
+            database.collection("reservas").document(reservaAEliminar.id)
+                .delete()
+                .addOnSuccessListener {
+                    // Operación de eliminación exitosa
+                    val nuevasReservas = reservas.toMutableList()
+                    nuevasReservas.removeAt(position) // Eliminar el elemento de la lista local
+                    callback(true)
+                }
+                .addOnFailureListener { exception ->
+                    // Error al eliminar la reserva
+                    Log.e("ReservaRepository", "Error al eliminar reserva", exception)
+                    callback(false)
+                }
+        } else {
+            // La posición está fuera de los límites de la lista de reservas
+            callback(false)
+        }
     }
 
 }

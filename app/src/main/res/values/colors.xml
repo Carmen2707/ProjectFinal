@@ -17,5 +17,5 @@
     <color name="yellow_dark">#C69F13</color>
     <color name="app_reservas_color">#FFFFFF</color>
     <color name="rectangle_6_color">#699BF7</color>
-    <color name="sign_up_color">#FF0000</color>
+    <color name="red">#FF0000</color>
 </resources>

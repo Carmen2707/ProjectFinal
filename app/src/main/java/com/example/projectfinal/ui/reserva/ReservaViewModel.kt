@@ -20,14 +20,15 @@ class ReservaViewModel @Inject constructor(val repository: ReservaRepository) : 
     val reserva: LiveData<UiState<List<Reserva>>> get() = _reserva
     private val db = Firebase.firestore
     fun cargarReservas(usuario: Usuario?) {
-        usuario?.let {
-            _reserva.value = UiState.Loading
-            repository.getReservas(usuario) { result ->
+        repository.cargarReservas(usuario) { result ->
+            if (result is UiState.Success) {
                 _reserva.value = result
-                Log.d("ReservaViewModel", "Reservas obtenidas con éxito: $result")
+            } else if (result is UiState.Failure) {
+                // Manejar el estado de fallo si es necesario
+                Log.e("ReservaViewModel", "Error al cargar reservas:")
             }
-        } ?: run {
-            Log.e("ReservaViewModel", "No se puede obtener reservas, usuario nulo")
+
+
         }
     }
     fun borrarReserva(position: Int, callback: (Boolean) -> Unit) {

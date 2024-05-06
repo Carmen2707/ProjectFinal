@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.projectfinal.data.model.Categorias
 import com.example.projectfinal.data.model.Restaurante
-import com.example.projectfinal.data.repository.RepositoryFavorito
 import com.example.projectfinal.room.DAO
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -18,23 +17,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RestauranteViewModel @Inject constructor(
-    private val dao: DAO,
-    private val repository: RepositoryFavorito
+    private val dao: DAO
 ) : ViewModel() {
 
     val _restaurantesBD = MutableLiveData<List<Restaurante>>()
     val restaurantesBD: LiveData<List<Restaurante>>
         get() = _restaurantesBD
 
-    val _listaFavoritos = MutableLiveData<List<Restaurante>>()
-    val listaFavoritos: LiveData<List<Restaurante>>
-        get() = _listaFavoritos
 
     val _listaFiltrados = MutableLiveData<List<Restaurante>>()
     val listaFiltrados: LiveData<List<Restaurante>>
         get() = _listaFiltrados
 
-    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+
 
     init {
         obtenerDatos() // Llama a la función para obtener los datos una vez que se inicializa el ViewModel
@@ -63,26 +58,8 @@ class RestauranteViewModel @Inject constructor(
     }
 
 
-    fun actualizarFavorito(restaurante: Restaurante, isChecked: Boolean) {
-        viewModelScope.launch {
-            restaurante.favorito = isChecked
-            restaurante.userId = userId
-            dao.actualizarRestaurante(restaurante)
-            _restaurantesBD.value = dao.getAll()
-            _listaFavoritos.value = dao.getFavoritos(userId)
 
-        }
-    }
 
-    fun actualizarListaRestaurantes(favoritos: List<Restaurante>) {
-        val listaRestaurantes = restaurantesBD.value.orEmpty().toMutableList()
-        for (restaurante in listaRestaurantes) {
-            restaurante.favorito = favoritos.any { it.id == restaurante.id }
-        }
-        _listaFavoritos.value = listaRestaurantes
-    }
-
-    // Método para obtener los datos de los restaurantes desde Firebase
     fun obtenerDatos() {
         /** bdref = FirebaseDatabase.getInstance().getReference("restaurantes")
         bdref.addValueEventListener(object : ValueEventListener {
@@ -148,13 +125,6 @@ class RestauranteViewModel @Inject constructor(
             viewModelScope.launch {
                 //  dao.insertAll(listaRestaurantes)
                 _restaurantesBD.postValue(dao.getAll())
-
-                // Filtra y obtén solo los favoritos para el usuario actual
-
-
-                Log.e("kjdsoidh", _restaurantesBD.value.toString())
-                Log.e("FirebaseError", userId)
-                Log.e("FirebaseError", _listaFavoritos.value.toString())
             }
         }.addOnFailureListener { error ->
             Log.e("FirebaseError", error.message.toString())

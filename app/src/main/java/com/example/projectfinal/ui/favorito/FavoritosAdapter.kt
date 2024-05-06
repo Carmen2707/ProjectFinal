@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
+import com.example.projectfinal.data.model.Reserva
 import com.example.projectfinal.data.model.Restaurante
 
 class FavoritosAdapter(
-    var favoritos: List<Restaurante>,
+    var favoritos:  MutableList<Restaurante> = mutableListOf(),
     private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit
 ) :
     RecyclerView.Adapter<FavoritosViewHolder>() {
@@ -29,5 +30,11 @@ class FavoritosAdapter(
 
     override fun getItemCount(): Int {
         return favoritos.size
+    }
+
+    fun updateList(lista: MutableList<Restaurante>) {
+        this.favoritos.clear()
+        this.favoritos.addAll(lista)
+        notifyDataSetChanged()
     }
 }

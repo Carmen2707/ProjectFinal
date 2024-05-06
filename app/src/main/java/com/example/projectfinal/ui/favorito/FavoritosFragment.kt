@@ -7,24 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.projectfinal.UsuarioViewModel
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentFavoritosBinding
 import com.example.projectfinal.ui.restaurante.RestauranteViewModel
+import com.example.projectfinal.util.UiState
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FavoritosFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
 
     private lateinit var binding: FragmentFavoritosBinding
     private var favoritosAdapter: FavoritosAdapter? = null // Define tu adaptador de favoritos aquí
     private var listaFavoritos = mutableListOf<Restaurante>()
-    private val viewModel: RestauranteViewModel by activityViewModels()
-    val userId = FirebaseAuth.getInstance().currentUser?.uid
+    private val viewModel: FavoritosViewModel by activityViewModels()
+    private val viewModelUsuario: UsuarioViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,13 +35,39 @@ class FavoritosFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFavoritosBinding.bind(view)
-        viewModel.listaFavoritos.observe(viewLifecycleOwner) { restaurantes ->
+
+
+        viewModelUsuario.getSession().observe(viewLifecycleOwner) { usuario ->
+            usuario?.let {
+                viewModel.cargarFavoritos(usuario)
+
+            } ?: run {
+                Log.d("MisReservasFragment", "Usuario no autenticado")
+            }
+        }
+
+        viewModel.listaFavoritos.observe(viewLifecycleOwner) { uiState ->
+            when (uiState) {
+                is UiState.Loading -> {
+
+                }
+
+                is UiState.Success -> {
+                    // Actualizar el adaptador con la lista de reservas
+                    favoritosAdapter?.updateList(uiState.data.toMutableList())
+                }
+
+
+                else -> {}
+            }
+        }
+      /*  viewModel.listaFavoritos.observe(viewLifecycleOwner) { restaurantes ->
             favoritosAdapter = FavoritosAdapter(restaurantes) { restaurante, isChecked ->
                 esChecked(restaurante, isChecked)
             }
             binding.rvFavoritos.adapter = favoritosAdapter
-            Log.e("Firebase", restaurantes.toString())
-        }
+
+        }*/
 
 
         binding.rvFavoritos.layoutManager = LinearLayoutManager(context)
@@ -67,24 +94,5 @@ class FavoritosFragment : Fragment() {
         binding = FragmentFavoritosBinding.inflate(inflater, container, false)
         // Retorna la vista inflada por el binding
         return binding.root
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FavoritosFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FavoritosFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
     }
 }

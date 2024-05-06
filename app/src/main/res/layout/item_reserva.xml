@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="5dp"
 
             android:fontFamily="@font/rocko"
             android:text="La Ristobottega"
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
 
             android:layout_marginStart="3dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/rocko"
             android:text="14/3/2024"
             android:textColor="@color/black"
@@ -148,13 +148,13 @@
             android:id="@+id/tvObservaciones"
             android:layout_width="230dp"
             android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="94dp"
             android:fontFamily="@font/rocko"
             android:text="Soy alérgica a los frutos secosfffffffffffffffffffffffffff"
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@id/tvTituloObservaciones"
-            app:layout_constraintTop_toBottomOf="@+id/tvFecha" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/btnBorrar"

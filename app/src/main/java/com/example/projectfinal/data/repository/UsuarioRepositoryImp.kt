@@ -13,9 +13,6 @@ class UsuarioRepositoryImp (val auth: FirebaseAuth,
                             val appPreferences: SharedPreferences,
                             val gson: Gson
 ) : UsuarioRepository {
-    override fun storeSession(id: String, result: (Usuario?) -> Unit) {
-        TODO("Not yet implemented")
-    }
 
     override fun getCurrentUser(): LiveData<Usuario?> {
         val currentUserLiveData = MutableLiveData<Usuario?>()

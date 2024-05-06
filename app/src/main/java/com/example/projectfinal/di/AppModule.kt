@@ -2,9 +2,12 @@ package com.example.projectfinal.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.projectfinal.data.repository.FavoritoRepository
+import com.example.projectfinal.data.repository.FavoritoRepositoryImp
 import com.example.projectfinal.room.DAO
 import com.example.projectfinal.room.RestaurantesBD
 import com.example.projectfinal.util.SharedPrefConstants
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -48,5 +51,11 @@ object AppModule {
     @Singleton
     fun getAppDatabase(@ApplicationContext context: Context): RestaurantesBD {
         return RestaurantesBD.getAppDBInstance(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoritoRepository(database: FirebaseFirestore): FavoritoRepository {
+        return FavoritoRepositoryImp(database)
     }
 }

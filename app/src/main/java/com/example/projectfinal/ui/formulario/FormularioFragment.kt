@@ -1,12 +1,14 @@
 package com.example.projectfinal.ui.formulario
 
+import android.R
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -15,14 +17,11 @@ import androidx.navigation.fragment.navArgs
 import com.example.projectfinal.data.model.Reserva
 import com.example.projectfinal.databinding.FragmentAnadirReservaBinding
 import com.example.projectfinal.ui.reserva.ReservaViewModel
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
-import java.util.Date
+
 
 @AndroidEntryPoint
 class FormularioFragment : Fragment() {
@@ -49,6 +48,7 @@ class FormularioFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAnadirReservaBinding.bind(view)
+
         if (args.isEdit) {
             // Estamos editando una reserva existente
             binding.tfFecha.setText(args.fecha)
@@ -69,8 +69,12 @@ class FormularioFragment : Fragment() {
         binding.btnAumentar.setOnClickListener {
             binding.cantidad.text = (++valor).toString()
         }
+
         binding.btnDisminuir.setOnClickListener {
-            binding.cantidad.text = (--valor).toString()
+            if (valor > 1) {
+                binding.cantidad.text = (--valor).toString()
+            } else {
+            }
         }
 
         binding.tfFecha.setOnClickListener {
@@ -80,11 +84,9 @@ class FormularioFragment : Fragment() {
             val day = c.get(Calendar.DAY_OF_MONTH)
 
             val datePickerDialog = DatePickerDialog(
-                // on below line we are passing context.
                 requireContext(),
                 { view, year, monthOfYear, dayOfMonth ->
-                    // on below line we are setting
-                    // date to our edit text.
+
                     val dat = (dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
                     binding.tfFecha.setText(dat)
 
@@ -130,43 +132,95 @@ class FormularioFragment : Fragment() {
         }
 
         binding.btnGuardar.setOnClickListener {
-            val observaciones = binding.tfEditTextObservacion.text.toString()
+            if (validate()) {
+                val observaciones = binding.tfEditTextObservacion.text.toString()
 
-            val reserva = Reserva( args.id,
-                binding.tfFecha.text.toString(),
-                binding.tfHora.text.toString(),
-                FirebaseAuth.getInstance().currentUser?.email ?: "" ,
-                observaciones,
-                valor,
-                args.restauranteNombre
-            )
+                val reserva = Reserva(
+                    args.id,
+                    binding.tfFecha.text.toString(),
+                    binding.tfHora.text.toString(),
+                    FirebaseAuth.getInstance().currentUser?.email ?: "",
+                    observaciones,
+                    valor,
+                    args.restauranteNombre
+                )
 
-            if (args.isEdit) {
-                viewModel.actualizarReserva(reserva)
-                val builder = AlertDialog.Builder(requireContext())
-                builder.setMessage("Reserva actualizada correctamente")
-                builder.setPositiveButton("Aceptar") { dialog, _ ->
 
-                    dialog.dismiss()
-                    requireActivity().supportFragmentManager.popBackStack()
+                if (args.isEdit) {
+                    viewModel.actualizarReserva(reserva)
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setMessage("Reserva actualizada correctamente")
+                    builder.setPositiveButton("Aceptar") { dialog, _ ->
+
+                        dialog.dismiss()
+                        requireActivity().supportFragmentManager.popBackStack()
+                    }
+                    val dialog: AlertDialog = builder.create()
+                    dialog.show()
+                } else {
+                    viewModel.addReserva(reserva = reserva)
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setMessage("Reserva realizada correctamente")
+                    builder.setPositiveButton("Aceptar") { dialog, _ ->
+
+                        dialog.dismiss()
+                        requireActivity().supportFragmentManager.popBackStack()
+                    }
+                    val dialog: AlertDialog = builder.create()
+                    dialog.show()
                 }
-                val dialog: AlertDialog = builder.create()
-                dialog.show()
-            } else {
-                viewModel.addReserva(reserva = reserva)
-                val builder = AlertDialog.Builder(requireContext())
-                builder.setMessage("Reserva realizada correctamente")
-                builder.setPositiveButton("Aceptar") { dialog, _ ->
-
-                    dialog.dismiss()
-                    requireActivity().supportFragmentManager.popBackStack()
-                }
-                val dialog: AlertDialog = builder.create()
-                dialog.show()
             }
+
+
+
 
         }
     }
+    fun validate(): Boolean {
+        var isValid = true
 
+        // Verificar si el campo de nombre está vacío
+        val nombre = binding.tfEditTextNombre.text.toString()
+        if (TextUtils.isEmpty(nombre)) {
+            toggleTextInputLayoutError(binding.tfNombre, "Campo obligatorio")
+            isValid = false
+        } else {
+            toggleTextInputLayoutError(binding.tfNombre, null)
+        }
+
+        // Verificar si el campo de fecha está vacío
+        val fecha = binding.tfFecha.text.toString()
+        if (TextUtils.isEmpty(fecha)) {
+            toggleTextInputLayoutError(binding.textInputLayoutFecha, "Campo obligatorio")
+            isValid = false
+        } else {
+            toggleTextInputLayoutError(binding.textInputLayoutFecha, null)
+        }
+
+        val hora = binding.tfHora.text.toString()
+        if (TextUtils.isEmpty(hora)) {
+            toggleTextInputLayoutError(binding.textInputLayoutHora, "Campo obligatorio")
+            isValid = false
+        } else {
+            toggleTextInputLayoutError(binding.textInputLayoutHora, null)
+        }
+
+        return isValid
+    }
+
+
+
+    /**
+     * Display/hides TextInputLayout error.
+     *
+     * @param msg the message, or null to hide
+     */
+    private fun toggleTextInputLayoutError(
+        @NonNull textInputLayout: TextInputLayout,
+        msg: String?
+    ) {
+        textInputLayout.error = msg
+        textInputLayout.isErrorEnabled = msg != null
+    }
 
 }

@@ -22,9 +22,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MisReservasFragment : Fragment() {
     private lateinit var binding: FragmentMisReservasBinding
     val viewModelReserva: ReservaViewModel by viewModels()
-    val viewModelUsuario: UsuarioViewModel by viewModels()
+    private val viewModelUsuario: UsuarioViewModel by viewModels()
     val adapter = ReservaAdapter()
-    private val db = Firebase.firestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
