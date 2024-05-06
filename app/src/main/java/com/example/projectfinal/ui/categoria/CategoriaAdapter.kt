@@ -20,6 +20,9 @@ class CategoriaAdapter(
     override fun getItemCount(): Int = categorias.size
 
     override fun onBindViewHolder(holder: CategoriasViewHolder, position: Int) {
-        holder.render(categorias[position], onItemSelected)
+        holder.render(
+            categorias[position], onItemSelected
+
+        )
     }
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.projectfinal.data.model.Reserva
 import com.example.projectfinal.databinding.FragmentAnadirReservaBinding
@@ -62,7 +63,7 @@ class FormularioFragment : Fragment() {
 
         binding.tvTitulo.text = args.restauranteNombre
         binding.btnCerrar.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
+            findNavController().popBackStack()
         }
 
         binding.btnAumentar.setOnClickListener {

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Categorias
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentRestaurantesBinding
@@ -60,6 +61,7 @@ class RestaurantesFragment : Fragment() {
         categorias[position].seleccionada = !categorias[position].seleccionada
         Log.d(
             "RestaurantesFragment",
+
             "Categoría seleccionada: ${categorias[position].javaClass.simpleName}, Estado: ${categorias[position].seleccionada}"
         )
         categoriaAdapter.notifyItemChanged(position)
@@ -77,10 +79,12 @@ class RestaurantesFragment : Fragment() {
                 restauranteAdapter.submitList(restaurantes)
             }
         } else {
+            viewModel.filtrarRestaurantesPorCategoria(categoriasSeleccionadas)
             viewModel.listaFiltrados.observe(viewLifecycleOwner) { restaurantes ->
                 restauranteAdapter.submitList(restaurantes)
+
             }
-            viewModel.filtrarRestaurantesPorCategoria(categoriasSeleccionadas)
+
         }
 
     }
@@ -97,11 +101,26 @@ class RestaurantesFragment : Fragment() {
 
 
     private fun onItemSelected(restaurante: Restaurante) {
-        val action = RestaurantesFragmentDirections.actionRestaurantesFragmentToFormularioFragment( restauranteNombre = restaurante.nombre, id = "",
-            nombreUsuario = "", fecha = "", hora = "", personas = 1, observaciones = "", isEdit = false)
-        val navController = findNavController()
+        val currentDestinationId = findNavController().currentDestination?.id
+        val restaurantesFragmentId = R.id.restaurantesFragment
 
-        navController.navigate(action)
+        if (currentDestinationId == restaurantesFragmentId) {
+            val action = RestaurantesFragmentDirections.actionRestaurantesFragmentToFormularioFragment(
+                restauranteNombre = restaurante.nombre,
+                id = "",
+                nombreUsuario = "",
+                fecha = "",
+                hora = "",
+                personas = 1,
+                observaciones = "",
+                isEdit = false
+            )
+            findNavController().navigate(action)
+        } else {
+            Log.e("Navigation", "No se puede navegar desde el fragmento actual")
+            // Puedes mostrar un mensaje de error o tomar otra acción aquí
+        }
+
 
     }
 
@@ -131,7 +150,6 @@ class RestaurantesFragment : Fragment() {
 
         // Observar los cambios en la lista de restaurantes desde el ViewModel
         viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
-
             restauranteAdapter = RestauranteAdapter(
                 onFavoritoChangeListener = { restaurante, isChecked ->
                     esChecked(restaurante, isChecked)
@@ -142,7 +160,16 @@ class RestaurantesFragment : Fragment() {
                 }
             )
             binding.rvRestaurantes.adapter = restauranteAdapter
-            restauranteAdapter.submitList(restaurantes)
+
+            if(viewModel._listaFiltrados.value?.isEmpty() == true){
+                restauranteAdapter.submitList(viewModel.listaFavoritos.value)
+            } else{
+                restauranteAdapter.submitList(restaurantes)
+            }
+
+
+
+
             (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(
                 recyclerViewPosition
             )
