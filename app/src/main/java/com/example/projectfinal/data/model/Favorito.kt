@@ -12,14 +12,14 @@ import androidx.room.Query
 
 @Entity(tableName = "favoritos")
 data class Favorito(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    @ColumnInfo(name = "restauranteId") val restauranteId: Long,
-    @ColumnInfo(name = "userId") val userId: String,
+    @PrimaryKey(autoGenerate = true) val id: String,
+    @ColumnInfo(name = "usuario") val usuario: String,
     val nombre: String? = null,
     val direccion: String? = null,
     val horario: String? = null,
     val contacto: Long? = null,
     val imagen: String? = null,
     val categoria: String? = null,
+    val favorito: Boolean? = null
 )
 

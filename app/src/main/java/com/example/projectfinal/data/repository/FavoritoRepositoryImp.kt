@@ -1,6 +1,7 @@
 package com.example.projectfinal.data.repository
 
 import android.util.Log
+import com.example.projectfinal.data.model.Favorito
 import com.example.projectfinal.data.model.Reserva
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.data.model.Usuario
@@ -20,6 +21,7 @@ class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepositor
                     val favoritos = arrayListOf<Restaurante>()
                     for (document in querySnapshot) {
                         val restaurante = document.toObject(Restaurante::class.java)
+                        Log.e("jdjjd", restaurante.id.toString())
                         favoritos.add(restaurante)
                     }
                     result.invoke(UiState.Success(favoritos))
@@ -40,21 +42,24 @@ class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepositor
         usuarioId: String,
         result: (UiState<Unit>) -> Unit
     ) {
+
+
+       val document = database.collection(FireStoreCollection.FAVORITOS).document()
+        restaurante.idFavorito = document.id
+
         val favorito = hashMapOf(
-            "restauranteId" to restaurante.id,
+            "idFavorito" to restaurante.idFavorito,
             "usuario" to usuarioId,
             "categoría" to restaurante.categoria,
             "contacto" to restaurante.contacto,
             "direccion" to restaurante.direccion,
             "horario" to restaurante.horario,
             "nombre" to restaurante.nombre,
-            "imagen" to restaurante.imagen
-
-            // Agregar otros campos del restaurante si es necesario
+            "imagen" to restaurante.imagen,
+            "favorito" to restaurante.favorito
         )
 
-        database.collection(FireStoreCollection.FAVORITOS)
-            .add(favorito)
+            document.set(favorito)
             .addOnSuccessListener {
                 result.invoke(UiState.Success(Unit))
                 Log.d("FavoritoRepository", "Restaurante añadido a favoritos con éxito")
@@ -64,7 +69,15 @@ class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepositor
                 Log.e("FavoritoRepository", "Error al añadir restaurante a favoritos", exception)
             }
     }
+
+    override fun eliminarFavorito(
+        restaurante: Restaurante,
+        usuarioId: String
+    ) {
+        restaurante.idFavorito?.let { database.collection("favoritos").document(it).delete() }
+
     }
+}
 
 
 

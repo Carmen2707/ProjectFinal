@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.projectfinal.data.model.Favorito
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.data.model.Usuario
 import com.example.projectfinal.data.repository.FavoritoRepository
@@ -20,7 +21,7 @@ class FavoritosViewModel @Inject constructor (val repository: FavoritoRepository
     val _listaFavoritos = MutableLiveData<UiState<List<Restaurante>>>()
     val listaFavoritos: LiveData<UiState<List<Restaurante>>>
         get() = _listaFavoritos
-    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+    val userId = FirebaseAuth.getInstance().currentUser?.email ?: ""
     fun cargarFavoritos(usuario: Usuario?) {
         repository.cargarFavoritos(usuario) { result ->
             if (result is UiState.Success) {
@@ -34,7 +35,7 @@ class FavoritosViewModel @Inject constructor (val repository: FavoritoRepository
         }
 
     }
-    fun addFavoritos(restaurante: Restaurante){
+   fun addFavoritos(restaurante: Restaurante){
         viewModelScope.launch {
             repository.addFavorito(restaurante, userId) { result ->
                 if (result is UiState.Success) {
@@ -49,11 +50,26 @@ class FavoritosViewModel @Inject constructor (val repository: FavoritoRepository
     fun actualizarFavorito(restaurante: Restaurante, isChecked: Boolean) {
         viewModelScope.launch {
             restaurante.favorito = isChecked
-            restaurante.userId = userId
-            dao.actualizarRestaurante(restaurante)
-           // _restaurantesBD.value = dao.getAll()
-            addFavoritos(restaurante)
 
+
+           // _restaurantesBD.value = dao.getAll()
+            if (isChecked){
+                addFavoritos(restaurante)
+                dao.actualizarRestaurante(restaurante)
+            } else {
+                eliminarFavorito(restaurante)
+                dao.actualizarRestaurante(restaurante)
+            }
+
+        }
+    }
+
+    fun eliminarFavorito(restaurante: Restaurante) {
+        viewModelScope.launch {
+            repository.eliminarFavorito(restaurante, userId)
+            // Actualizar el estado local del restaurante
+            restaurante.favorito = false
+            dao.actualizarRestaurante(restaurante)
         }
     }
 }

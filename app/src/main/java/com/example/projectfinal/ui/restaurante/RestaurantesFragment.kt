@@ -112,7 +112,9 @@ class RestaurantesFragment : Fragment() {
 
 
     private fun esChecked(restaurante: Restaurante, isChecked: Boolean) {
+
         viewModelFavoritos.actualizarFavorito(restaurante, isChecked)
+
           recyclerViewPosition = restauranteAdapter.currentList.indexOf(restaurante)
           println(recyclerViewPosition)
           if (recyclerViewPosition != RecyclerView.NO_POSITION) {

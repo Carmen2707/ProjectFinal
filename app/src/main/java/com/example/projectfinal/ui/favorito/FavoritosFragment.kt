@@ -54,6 +54,10 @@ class FavoritosFragment : Fragment() {
 
                 is UiState.Success -> {
                     // Actualizar el adaptador con la lista de reservas
+                    favoritosAdapter = FavoritosAdapter(uiState.data.toMutableList()) { restaurante, isChecked ->
+                        esChecked(restaurante, isChecked)
+                    }
+                    binding.rvFavoritos.adapter = favoritosAdapter
                     favoritosAdapter?.updateList(uiState.data.toMutableList())
                 }
 
@@ -69,23 +73,16 @@ class FavoritosFragment : Fragment() {
 
         }*/
 
-
+        binding.rvFavoritos.adapter = favoritosAdapter
         binding.rvFavoritos.layoutManager = LinearLayoutManager(context)
     }
 
     private fun esChecked(restaurante: Restaurante, isChecked: Boolean) {
-        restaurante.favorito = isChecked
         viewModel.actualizarFavorito(restaurante, isChecked)
+
     }
 
-    /* private fun cargarListaFavoritos() {
-        viewModel.getFavoritos(viewModel.getCurrentUserId()).observe(viewLifecycleOwner) { favoritos ->
-            listaFavoritos.clear()
-            listaFavoritos.addAll(favoritos)
-            favoritosAdapter.actualizarFavoritos(listaFavoritos)
-        }
 
-    }*/
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
