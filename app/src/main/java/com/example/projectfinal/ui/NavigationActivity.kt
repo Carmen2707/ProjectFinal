@@ -6,13 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.projectfinal.R
 import com.example.projectfinal.databinding.ActivityNavigationBinding
-import com.example.projectfinal.ui.favorito.FavoritosFragment
-import com.example.projectfinal.ui.formulario.FormularioFragment
-import com.example.projectfinal.ui.reserva.MisReservasFragment
 import com.example.projectfinal.ui.restaurante.RestaurantesFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +23,8 @@ class NavigationActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navigationBar
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.frame_layout) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.frame_layout) as NavHostFragment
         navController = navHostFragment.navController
         navView.setupWithNavController(navController)
         remplazarFragments(RestaurantesFragment())

@@ -12,14 +12,15 @@ import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
 
 class RestauranteViewHolder(
-    view: View,
-    private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit
+    view: View
 ) : RecyclerView.ViewHolder(view) {
     private val ivRestaurante: ImageView = view.findViewById(R.id.ivRestaurante)
     private val tvNombreRestaurante: TextView = view.findViewById(R.id.tvNombreRestaurante)
     private val tvDireccionRestaurante: TextView = view.findViewById(R.id.tvDireccionRestaurante)
     private val tvHorarioRestaurante: TextView = view.findViewById(R.id.tvHorarioRestaurante)
     private val tvContactoRestaurante: TextView = view.findViewById(R.id.tvContactoRestaurante)
+    private val tvApertura: TextView = view.findViewById(R.id.tvApertura)
+    private val tvCierre: TextView = view.findViewById(R.id.tvCierre)
     val checkBox: CheckBox = view.findViewById(R.id.cbFavorito)
 
     fun render(restaurante: Restaurante, onClickListener: (Restaurante) -> Unit) {
@@ -32,9 +33,10 @@ class RestauranteViewHolder(
         tvDireccionRestaurante.text = restaurante.direccion
         tvHorarioRestaurante.text = restaurante.horario
         tvContactoRestaurante.text = restaurante.contacto.toString()
-
+        tvApertura.text = restaurante.horaApertura
+        tvCierre.text = restaurante.horaCierre
         // Actualizar el estado del CheckBox
-        checkBox.isChecked = restaurante.favorito ?: false
+        checkBox.isChecked = restaurante.favorito
         itemView.setOnClickListener {
             onClickListener(restaurante)
         }

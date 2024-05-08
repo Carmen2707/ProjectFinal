@@ -253,9 +253,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tfObservaciones"
             android:layout_width="300dp"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:fontFamily="@font/rocko"
-            android:hint="Sugerencias, alérgenos, detalles de la reserva..."
+            android:hint="Sugerencias, alérgenos, detalles..."
 
             app:boxBackgroundMode="outline"
             app:layout_constraintEnd_toEndOf="parent"

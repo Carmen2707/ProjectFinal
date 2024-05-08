@@ -5,7 +5,7 @@ import com.example.projectfinal.data.model.Usuario
 
 interface UsuarioRepository {
 
-    fun getCurrentUser():LiveData<Usuario?>
+    fun getCurrentUser(): LiveData<Usuario?>
 
     fun getUsuario(): Usuario?
 

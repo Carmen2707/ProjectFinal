@@ -124,6 +124,7 @@
             app:startIconDrawable="@drawable/arroba">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
@@ -163,6 +164,7 @@
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="62dp" />
         </com.google.android.material.textfield.TextInputLayout>

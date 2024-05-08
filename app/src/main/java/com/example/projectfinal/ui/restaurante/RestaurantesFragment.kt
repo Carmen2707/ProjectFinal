@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -16,7 +17,7 @@ import com.example.projectfinal.data.model.Categorias
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentRestaurantesBinding
 import com.example.projectfinal.ui.categoria.CategoriaAdapter
-import com.example.projectfinal.util.UiState
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -92,16 +93,19 @@ class RestaurantesFragment : Fragment() {
         val restaurantesFragmentId = R.id.restaurantesFragment
 
         if (currentDestinationId == restaurantesFragmentId) {
-            val action = RestaurantesFragmentDirections.actionRestaurantesFragmentToFormularioFragment(
-                restauranteNombre = restaurante.nombre,
-                id = "",
-                nombreUsuario = "",
-                fecha = "",
-                hora = "",
-                personas = 1,
-                observaciones = "",
-                isEdit = false
-            )
+            val action =
+                RestaurantesFragmentDirections.actionRestaurantesFragmentToFormularioFragment(
+                    restauranteNombre = restaurante.nombre,
+                    id = "",
+                    nombreUsuario = "",
+                    fecha = "",
+                    hora = "",
+                    personas = 1,
+                    observaciones = "",
+                    horaApertura = restaurante.horaApertura,
+                    horaCierre = restaurante.horaCierre,
+                    isEdit = false
+                )
             findNavController().navigate(action)
         } else {
             Log.e("Navigation", "No se puede navegar desde el fragmento actual")
@@ -114,11 +118,13 @@ class RestaurantesFragment : Fragment() {
 
         viewModel.actualizarFavorito(restaurante, isChecked)
 
-          recyclerViewPosition = restauranteAdapter.currentList.indexOf(restaurante)
-          println(recyclerViewPosition)
-          if (recyclerViewPosition != RecyclerView.NO_POSITION) {
-              (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(recyclerViewPosition)
-          }
+        recyclerViewPosition = restauranteAdapter.currentList.indexOf(restaurante)
+        println(recyclerViewPosition)
+        if (recyclerViewPosition != RecyclerView.NO_POSITION) {
+            (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(
+                recyclerViewPosition
+            )
+        }
     }
 
 
@@ -126,6 +132,22 @@ class RestaurantesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRestaurantesBinding.bind(view)
 
+        binding.btnPerfil.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setMessage("¿Seguro que quieres cerrar sesión?")
+            builder.setPositiveButton("Si") { dialog, _ ->
+                FirebaseAuth.getInstance().signOut()
+                findNavController().navigate(R.id.action_restaurantesFragment_to_mainActivity)
+                dialog.dismiss()
+            }
+            builder.setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            builder.setCancelable(false)
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+
+        }
         // Restaurar la posición del RecyclerView si está guardada
         if (savedInstanceState != null) {
             recyclerViewPosition = savedInstanceState.getInt("recyclerViewPosition", 0)
@@ -146,7 +168,8 @@ class RestaurantesFragment : Fragment() {
             )
 
             for (restaurante in restaurantes) {
-                restaurante.favorito = viewModel.isFavorito(restaurante) // Método para verificar si el restaurante está en la lista de favoritos
+                restaurante.favorito =
+                    viewModel.isFavorito(restaurante) // Método para verificar si el restaurante está en la lista de favoritos
             }
 
             binding.rvRestaurantes.adapter = restauranteAdapter
@@ -179,11 +202,10 @@ class RestaurantesFragment : Fragment() {
     }
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentRestaurantesBinding.inflate(inflater, container, false)
         return binding.root
     }

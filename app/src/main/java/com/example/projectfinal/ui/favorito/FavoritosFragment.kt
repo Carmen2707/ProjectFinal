@@ -14,7 +14,6 @@ import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentFavoritosBinding
 import com.example.projectfinal.ui.restaurante.RestauranteViewModel
 import com.example.projectfinal.util.UiState
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -54,9 +53,10 @@ class FavoritosFragment : Fragment() {
 
                 is UiState.Success -> {
                     // Actualizar el adaptador con la lista de reservas
-                    favoritosAdapter = FavoritosAdapter(uiState.data.toMutableList()) { restaurante, isChecked ->
-                        esChecked(restaurante, isChecked)
-                    }
+                    favoritosAdapter =
+                        FavoritosAdapter(uiState.data.toMutableList()) { restaurante, isChecked ->
+                            esChecked(restaurante, isChecked)
+                        }
                     binding.rvFavoritos.adapter = favoritosAdapter
                     favoritosAdapter?.updateList(uiState.data.toMutableList())
                 }
@@ -65,13 +65,13 @@ class FavoritosFragment : Fragment() {
                 else -> {}
             }
         }
-      /*  viewModel.listaFavoritos.observe(viewLifecycleOwner) { restaurantes ->
-            favoritosAdapter = FavoritosAdapter(restaurantes) { restaurante, isChecked ->
-                esChecked(restaurante, isChecked)
-            }
-            binding.rvFavoritos.adapter = favoritosAdapter
+        /*  viewModel.listaFavoritos.observe(viewLifecycleOwner) { restaurantes ->
+              favoritosAdapter = FavoritosAdapter(restaurantes) { restaurante, isChecked ->
+                  esChecked(restaurante, isChecked)
+              }
+              binding.rvFavoritos.adapter = favoritosAdapter
 
-        }*/
+          }*/
 
         binding.rvFavoritos.layoutManager = LinearLayoutManager(context)
     }
@@ -85,7 +85,7 @@ class FavoritosFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentFavoritosBinding.inflate(inflater, container, false)
         // Retorna la vista inflada por el binding

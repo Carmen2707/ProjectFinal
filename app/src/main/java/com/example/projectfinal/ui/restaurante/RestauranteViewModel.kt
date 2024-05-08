@@ -10,20 +10,19 @@ import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.data.model.Usuario
 import com.example.projectfinal.data.repository.FavoritoRepository
 import com.example.projectfinal.data.repository.UsuarioRepository
-import com.example.projectfinal.room.DAO
+
 import com.example.projectfinal.util.UiState
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
 class RestauranteViewModel @Inject constructor(
-    private val dao: DAO,val repository: FavoritoRepository, val repositoryUsuario: UsuarioRepository
+    val repository: FavoritoRepository,
+    val repositoryUsuario: UsuarioRepository
 ) : ViewModel() {
 
     val _restaurantesBD = MutableLiveData<List<Restaurante>>()
@@ -77,7 +76,8 @@ class RestauranteViewModel @Inject constructor(
 
         }
     }
-            fun addFavoritos(restaurante: Restaurante) {
+
+    fun addFavoritos(restaurante: Restaurante) {
         // dao.modificarFavorito(restaurante.nombre, true)
         viewModelScope.launch {
             repository.addFavorito(restaurante, userId) { result ->
@@ -110,10 +110,10 @@ class RestauranteViewModel @Inject constructor(
         viewModelScope.launch {
             repository.eliminarFavorito(restaurante, userId)
 
-            dao.modificarFavorito(restaurante.nombre, false)
+            // dao.modificarFavorito(restaurante.nombre, false)
             val currentList = when (val currentState = _listaFavoritos.value) {
                 is UiState.Success -> {
-                    val dataList = currentState.data ?: listOf()
+                    val dataList = currentState.data
                     dataList.toMutableList().apply {
                         // Eliminar el restaurante de la lista si existe
                         removeAll { it.id == restaurante.id }
@@ -126,8 +126,6 @@ class RestauranteViewModel @Inject constructor(
             _listaFavoritos.value = UiState.Success(currentList)
         }
     }
-
-
 
 
     fun filtrarRestaurantesPorCategoria(categoriasSeleccionadas: MutableList<Categorias>) {
@@ -153,8 +151,6 @@ class RestauranteViewModel @Inject constructor(
     }
 
 
-
-
     fun obtenerDatos() {
         val listaRestaurantes = mutableListOf<Restaurante>()
         var id: Long
@@ -164,7 +160,8 @@ class RestauranteViewModel @Inject constructor(
         var contacto: Long
         var imagen: String
         var categoria: String
-
+        var horaApertura: String
+        var horaCierre: String
         var restaurante: Restaurante
 
         val db = Firebase.firestore
@@ -177,18 +174,22 @@ class RestauranteViewModel @Inject constructor(
                 contacto = document.data.get("contacto") as Long
                 imagen = document.data.get("imagen") as String
                 categoria = document.data.get("categoria") as String
-
+                horaApertura = document.data.get("horaApertura") as String
+                horaCierre = document.data.get("horaCierre") as String
                 restaurante = Restaurante(
                     id,
                     nombre,
                     direccion,
                     horario,
+                    horaApertura,
+                    horaCierre,
                     contacto,
                     imagen,
-                    categoria
-                )
+                    categoria,
+
+                    )
                 listaRestaurantes.add(restaurante)
-                dao.insertAll(listaRestaurantes)
+
 
             }
             viewModelScope.launch {
@@ -201,30 +202,30 @@ class RestauranteViewModel @Inject constructor(
 
     }
 
-  /*  fun obtenerDatos() {
-        val userDocument = FirebaseFirestore.getInstance()
-            .collection("usuarios")
-            .document(FirebaseAuth.getInstance().currentUser?.email ?: "")
-            .get()
-        Log.e("carmen", userDocument.result.toString())
-        userDocument.addOnSuccessListener { documentSnapshot ->
-            // Verificar si el documento existe y contiene datos
-            if (documentSnapshot.exists()) {
-                // Si existe, obtén la lista de favoritos y actualiza LiveData
-                val favoritos = documentSnapshot.toObject(Usuario::class.java)?.favoritos
-                //_listaFavoritos.postValue(UiState.Success(favoritos))
-                Log.e("carmen1", "patatoide")
-            } else {
-                // Si el documento no existe, actualiza LiveData con un estado de error
-               // _listaFavoritos.postValue(UiState.Failure(Exception("El documento del usuario no existe")))
-                Log.e("carmen2", "entro en el dos")
+    /*  fun obtenerDatos() {
+          val userDocument = FirebaseFirestore.getInstance()
+              .collection("usuarios")
+              .document(FirebaseAuth.getInstance().currentUser?.email ?: "")
+              .get()
+          Log.e("carmen", userDocument.result.toString())
+          userDocument.addOnSuccessListener { documentSnapshot ->
+              // Verificar si el documento existe y contiene datos
+              if (documentSnapshot.exists()) {
+                  // Si existe, obtén la lista de favoritos y actualiza LiveData
+                  val favoritos = documentSnapshot.toObject(Usuario::class.java)?.favoritos
+                  //_listaFavoritos.postValue(UiState.Success(favoritos))
+                  Log.e("carmen1", "patatoide")
+              } else {
+                  // Si el documento no existe, actualiza LiveData con un estado de error
+                 // _listaFavoritos.postValue(UiState.Failure(Exception("El documento del usuario no existe")))
+                  Log.e("carmen2", "entro en el dos")
 
-            }
-        }.addOnFailureListener { e ->
-            // Manejar cualquier excepción que ocurra durante la consulta
-            Log.e("carmen4", "Despues del 2 va el 4")
-        }
-    }
-*/
+              }
+          }.addOnFailureListener { e ->
+              // Manejar cualquier excepción que ocurra durante la consulta
+              Log.e("carmen4", "Despues del 2 va el 4")
+          }
+      }
+  */
 
 }

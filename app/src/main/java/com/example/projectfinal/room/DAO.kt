@@ -1,12 +1,6 @@
 package com.example.projectfinal.room
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Update
-import com.example.projectfinal.data.model.Restaurante
-
+/*
 @Dao
 interface DAO {
     @Query("SELECT * FROM restaurantesBD")
@@ -23,4 +17,4 @@ interface DAO {
     @Query("SELECT * FROM restaurantesBD WHERE favorito = 1 AND userId = :userId")
     fun getFavoritos(userId: String): List<Restaurante>
 
-}
+}*/

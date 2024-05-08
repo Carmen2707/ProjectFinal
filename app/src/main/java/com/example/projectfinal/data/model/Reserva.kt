@@ -1,7 +1,5 @@
 package com.example.projectfinal.data.model
 
-import java.util.Date
-
 data class Reserva(
     var id: String = "",
     var fecha: String = "",
@@ -9,8 +7,10 @@ data class Reserva(
     var usuario: String = "",
     var observaciones: String? = null,
     var personas: Int = 0,
-    var restaurante: String = ""
+    var restaurante: String = "",
+    var horaApertura: String = "",
+    var horaCierre: String = ""
 ) {
-    constructor() : this("","", "", "", null, 0, "")
+    constructor() : this("", "", "", "", null, 0, "")
 }
 

@@ -26,7 +26,11 @@ class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepositor
                     Log.d("FavoritoRepository", "Favoritos obtenidos con éxito: $favoritos")
                 }
                 .addOnFailureListener { exception ->
-                    result.invoke(UiState.Failure(exception.localizedMessage ?: "Error desconocido al obtener Favoritos"))
+                    result.invoke(
+                        UiState.Failure(
+                            exception.localizedMessage ?: "Error desconocido al obtener Favoritos"
+                        )
+                    )
                     Log.e("FavoritoRepository", "Error al obtener Favoritos", exception)
                 }
         } else {
@@ -42,7 +46,7 @@ class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepositor
     ) {
 
 
-       val document = database.collection(FireStoreCollection.FAVORITOS).document()
+        val document = database.collection(FireStoreCollection.FAVORITOS).document()
         restaurante.idFavorito = document.id
 
         val favorito = hashMapOf(
@@ -58,16 +62,20 @@ class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepositor
             "favorito" to restaurante.favorito
         )
 
-            document.set(favorito)
+        document.set(favorito)
             .addOnSuccessListener {
                 result.invoke(UiState.Success(Unit))
                 Log.d("FavoritoRepository", "Restaurante añadido a favoritos con éxito")
             }
             .addOnFailureListener { exception ->
-                result.invoke(UiState.Failure(exception.localizedMessage ?: "Error desconocido al añadir restaurante a favoritos"))
+                result.invoke(
+                    UiState.Failure(
+                        exception.localizedMessage
+                            ?: "Error desconocido al añadir restaurante a favoritos"
+                    )
+                )
                 Log.e("FavoritoRepository", "Error al añadir restaurante a favoritos", exception)
             }
-
 
 
     }

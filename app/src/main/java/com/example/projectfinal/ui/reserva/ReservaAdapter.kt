@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Reserva
 
-class ReservaAdapter() :
+class ReservaAdapter :
     RecyclerView.Adapter<ReservaViewHolder>() {
     private var reservas: MutableList<Reserva> = mutableListOf()
     private var listener: OnItemClickListener? = null

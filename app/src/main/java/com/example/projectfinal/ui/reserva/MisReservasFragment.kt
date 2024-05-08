@@ -13,9 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectfinal.UsuarioViewModel
 import com.example.projectfinal.databinding.FragmentMisReservasBinding
 import com.example.projectfinal.util.UiState
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.firestore
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -72,8 +69,16 @@ class MisReservasFragment : Fragment() {
                 val reserva = adapter.getItemAtPosition(position)
                 val action =
                     MisReservasFragmentDirections.actionMisReservasFragmentToFormularioFragment(
-                        restauranteNombre = reserva.restaurante,id = reserva.id, nombreUsuario = reserva.usuario, personas = reserva.personas,
-                        fecha = reserva.fecha, hora = reserva.hora, observaciones = reserva.observaciones, isEdit = true
+                        restauranteNombre = reserva.restaurante,
+                        id = reserva.id,
+                        nombreUsuario = reserva.usuario,
+                        personas = reserva.personas,
+                        fecha = reserva.fecha,
+                        hora = reserva.hora,
+                        observaciones = reserva.observaciones,
+                        horaApertura = reserva.horaApertura,
+                        horaCierre = reserva.horaCierre,
+                        isEdit = true
                     )
                 findNavController().navigate(action)
 
@@ -112,7 +117,7 @@ class MisReservasFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentMisReservasBinding.inflate(inflater, container, false)
         // Retorna la vista inflada por el binding

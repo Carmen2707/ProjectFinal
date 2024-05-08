@@ -9,7 +9,6 @@ import com.example.projectfinal.data.model.Usuario
 import com.example.projectfinal.data.repository.ReservaRepository
 import com.example.projectfinal.util.UiState
 import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -31,6 +30,7 @@ class ReservaViewModel @Inject constructor(val repository: ReservaRepository) : 
 
         }
     }
+
     fun borrarReserva(position: Int, callback: (Boolean) -> Unit) {
         val uiState = reserva.value
         if (uiState is UiState.Success) {
@@ -42,7 +42,8 @@ class ReservaViewModel @Inject constructor(val repository: ReservaRepository) : 
                     .addOnSuccessListener {
                         // Operación de eliminación exitosa
                         reservas.removeAt(position) // Eliminar el elemento de la lista local
-                        _reserva.value = UiState.Success(reservas) // Actualizar el estado con la lista modificada
+                        _reserva.value =
+                            UiState.Success(reservas) // Actualizar el estado con la lista modificada
                         callback(true)
                     }
                     .addOnFailureListener { exception ->

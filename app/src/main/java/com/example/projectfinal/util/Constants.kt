@@ -1,6 +1,6 @@
 package com.example.projectfinal.util
 
-object FireStoreCollection{
+object FireStoreCollection {
     val RESERVA = "reservas"
     val FAVORITOS = "favoritos"
 }

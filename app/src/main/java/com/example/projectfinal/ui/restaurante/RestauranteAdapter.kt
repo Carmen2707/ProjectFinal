@@ -15,7 +15,7 @@ class RestauranteAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestauranteViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_restaurante, parent, false)
-        return RestauranteViewHolder(view, onFavoritoChangeListener)
+        return RestauranteViewHolder(view)
     }
 
     override fun getItemCount(): Int = currentList.size
@@ -31,12 +31,7 @@ class RestauranteAdapter(
             onFavoritoChangeListener(restaurante, isChecked)
         }
     }
-    fun updateFavoritos(favoritos: List<Restaurante>) {
-        currentList.forEach { restaurante ->
-            restaurante.favorito = favoritos.any { it.id == restaurante.id }
-        }
-        notifyDataSetChanged()
-    }
+
     companion object {
         val RESTAURANTE_COMPARATOR = object : DiffUtil.ItemCallback<Restaurante>() {
             override fun areItemsTheSame(oldItem: Restaurante, newItem: Restaurante): Boolean {

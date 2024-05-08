@@ -1,16 +1,16 @@
 package com.example.projectfinal.data.model
 
-import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "restaurantesBD")
 data class Restaurante(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
     val nombre: String,
     val direccion: String? = null,
     val horario: String? = null,
+    val horaApertura: String,
+    val horaCierre: String,
     val contacto: Long? = null,
     val imagen: String? = null,
     val categoria: String,
@@ -22,7 +22,10 @@ data class Restaurante(
     constructor() : this(
         id = 0,
         nombre = "",
-        categoria = ""
+        categoria = "",
+        horaApertura = "",
+
+        horaCierre = ""
     )
 }
 

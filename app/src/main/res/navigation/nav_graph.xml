@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_restaurantesFragment_to_formularioFragment"
             app:destination="@id/formularioFragment" />
+        <action
+            android:id="@+id/action_restaurantesFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
 
 
     </fragment>
@@ -45,6 +48,12 @@
             app:argType="boolean" />
         <argument
             android:name="id"
+            app:argType="string" />
+        <argument
+            android:name="horaApertura"
+            app:argType="string" />
+        <argument
+            android:name="horaCierre"
             app:argType="string" />
     </fragment>
     <fragment

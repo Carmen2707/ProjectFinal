@@ -1,6 +1,5 @@
 package com.example.projectfinal.ui.formulario
 
-import android.R
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -39,7 +38,7 @@ class FormularioFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAnadirReservaBinding.inflate(inflater, container, false)
         // Retorna la vista inflada por el binding
         return binding.root
@@ -118,18 +117,61 @@ class FormularioFragment : Fragment() {
             val c = Calendar.getInstance()
             val hour = c.get(Calendar.HOUR_OF_DAY)
             val minute = c.get(Calendar.MINUTE)
+
+            val horaApertura = args.horaApertura
+            val horaCierre = args.horaCierre
+
+            val horaAperturaParts = horaApertura.split(":")
+            val horaAperturaHour = horaAperturaParts[0].toInt()
+            val horaAperturaMinute = horaAperturaParts[1].toInt()
+
+            val horaCierreParts = horaCierre.split(":")
+            val horaCierreHour = horaCierreParts[0].toInt()
+            val horaCierreMinute = horaCierreParts[1].toInt()
+
             val timePickerDialog = TimePickerDialog(
                 requireContext(),
-                { view, hourOfDay, minute ->
-                    binding.tfHora.setText("$hourOfDay:$minute")
-
+                { _, hourOfDay, minute ->
+                    // Verificar si la hora seleccionada está dentro del rango permitido
+                    if (hourOfDay < horaAperturaHour || (hourOfDay == horaAperturaHour && minute < horaAperturaMinute)) {
+                        // Si la hora seleccionada está antes de la hora de apertura, ajustar a la hora de apertura
+                        binding.tfHora.setText(horaApertura)
+                    } else if (hourOfDay > horaCierreHour || (hourOfDay == horaCierreHour && minute > horaCierreMinute)) {
+                        // Si la hora seleccionada está después de la hora de cierre, ajustar a la hora de cierre
+                        binding.tfHora.setText(horaCierre)
+                    } else {
+                        // La hora seleccionada está dentro del rango permitido, establecerla en el EditText
+                        val selectedHour = if (hourOfDay < 10) "0$hourOfDay" else hourOfDay.toString()
+                        val selectedMinute = if (minute < 10) "0$minute" else minute.toString()
+                        val selectedTime = "$selectedHour:$selectedMinute"
+                        binding.tfHora.setText(selectedTime)
+                    }
                 },
                 hour,
                 minute,
                 true
             )
+
+            // Deshabilitar las horas fuera del rango
+            timePickerDialog.setOnTimeChangedListener { view, hourOfDay, minute ->
+                if (hourOfDay < horaAperturaHour || (hourOfDay == horaAperturaHour && minute < horaAperturaMinute)) {
+                    // Si la hora seleccionada está antes de la hora de apertura, establecer la hora de apertura
+                    view.hour = horaAperturaHour
+                    view.minute = horaAperturaMinute
+                } else if (hourOfDay > horaCierreHour || (hourOfDay == horaCierreHour && minute > horaCierreMinute)) {
+                    // Si la hora seleccionada está después de la hora de cierre, establecer la hora de cierre
+                    view.hour = horaCierreHour
+                    view.minute = horaCierreMinute
+                }
+            }
+
             timePickerDialog.show()
         }
+
+
+
+
+
 
         binding.btnGuardar.setOnClickListener {
             if (validate()) {
@@ -172,10 +214,9 @@ class FormularioFragment : Fragment() {
             }
 
 
-
-
         }
     }
+
     fun validate(): Boolean {
         var isValid = true
 
@@ -207,7 +248,6 @@ class FormularioFragment : Fragment() {
 
         return isValid
     }
-
 
 
     /**
