@@ -1,8 +1,6 @@
 package com.example.projectfinal.data.repository
 
 import android.util.Log
-import com.example.projectfinal.data.model.Favorito
-import com.example.projectfinal.data.model.Reserva
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.data.model.Usuario
 import com.example.projectfinal.util.FireStoreCollection
@@ -48,6 +46,7 @@ class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepositor
         restaurante.idFavorito = document.id
 
         val favorito = hashMapOf(
+            "id" to restaurante.id,
             "idFavorito" to restaurante.idFavorito,
             "usuario" to usuarioId,
             "categoría" to restaurante.categoria,
@@ -68,6 +67,9 @@ class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepositor
                 result.invoke(UiState.Failure(exception.localizedMessage ?: "Error desconocido al añadir restaurante a favoritos"))
                 Log.e("FavoritoRepository", "Error al añadir restaurante a favoritos", exception)
             }
+
+
+
     }
 
     override fun eliminarFavorito(

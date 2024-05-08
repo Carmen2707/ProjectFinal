@@ -7,4 +7,7 @@ interface UsuarioRepository {
 
     fun getCurrentUser():LiveData<Usuario?>
 
+    fun getUsuario(): Usuario?
+
+    fun obtenerUsuario(userId: String): Usuario?
 }

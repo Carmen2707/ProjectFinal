@@ -11,12 +11,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
+import com.example.projectfinal.UsuarioViewModel
 import com.example.projectfinal.data.model.Categorias
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentRestaurantesBinding
 import com.example.projectfinal.ui.categoria.CategoriaAdapter
-import com.example.projectfinal.ui.favorito.FavoritosViewModel
-import com.google.firebase.auth.FirebaseAuth
+import com.example.projectfinal.util.UiState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,8 +27,7 @@ class RestaurantesFragment : Fragment() {
     private lateinit var restauranteAdapter: RestauranteAdapter
     private var recyclerViewPosition = 0
     private val viewModel: RestauranteViewModel by activityViewModels()
-    private val viewModelFavoritos: FavoritosViewModel by activityViewModels()
-
+    private val viewModelUsuario: UsuarioViewModel by activityViewModels()
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -113,7 +112,7 @@ class RestaurantesFragment : Fragment() {
 
     private fun esChecked(restaurante: Restaurante, isChecked: Boolean) {
 
-        viewModelFavoritos.actualizarFavorito(restaurante, isChecked)
+        viewModel.actualizarFavorito(restaurante, isChecked)
 
           recyclerViewPosition = restauranteAdapter.currentList.indexOf(restaurante)
           println(recyclerViewPosition)
@@ -127,7 +126,6 @@ class RestaurantesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRestaurantesBinding.bind(view)
 
-
         // Restaurar la posición del RecyclerView si está guardada
         if (savedInstanceState != null) {
             recyclerViewPosition = savedInstanceState.getInt("recyclerViewPosition", 0)
@@ -136,6 +134,7 @@ class RestaurantesFragment : Fragment() {
         binding.rvRestaurantes.layoutManager = LinearLayoutManager(context)
 
         viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
+
             restauranteAdapter = RestauranteAdapter(
                 onFavoritoChangeListener = { restaurante, isChecked ->
                     esChecked(restaurante, isChecked)
@@ -145,6 +144,11 @@ class RestaurantesFragment : Fragment() {
                     onItemSelected(restaurante)
                 }
             )
+
+            for (restaurante in restaurantes) {
+                restaurante.favorito = viewModel.isFavorito(restaurante) // Método para verificar si el restaurante está en la lista de favoritos
+            }
+
             binding.rvRestaurantes.adapter = restauranteAdapter
 
             restauranteAdapter.submitList(restaurantes)
@@ -152,9 +156,14 @@ class RestaurantesFragment : Fragment() {
             (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(
                 recyclerViewPosition
             )
-
+            viewModelUsuario.getSession().observe(viewLifecycleOwner) { usuario ->
+                usuario?.let {
+                    viewModel.cargarFavoritos(usuario)
+                } ?: run {
+                    Log.d("RestaurantesFragment", "Usuario no autenticado")
+                }
+            }
         }
-
 
         // Configurar el adaptador de categorías
         categoriaAdapter =
@@ -168,6 +177,7 @@ class RestaurantesFragment : Fragment() {
             (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(position)
         }
     }
+
 
 
     override fun onCreateView(

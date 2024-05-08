@@ -25,6 +25,10 @@ class FavoritosAdapter(
         holder.checkBox.isChecked = restaurante.favorito == true
         holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
             onFavoritoChangeListener(restaurante, isChecked)
+            if (!isChecked) {
+                favoritos.remove(restaurante)
+                notifyItemRemoved(position)
+            }
         }
     }
 

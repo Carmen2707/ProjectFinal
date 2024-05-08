@@ -12,4 +12,8 @@ class UsuarioViewModel @Inject constructor(val repository: UsuarioRepository
     fun getSession(): LiveData<Usuario?> {
       return  repository.getCurrentUser()
     }
+
+    fun getUsuario(): Usuario? {
+       return repository.getUsuario()
+    }
 }

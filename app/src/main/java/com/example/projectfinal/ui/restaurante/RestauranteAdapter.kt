@@ -24,12 +24,19 @@ class RestauranteAdapter(
         val restaurante = currentList[position]
         holder.render(restaurante, onItemSelected)
 
-        holder.checkBox.isChecked = restaurante.favorito == true
+        holder.checkBox.isChecked = restaurante.favorito
+
+
         holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
             onFavoritoChangeListener(restaurante, isChecked)
         }
     }
-
+    fun updateFavoritos(favoritos: List<Restaurante>) {
+        currentList.forEach { restaurante ->
+            restaurante.favorito = favoritos.any { it.id == restaurante.id }
+        }
+        notifyDataSetChanged()
+    }
     companion object {
         val RESTAURANTE_COMPARATOR = object : DiffUtil.ItemCallback<Restaurante>() {
             override fun areItemsTheSame(oldItem: Restaurante, newItem: Restaurante): Boolean {

@@ -1,8 +1,6 @@
 package com.example.projectfinal.room
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -19,6 +17,8 @@ interface DAO {
     fun actualizarRestaurante(restaurante: Restaurante)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(restaurante: MutableList<Restaurante>)
+    @Query("UPDATE restaurantesBD SET favorito = :estado WHERE nombre = :nombreRestaurante")
+    fun modificarFavorito(nombreRestaurante: String, estado:Boolean)
 
     @Query("SELECT * FROM restaurantesBD WHERE favorito = 1 AND userId = :userId")
     fun getFavoritos(userId: String): List<Restaurante>

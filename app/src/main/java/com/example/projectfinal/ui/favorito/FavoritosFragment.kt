@@ -24,7 +24,7 @@ class FavoritosFragment : Fragment() {
     private lateinit var binding: FragmentFavoritosBinding
     private var favoritosAdapter: FavoritosAdapter? = null // Define tu adaptador de favoritos aquí
     private var listaFavoritos = mutableListOf<Restaurante>()
-    private val viewModel: FavoritosViewModel by activityViewModels()
+    private val viewModel: RestauranteViewModel by activityViewModels()
     private val viewModelUsuario: UsuarioViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +73,6 @@ class FavoritosFragment : Fragment() {
 
         }*/
 
-        binding.rvFavoritos.adapter = favoritosAdapter
         binding.rvFavoritos.layoutManager = LinearLayoutManager(context)
     }
 
