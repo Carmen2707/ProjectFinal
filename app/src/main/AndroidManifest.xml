@@ -16,22 +16,26 @@
         android:roundIcon="@drawable/reserva2"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectFinal"
-        android:enableOnBackInvokedCallback="true"
+
         tools:targetApi="31">
         <activity
             android:name=".ui.NavigationActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_navigation" />
 
         <activity
             android:name=".ui.RegistrarActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.IniciarActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
