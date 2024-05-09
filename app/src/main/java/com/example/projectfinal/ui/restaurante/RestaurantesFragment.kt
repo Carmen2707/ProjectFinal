@@ -125,6 +125,7 @@ class RestaurantesFragment : Fragment() {
                 recyclerViewPosition
             )
         }
+
     }
 
 
@@ -156,9 +157,13 @@ class RestaurantesFragment : Fragment() {
         binding.rvRestaurantes.layoutManager = LinearLayoutManager(context)
 
         viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
-
+            for (restaurante in restaurantes) {
+                restaurante.favorito = viewModel.isFavorito(restaurante) // Método para verificar si el restaurante está en la lista de favoritos
+                Log.e("fav", restaurante.favorito.toString())
+            }
             restauranteAdapter = RestauranteAdapter(
                 onFavoritoChangeListener = { restaurante, isChecked ->
+                    Log.e("che", isChecked.toString())
                     esChecked(restaurante, isChecked)
 
                 },
@@ -167,10 +172,7 @@ class RestaurantesFragment : Fragment() {
                 }
             )
 
-            for (restaurante in restaurantes) {
-                restaurante.favorito =
-                    viewModel.isFavorito(restaurante) // Método para verificar si el restaurante está en la lista de favoritos
-            }
+
 
             binding.rvRestaurantes.adapter = restauranteAdapter
 
@@ -181,7 +183,7 @@ class RestaurantesFragment : Fragment() {
             )
             viewModelUsuario.getSession().observe(viewLifecycleOwner) { usuario ->
                 usuario?.let {
-                    viewModel.cargarFavoritos(usuario)
+                    viewModel.cargarFragmentFavoritos(usuario)
                 } ?: run {
                     Log.d("RestaurantesFragment", "Usuario no autenticado")
                 }

@@ -90,7 +90,7 @@ class MisReservasFragment : Fragment() {
                 Log.d("MiFragmento", "Botón Borrar clickeado en la posición: $position")
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setMessage("¿Seguro que quieres eliminar esta reserva?")
-                builder.setPositiveButton("Si") { dialog, _ ->
+                builder.setPositiveButton("Eliminar") { dialog, _ ->
                     viewModelReserva.borrarReserva(position) { success ->
                         if (success) {
                             adapter.notifyItemRemoved(position)

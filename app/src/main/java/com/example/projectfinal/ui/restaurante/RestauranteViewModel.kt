@@ -39,19 +39,20 @@ class RestauranteViewModel @Inject constructor(
 
     init {
         obtenerDatos()
-        cargarFavoritos2()
+        cargarFavoritos()
     }
 
     fun isFavorito(restaurante: Restaurante): Boolean {
         val favoritosState = _listaFavoritos.value
-        if (favoritosState is UiState.Success) {
+        return if (favoritosState is UiState.Success) {
             val favoritos = favoritosState.data
-            return favoritos.any { it.id == restaurante.id }
+            favoritos.any { it.id == restaurante.id }
+        } else {
+            false
         }
-        return false
     }
 
-    fun cargarFavoritos2() {
+    fun cargarFavoritos() {
         viewModelScope.launch {
             val usuario = repositoryUsuario.obtenerUsuario(userId)
             repository.cargarFavoritos(usuario) { result ->
@@ -65,7 +66,7 @@ class RestauranteViewModel @Inject constructor(
         }
     }
 
-    fun cargarFavoritos(usuario: Usuario?) {
+    fun cargarFragmentFavoritos(usuario: Usuario?) {
         repository.cargarFavoritos(usuario) { result ->
             if (result is UiState.Success) {
                 _listaFavoritos.value = result
@@ -188,6 +189,10 @@ class RestauranteViewModel @Inject constructor(
                     categoria,
 
                     )
+
+                if (isFavorito(restaurante)) {
+                    restaurante.favorito = true
+                }
                 listaRestaurantes.add(restaurante)
 
 
@@ -201,31 +206,5 @@ class RestauranteViewModel @Inject constructor(
         }
 
     }
-
-    /*  fun obtenerDatos() {
-          val userDocument = FirebaseFirestore.getInstance()
-              .collection("usuarios")
-              .document(FirebaseAuth.getInstance().currentUser?.email ?: "")
-              .get()
-          Log.e("carmen", userDocument.result.toString())
-          userDocument.addOnSuccessListener { documentSnapshot ->
-              // Verificar si el documento existe y contiene datos
-              if (documentSnapshot.exists()) {
-                  // Si existe, obtén la lista de favoritos y actualiza LiveData
-                  val favoritos = documentSnapshot.toObject(Usuario::class.java)?.favoritos
-                  //_listaFavoritos.postValue(UiState.Success(favoritos))
-                  Log.e("carmen1", "patatoide")
-              } else {
-                  // Si el documento no existe, actualiza LiveData con un estado de error
-                 // _listaFavoritos.postValue(UiState.Failure(Exception("El documento del usuario no existe")))
-                  Log.e("carmen2", "entro en el dos")
-
-              }
-          }.addOnFailureListener { e ->
-              // Manejar cualquier excepción que ocurra durante la consulta
-              Log.e("carmen4", "Despues del 2 va el 4")
-          }
-      }
-  */
 
 }

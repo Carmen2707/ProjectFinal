@@ -86,6 +86,8 @@ class FormularioFragment : Fragment() {
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
 
+            c.add(Calendar.DAY_OF_MONTH, 1)
+
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
                 { view, year, monthOfYear, dayOfMonth ->
@@ -98,23 +100,9 @@ class FormularioFragment : Fragment() {
                 month,
                 day
             )
-            datePickerDialog.show()
 
-            /* val currentDateTime = Calendar.getInstance()
-              val startYear = currentDateTime.get(Calendar.YEAR)
-              val startMonth = currentDateTime.get(Calendar.MONTH)
-              val startDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
-              val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
-              val startMinute = currentDateTime.get(Calendar.MINUTE)
-              DatePickerDialog(requireContext(), { _, year, month, day ->
-                  TimePickerDialog(context, { _, hour, minute ->
-                      val pickedDateTime = Calendar.getInstance()
-                      pickedDateTime.set(year, month, day, hour, minute)
-                      val formattedDateTime = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(pickedDateTime.time)
-                      binding.tfFecha.setText(formattedDateTime)
-                  }, startHour, startMinute, false).show()
-              }, startYear, startMonth, startDay).show()
-  */
+            datePickerDialog.datePicker.minDate = c.timeInMillis
+            datePickerDialog.show()
         }
 
         binding.tfHora.setOnClickListener {
@@ -157,9 +145,6 @@ class FormularioFragment : Fragment() {
 
 
         binding.btnGuardar.setOnClickListener {
-            val horaApertura = args.horaApertura
-            val horaCierre = args.horaCierre
-
             if (validate()) {
                 val observaciones = binding.tfEditTextObservacion.text.toString()
 

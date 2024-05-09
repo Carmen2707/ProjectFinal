@@ -9,5 +9,6 @@ interface FavoritoRepository {
 
     fun addFavorito(restaurante: Restaurante, usuarioId: String, result: (UiState<Unit>) -> Unit)
 
-    fun eliminarFavorito(restaurante: Restaurante, usuarioId: String)
+    fun eliminarFavorito(restaurante: Restaurante, userId: String)
+
 }

@@ -9,6 +9,7 @@ import com.example.projectfinal.util.UiState
 import com.google.firebase.firestore.FirebaseFirestore
 
 class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepository {
+    val documento = database.collection(FireStoreCollection.FAVORITOS).document()
 
     override fun cargarFavoritos(usuario: Usuario?, result: (UiState<List<Restaurante>>) -> Unit) {
         if (usuario != null) {
@@ -19,7 +20,7 @@ class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepositor
                     val favoritos = arrayListOf<Restaurante>()
                     for (document in querySnapshot) {
                         val restaurante = document.toObject(Restaurante::class.java)
-                        Log.e("jdjjd", restaurante.id.toString())
+                      //  restaurante.idFavorito = documento.id
                         favoritos.add(restaurante)
                     }
                     result.invoke(UiState.Success(favoritos))
@@ -46,12 +47,11 @@ class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepositor
     ) {
 
 
-        val document = database.collection(FireStoreCollection.FAVORITOS).document()
-        restaurante.idFavorito = document.id
+        val document = database.collection(FireStoreCollection.FAVORITOS).document(restaurante.id.toString() + usuarioId)
+
 
         val favorito = hashMapOf(
             "id" to restaurante.id,
-            "idFavorito" to restaurante.idFavorito,
             "usuario" to usuarioId,
             "categoría" to restaurante.categoria,
             "contacto" to restaurante.contacto,
@@ -81,13 +81,14 @@ class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepositor
     }
 
     override fun eliminarFavorito(
-        restaurante: Restaurante,
-        usuarioId: String
+        restaurante: Restaurante, userId: String
     ) {
-        restaurante.idFavorito?.let { database.collection("favoritos").document(it).delete() }
+         database.collection("favoritos").document(restaurante.id.toString()+ userId).delete() }
 
     }
-}
+
+
+
 
 
 

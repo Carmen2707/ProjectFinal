@@ -14,7 +14,7 @@ data class Restaurante(
     val contacto: Long? = null,
     val imagen: String? = null,
     val categoria: String,
-    var favorito: Boolean = false,
+    var favorito: Boolean? = null,
     var userId: String? = null,
     var idFavorito: String? = null
 ) {
@@ -24,7 +24,6 @@ data class Restaurante(
         nombre = "",
         categoria = "",
         horaApertura = "",
-
         horaCierre = ""
     )
 }

@@ -24,7 +24,7 @@ class RestauranteAdapter(
         val restaurante = currentList[position]
         holder.render(restaurante, onItemSelected)
 
-        holder.checkBox.isChecked = restaurante.favorito
+        holder.checkBox.isChecked = restaurante.favorito == true
 
 
         holder.checkBox.setOnCheckedChangeListener { _, isChecked ->

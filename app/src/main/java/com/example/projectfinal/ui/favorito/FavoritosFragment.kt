@@ -38,7 +38,7 @@ class FavoritosFragment : Fragment() {
 
         viewModelUsuario.getSession().observe(viewLifecycleOwner) { usuario ->
             usuario?.let {
-                viewModel.cargarFavoritos(usuario)
+                viewModel.cargarFragmentFavoritos(usuario)
 
             } ?: run {
                 Log.d("MisReservasFragment", "Usuario no autenticado")
