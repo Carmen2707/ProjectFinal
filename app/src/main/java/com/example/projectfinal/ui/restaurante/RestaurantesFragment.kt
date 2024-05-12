@@ -42,8 +42,8 @@ class RestaurantesFragment : Fragment() {
     // Lista de categorías
     private val categorias =
         listOf(
-            Categorias.Italiano, Categorias.Indio, Categorias.China, Categorias.Japonesa,
-            Categorias.Mediterránea, Categorias.Tapas, Categorias.Mexicano,
+            Categorias.Italiano, Categorias.Indio, Categorias.Chino, Categorias.Japones,
+            Categorias.Mediterráneo, Categorias.Tapas, Categorias.Mexicano,
             Categorias.Cafés, Categorias.Vegetariano
         )
 
@@ -94,23 +94,15 @@ class RestaurantesFragment : Fragment() {
 
         if (currentDestinationId == restaurantesFragmentId) {
             val action =
-                RestaurantesFragmentDirections.actionRestaurantesFragmentToFormularioFragment(
-                    restauranteNombre = restaurante.nombre,
-                    id = "",
-                    nombreUsuario = "",
-                    fecha = "",
-                    hora = "",
-                    personas = 1,
-                    observaciones = "",
-                    horaApertura = restaurante.horaApertura,
-                    horaCierre = restaurante.horaCierre,
-                    isEdit = false
+                RestaurantesFragmentDirections.actionRestaurantesFragmentToDetallesFragment(
+                    restauranteNombre = restaurante.nombre, restaurante
                 )
             findNavController().navigate(action)
         } else {
             Log.e("Navigation", "No se puede navegar desde el fragmento actual")
 
         }
+
     }
 
 

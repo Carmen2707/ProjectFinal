@@ -71,7 +71,6 @@ class RestauranteViewModel @Inject constructor(
             if (result is UiState.Success) {
                 _listaFavoritos.value = result
             } else if (result is UiState.Failure) {
-                // Manejar el estado de fallo si es necesario
                 Log.e("ReservaViewModel", "Error al cargar reservas:")
             }
 
@@ -110,8 +109,6 @@ class RestauranteViewModel @Inject constructor(
 
         viewModelScope.launch {
             repository.eliminarFavorito(restaurante, userId)
-
-            // dao.modificarFavorito(restaurante.nombre, false)
             val currentList = when (val currentState = _listaFavoritos.value) {
                 is UiState.Success -> {
                     val dataList = currentState.data
@@ -163,6 +160,7 @@ class RestauranteViewModel @Inject constructor(
         var categoria: String
         var horaApertura: String
         var horaCierre: String
+        var imagenes: List<String>
         var restaurante: Restaurante
 
         val db = Firebase.firestore
@@ -177,6 +175,7 @@ class RestauranteViewModel @Inject constructor(
                 categoria = document.data.get("categoria") as String
                 horaApertura = document.data.get("horaApertura") as String
                 horaCierre = document.data.get("horaCierre") as String
+                imagenes = document.data.get("carousel") as List<String>
                 restaurante = Restaurante(
                     id,
                     nombre,
@@ -187,7 +186,7 @@ class RestauranteViewModel @Inject constructor(
                     contacto,
                     imagen,
                     categoria,
-
+                    imagenes
                     )
 
                 if (isFavorito(restaurante)) {
@@ -198,7 +197,6 @@ class RestauranteViewModel @Inject constructor(
 
             }
             viewModelScope.launch {
-                //  dao.insertAll(listaRestaurantes)
                 _restaurantesBD.postValue(listaRestaurantes)
             }
         }.addOnFailureListener { error ->
@@ -206,5 +204,8 @@ class RestauranteViewModel @Inject constructor(
         }
 
     }
+
+
+
 
 }

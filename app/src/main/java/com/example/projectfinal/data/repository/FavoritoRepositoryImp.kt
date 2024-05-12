@@ -8,8 +8,7 @@ import com.example.projectfinal.util.FireStoreDocumentField
 import com.example.projectfinal.util.UiState
 import com.google.firebase.firestore.FirebaseFirestore
 
-class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepository {
-    val documento = database.collection(FireStoreCollection.FAVORITOS).document()
+class FavoritoRepositoryImp(private val database: FirebaseFirestore) : FavoritoRepository {
 
     override fun cargarFavoritos(usuario: Usuario?, result: (UiState<List<Restaurante>>) -> Unit) {
         if (usuario != null) {
@@ -20,7 +19,6 @@ class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepositor
                     val favoritos = arrayListOf<Restaurante>()
                     for (document in querySnapshot) {
                         val restaurante = document.toObject(Restaurante::class.java)
-                      //  restaurante.idFavorito = documento.id
                         favoritos.add(restaurante)
                     }
                     result.invoke(UiState.Success(favoritos))
@@ -57,6 +55,8 @@ class FavoritoRepositoryImp(val database: FirebaseFirestore) : FavoritoRepositor
             "contacto" to restaurante.contacto,
             "direccion" to restaurante.direccion,
             "horario" to restaurante.horario,
+            "horaApertura" to restaurante.horaApertura,
+            "horaCierre" to restaurante.horaCierre,
             "nombre" to restaurante.nombre,
             "imagen" to restaurante.imagen,
             "favorito" to restaurante.favorito

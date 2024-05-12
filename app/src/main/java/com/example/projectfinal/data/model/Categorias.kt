@@ -4,9 +4,9 @@ package com.example.projectfinal.data.model
 sealed class Categorias(var seleccionada: Boolean = false) {
     object Italiano : Categorias()
     object Indio : Categorias()
-    object China : Categorias()
-    object Japonesa : Categorias()
-    object Mediterránea : Categorias()
+    object Chino : Categorias()
+    object Japones : Categorias()
+    object Mediterráneo : Categorias()
     object Tapas : Categorias()
 
     object Mexicano : Categorias()

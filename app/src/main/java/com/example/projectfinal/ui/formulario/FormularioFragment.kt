@@ -32,7 +32,7 @@ class FormularioFragment : Fragment() {
     private lateinit var binding: FragmentAnadirReservaBinding
     private val viewModel: ReservaViewModel by activityViewModels()
 
-    private var valor = 0
+    private var valor = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -57,7 +57,8 @@ class FormularioFragment : Fragment() {
             binding.tfFecha.setText(args.fecha)
             binding.tfHora.setText(args.hora)
             binding.tfEditTextObservacion.setText(args.observaciones)
-            // Llenar otros campos según sea necesario
+            binding.tfEditTextNombre.setText(args.nombreUsuario)
+
         } else {
             // Estamos creando una nueva reserva
             // Los campos del formulario deben estar vacíos

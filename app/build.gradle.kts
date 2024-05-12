@@ -65,9 +65,9 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx:24.11.0")
     implementation("com.google.firebase:firebase-database-ktx:20.3.1")
 
-    //glide
+    //glide y coil
     implementation("com.github.bumptech.glide:glide:4.13.0")
-
+    implementation("io.coil-kt:coil:2.6.0")
 
     //Gson
     implementation("com.google.code.gson:gson:2.8.9")
@@ -77,6 +77,7 @@ dependencies {
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("com.google.firebase:firebase-firestore:24.11.1")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
     //Dagger Hilt
     val hiltVersion = "2.48.1"
     kapt("com.google.dagger:hilt-compiler:${hiltVersion}")

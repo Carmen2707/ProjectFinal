@@ -21,8 +21,7 @@ class FavoritosFragment : Fragment() {
 
 
     private lateinit var binding: FragmentFavoritosBinding
-    private var favoritosAdapter: FavoritosAdapter? = null // Define tu adaptador de favoritos aquí
-    private var listaFavoritos = mutableListOf<Restaurante>()
+    private var favoritosAdapter: FavoritosAdapter? = null
     private val viewModel: RestauranteViewModel by activityViewModels()
     private val viewModelUsuario: UsuarioViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,12 +36,7 @@ class FavoritosFragment : Fragment() {
 
 
         viewModelUsuario.getSession().observe(viewLifecycleOwner) { usuario ->
-            usuario?.let {
-                viewModel.cargarFragmentFavoritos(usuario)
-
-            } ?: run {
-                Log.d("MisReservasFragment", "Usuario no autenticado")
-            }
+            viewModel.cargarFragmentFavoritos(usuario)
         }
 
         viewModel.listaFavoritos.observe(viewLifecycleOwner) { uiState ->
@@ -65,13 +59,6 @@ class FavoritosFragment : Fragment() {
                 else -> {}
             }
         }
-        /*  viewModel.listaFavoritos.observe(viewLifecycleOwner) { restaurantes ->
-              favoritosAdapter = FavoritosAdapter(restaurantes) { restaurante, isChecked ->
-                  esChecked(restaurante, isChecked)
-              }
-              binding.rvFavoritos.adapter = favoritosAdapter
-
-          }*/
 
         binding.rvFavoritos.layoutManager = LinearLayoutManager(context)
     }

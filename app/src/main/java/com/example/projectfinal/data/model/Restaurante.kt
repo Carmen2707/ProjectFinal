@@ -1,6 +1,7 @@
 package com.example.projectfinal.data.model
 
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 
 data class Restaurante(
@@ -14,17 +15,18 @@ data class Restaurante(
     val contacto: Long? = null,
     val imagen: String? = null,
     val categoria: String,
+    var imagenes: List<String>,
     var favorito: Boolean? = null,
-    var userId: String? = null,
-    var idFavorito: String? = null
-) {
+
+) : Serializable {
     // Constructor sin argumentos requerido por Firestore
     constructor() : this(
         id = 0,
         nombre = "",
         categoria = "",
         horaApertura = "",
-        horaCierre = ""
+        horaCierre = "",
+        imagenes = listOf<String>()
     )
 }
 

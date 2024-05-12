@@ -30,6 +30,6 @@ class CategoriaAdapter(
         for (categoria in categorias) {
             categoria.seleccionada = false
         }
-        notifyDataSetChanged() // Notificar al adaptador sobre el cambio
+        notifyDataSetChanged()
     }
 }
