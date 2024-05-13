@@ -8,10 +8,21 @@
 
     tools:context=".ui.detalles.DetallesFragment">
 
+    <ImageButton
+        android:id="@+id/btnVolver"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:src="@drawable/btnvolver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/carouselRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="190dp"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="horizontal"
@@ -20,17 +31,17 @@
         app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.141"
+        app:layout_constraintVertical_bias="0.156"
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
         android:id="@+id/btnHacerReserva"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="@color/white"
-        android:text="Reservar mesa"
         android:fontFamily="@font/rocko"
+        android:text="Reservar mesa"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,9 +53,9 @@
         android:id="@+id/mapView"
         android:layout_width="300dp"
         android:layout_height="150dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/carouselRecyclerView" />
 
@@ -55,21 +66,104 @@
         android:fontFamily="@font/dunkin"
         android:text="TextView"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="22sp"
         app:layout_constraintBottom_toTopOf="@+id/carouselRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.684" />
+        app:layout_constraintVertical_bias="0.804" />
 
-    <ImageButton
-        android:id="@+id/btnVolver"
+    <TextView
+        android:id="@+id/numTel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+
+        android:fontFamily="@font/rocko"
+        android:text="@string/text_subrayado"
+        android:textColor="#0099CC"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toEndOf="@+id/tvTitTel"
+        app:layout_constraintTop_toTopOf="@+id/tvTitTel" />
+
+    <TextView
+        android:id="@+id/tvTitTel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@null"
-        android:src="@drawable/flechaizquierda1"
+        android:fontFamily="@font/rocko"
+
+        android:text="Teléfono:"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/btnWeb"
+        app:layout_constraintTop_toBottomOf="@+id/btnWeb" />
+
+    <Button
+        android:id="@+id/btnWeb"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/white"
+        android:drawableLeft="@drawable/menu"
+        android:fontFamily="@font/rocko"
+        android:text="Página Web"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/mapView" />
+
+    <TextView
+        android:id="@+id/tvTitApertura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/rocko"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:text="Hora de apertura:"
+        app:layout_constraintStart_toStartOf="@+id/tvTitTel"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitTel" />
+
+    <TextView
+        android:id="@+id/tvTitCierre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Hora de cierre:"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:fontFamily="@font/rocko"
+        app:layout_constraintStart_toStartOf="@+id/tvTitApertura"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitApertura" />
+
+    <TextView
+        android:id="@+id/tvHoraApertura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:fontFamily="@font/rocko"
+        app:layout_constraintStart_toEndOf="@+id/tvTitApertura"
+        app:layout_constraintTop_toTopOf="@+id/tvTitApertura" />
+
+    <TextView
+        android:id="@+id/tvHoraCierre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:fontFamily="@font/rocko"
+        app:layout_constraintStart_toEndOf="@+id/tvTitCierre"
+        app:layout_constraintTop_toTopOf="@+id/tvTitCierre" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -77,6 +77,7 @@ dependencies {
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("com.google.firebase:firebase-firestore:24.11.1")
+    //mapas
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     //Dagger Hilt
     val hiltVersion = "2.48.1"

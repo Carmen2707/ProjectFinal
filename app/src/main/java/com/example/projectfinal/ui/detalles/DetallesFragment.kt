@@ -1,7 +1,9 @@
 package com.example.projectfinal.ui.detalles
 
+import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -70,6 +72,12 @@ class DetallesFragment : Fragment(), OnMapReadyCallback {
             findNavController().popBackStack()
         }
         binding.tvTitle.text = args.restauranteNombre
+        binding.numTel.text = args.objRestaurante.contacto.toString()
+        binding.numTel.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:${args.objRestaurante.contacto}")
+            startActivity(intent)
+        }
         mapView = binding.mapView
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
