@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
@@ -77,6 +78,20 @@ class DetallesFragment : Fragment(), OnMapReadyCallback {
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:${args.objRestaurante.contacto}")
             startActivity(intent)
+        }
+        binding.tvHoraApertura.text = args.objRestaurante.horaApertura
+        binding.tvHoraCierre.text = args.objRestaurante.horaCierre
+
+        binding.btnWeb.setOnClickListener {
+            val webUrl = args.objRestaurante.web
+
+            if (webUrl != null && webUrl.isNotEmpty()) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(webUrl))
+                startActivity(intent)
+            } else {
+                // Manejar el caso en el que la URL es nula o vacía
+                Toast.makeText(requireContext(), "La URL no está disponible", Toast.LENGTH_SHORT).show()
+            }
         }
         mapView = binding.mapView
         mapView.onCreate(savedInstanceState)

@@ -161,6 +161,7 @@ class RestauranteViewModel @Inject constructor(
         var horaApertura: String
         var horaCierre: String
         var imagenes: List<String>
+        var web: String
         var restaurante: Restaurante
 
         val db = Firebase.firestore
@@ -176,6 +177,7 @@ class RestauranteViewModel @Inject constructor(
                 horaApertura = document.data.get("horaApertura") as String
                 horaCierre = document.data.get("horaCierre") as String
                 imagenes = document.data.get("carousel") as List<String>
+                web = document.data.get("web") as String
                 restaurante = Restaurante(
                     id,
                     nombre,
@@ -186,7 +188,8 @@ class RestauranteViewModel @Inject constructor(
                     contacto,
                     imagen,
                     categoria,
-                    imagenes
+                    imagenes,
+                    web
                     )
 
                 if (isFavorito(restaurante)) {

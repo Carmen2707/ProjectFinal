@@ -16,8 +16,8 @@ data class Restaurante(
     val imagen: String? = null,
     val categoria: String,
     var imagenes: List<String>,
+    var web: String? = null,
     var favorito: Boolean? = null,
-
 ) : Serializable {
     // Constructor sin argumentos requerido por Firestore
     constructor() : this(

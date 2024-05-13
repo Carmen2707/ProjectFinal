@@ -32,7 +32,7 @@ class FormularioFragment : Fragment() {
     private lateinit var binding: FragmentAnadirReservaBinding
     private val viewModel: ReservaViewModel by activityViewModels()
 
-    private var valor = 0
+    private var valor = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -153,6 +153,7 @@ class FormularioFragment : Fragment() {
                     binding.tfFecha.text.toString(),
                     binding.tfHora.text.toString(),
                     FirebaseAuth.getInstance().currentUser?.email ?: "",
+                    binding.tfEditTextNombre.text.toString(),
                     observaciones,
                     valor,
                     args.restauranteNombre

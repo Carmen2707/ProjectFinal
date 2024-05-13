@@ -64,7 +64,7 @@ class MisReservasFragment : Fragment() {
                     MisReservasFragmentDirections.actionMisReservasFragmentToFormularioFragment(
                         restauranteNombre = reserva.restaurante,
                         id = reserva.id,
-                        nombreUsuario = reserva.usuario,
+                        nombreUsuario = reserva.nombreUsuario,
                         personas = reserva.personas,
                         fecha = reserva.fecha,
                         hora = reserva.hora,
