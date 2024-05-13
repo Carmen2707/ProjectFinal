@@ -31,12 +31,11 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideAutghRepository(
-        database: FirebaseFirestore,
         auth: FirebaseAuth,
         appPreferences: SharedPreferences,
         gson: Gson
     ): UsuarioRepository {
-        return UsuarioRepositoryImp(auth, database, appPreferences, gson)
+        return UsuarioRepositoryImp(auth, appPreferences, gson)
     }
 
     @Provides

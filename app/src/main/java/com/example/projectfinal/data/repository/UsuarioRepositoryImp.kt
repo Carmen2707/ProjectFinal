@@ -10,7 +10,6 @@ import com.google.gson.Gson
 
 class UsuarioRepositoryImp(
     val auth: FirebaseAuth,
-    val database: FirebaseFirestore,
     val appPreferences: SharedPreferences,
     val gson: Gson
 ) : UsuarioRepository {
@@ -50,8 +49,7 @@ class UsuarioRepositoryImp(
                 val usuario = Usuario(
                     currentUser.displayName ?: "",
                     "",
-                    currentUser.email ?: "",
-                    arrayListOf()
+                    currentUser.email ?: ""
                 )
                 currentUserLiveData.value = usuario
             } else {

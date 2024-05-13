@@ -59,7 +59,6 @@ class FormularioFragment : Fragment() {
             binding.tfEditTextObservacion.setText(args.observaciones)
             binding.tfEditTextNombre.setText(args.nombreUsuario)
             binding.cantidad.text = args.personas.toString()
-            Log.e("cantidad", args.personas.toString())
         } else {
             binding.cantidad.text = args.personas.toString()
         }
@@ -192,12 +191,12 @@ class FormularioFragment : Fragment() {
         val aperturra = convertirAMinutos(horaApertura)
         val cierre = convertirAMinutos(horaCierre)
 
-        if (cierre < aperturra) {
+        return if (cierre < aperturra) {
             // el rango de tiempo atraviesa la medianoche
-            return horaSeleccionada >= aperturra || horaSeleccionada <= cierre
+            horaSeleccionada >= aperturra || horaSeleccionada <= cierre
         } else {
             // el rango de tiempo está dentro del mismo día
-            return horaSeleccionada in aperturra..cierre
+            horaSeleccionada in aperturra..cierre
         }
     }
 

@@ -9,7 +9,6 @@ import com.example.projectfinal.util.UiState
 import com.google.firebase.firestore.FirebaseFirestore
 
 class FavoritoRepositoryImp(private val database: FirebaseFirestore) : FavoritoRepository {
-
     override fun cargarFavoritos(usuario: Usuario?, result: (UiState<List<Restaurante>>) -> Unit) {
         if (usuario != null) {
             database.collection(FireStoreCollection.FAVORITOS)
@@ -43,10 +42,7 @@ class FavoritoRepositoryImp(private val database: FirebaseFirestore) : FavoritoR
         usuarioId: String,
         result: (UiState<Unit>) -> Unit
     ) {
-
-
         val document = database.collection(FireStoreCollection.FAVORITOS).document(restaurante.id.toString() + usuarioId)
-
 
         val favorito = hashMapOf(
             "id" to restaurante.id,

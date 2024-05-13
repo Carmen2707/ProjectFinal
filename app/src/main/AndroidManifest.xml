@@ -31,11 +31,11 @@
             android:label="@string/title_activity_navigation" />
 
         <activity
-            android:name=".ui.RegistrarActivity"
+            android:name=".ui.auth.RegistrarActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".ui.IniciarActivity"
+            android:name=".ui.auth.IniciarActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity

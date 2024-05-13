@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -12,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
-import com.example.projectfinal.UsuarioViewModel
+import com.example.projectfinal.ui.auth.UsuarioViewModel
 import com.example.projectfinal.data.model.Categorias
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentRestaurantesBinding
@@ -133,12 +134,7 @@ class RestaurantesFragment : Fragment() {
                 findNavController().navigate(R.id.action_restaurantesFragment_to_mainActivity)
                 dialog.dismiss()
             }
-            builder.setNegativeButton("Cancelar") { dialog, _ ->
-                dialog.dismiss()
-            }
-            builder.setCancelable(false)
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
+
 
         }
         // Restaurar la posición del RecyclerView si está guardada
@@ -174,11 +170,8 @@ class RestaurantesFragment : Fragment() {
                 recyclerViewPosition
             )
             viewModelUsuario.getSession().observe(viewLifecycleOwner) { usuario ->
-                usuario?.let {
-                    viewModel.cargarFragmentFavoritos(usuario)
-                } ?: run {
-                    Log.d("RestaurantesFragment", "Usuario no autenticado")
-                }
+                viewModel.cargarFragmentFavoritos(usuario)
+
             }
         }
 
@@ -188,7 +181,7 @@ class RestaurantesFragment : Fragment() {
         binding.rvCategorias.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rvCategorias.adapter = categoriaAdapter
-        categoriaAdapter.deseleccionarTodas()
+        categoriaAdapter.resetearCategorias()
         savedInstanceState?.getInt("recyclerViewPosition")?.let { position ->
             recyclerViewPosition = position
             (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(position)

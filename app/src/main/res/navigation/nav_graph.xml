@@ -72,12 +72,12 @@
         tools:layout="@layout/fragment_favoritos" />
     <activity
         android:id="@+id/iniciarActivity"
-        android:name="com.example.projectfinal.ui.IniciarActivity"
+        android:name="com.example.projectfinal.ui.auth.IniciarActivity"
         android:label="activity_iniciar"
         tools:layout="@layout/activity_iniciar" />
     <activity
         android:id="@+id/registrarActivity"
-        android:name="com.example.projectfinal.ui.RegistrarActivity"
+        android:name="com.example.projectfinal.ui.auth.RegistrarActivity"
         android:label="activity_registrar"
         tools:layout="@layout/activity_registrar" />
     <activity

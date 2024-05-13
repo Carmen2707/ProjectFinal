@@ -26,7 +26,7 @@ class CategoriaAdapter(
         )
     }
 
-    fun deseleccionarTodas() {
+    fun resetearCategorias() {
         for (categoria in categorias) {
             categoria.seleccionada = false
         }

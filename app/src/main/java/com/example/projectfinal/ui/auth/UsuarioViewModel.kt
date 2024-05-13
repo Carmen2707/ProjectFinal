@@ -1,4 +1,4 @@
-package com.example.projectfinal
+package com.example.projectfinal.ui.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -13,9 +13,5 @@ class UsuarioViewModel @Inject constructor(
 ) : ViewModel() {
     fun getSession(): LiveData<Usuario?> {
         return repository.getCurrentUser()
-    }
-
-    fun getUsuario(): Usuario? {
-        return repository.getUsuario()
     }
 }

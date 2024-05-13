@@ -132,7 +132,7 @@ class RestauranteViewModel @Inject constructor(
         val listaRestaurantes = _restaurantesBD.value
 
         // Verificar si la lista de restaurantes no es nula y no está vacía
-        if (listaRestaurantes != null && listaRestaurantes.isNotEmpty()) {
+        if (!listaRestaurantes.isNullOrEmpty()) {
             // Iterar sobre cada restaurante en la lista de restaurantes
             for (restaurante in listaRestaurantes) {
                 // Verificar si el restaurante tiene alguna de las categorías seleccionadas
@@ -141,11 +141,9 @@ class RestauranteViewModel @Inject constructor(
                     restaurantesFiltrados.add(restaurante)
                 }
             }
-            Log.e("rest", restaurantesFiltrados.toString())
         }
 
         _listaFiltrados.postValue(restaurantesFiltrados)
-        Log.e("ssj", _listaFiltrados.value.toString())
     }
 
 

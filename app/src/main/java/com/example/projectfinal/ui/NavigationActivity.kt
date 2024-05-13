@@ -1,6 +1,8 @@
 package com.example.projectfinal.ui
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -33,7 +35,6 @@ class NavigationActivity : AppCompatActivity() {
         binding.navigationBar.setOnItemSelectedListener { menuItem ->
 
             when (menuItem.itemId) {
-                // Ir a la activity de home
                 R.id.navigation_home -> findNavController(R.id.frame_layout).navigate(R.id.restaurantesFragment)
                 R.id.navigation_favoritos -> findNavController(R.id.frame_layout).navigate(R.id.favoritosFragment)
                 R.id.navigation_mis_reservas -> findNavController(R.id.frame_layout).navigate(R.id.misReservasFragment)
@@ -44,6 +45,21 @@ class NavigationActivity : AppCompatActivity() {
                 }
             }
             true
+        }
+
+        onBackPressedDispatcher.addCallback(this) {
+            // Obtener el ID del fragmento actual
+            val currentDestinationId = navController.currentDestination?.id
+            // Obtener el ID del fragmento de inicio (home)
+            val homeFragmentId = R.id.restaurantesFragment
+
+            // Si el fragmento actual es el fragmento de inicio (home), cerrar la actividad
+            if (currentDestinationId == homeFragmentId) {
+                finishAffinity()
+            } else {
+                // Si no, navegar hacia atrás hacia home
+                navController.navigate(R.id.restaurantesFragment)
+            }
         }
     }
 

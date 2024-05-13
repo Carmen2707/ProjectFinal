@@ -1,4 +1,4 @@
-package com.example.projectfinal.ui
+package com.example.projectfinal.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,9 @@ import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projectfinal.databinding.ActivityRegistrarBinding
+import com.example.projectfinal.ui.MainActivity
+import com.example.projectfinal.ui.NavigationActivity
+import com.example.projectfinal.ui.ProviderType
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 

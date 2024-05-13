@@ -1,4 +1,4 @@
-package com.example.projectfinal.ui
+package com.example.projectfinal.ui.auth
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,6 +9,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projectfinal.R
 import com.example.projectfinal.databinding.ActivityIniciarBinding
+import com.example.projectfinal.ui.MainActivity
+import com.example.projectfinal.ui.NavigationActivity
+import com.example.projectfinal.ui.ProviderType
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException

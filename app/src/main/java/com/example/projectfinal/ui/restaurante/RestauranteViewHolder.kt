@@ -24,8 +24,6 @@ class RestauranteViewHolder(
     val checkBox: CheckBox = view.findViewById(R.id.cbFavorito)
 
     fun render(restaurante: Restaurante, onClickListener: (Restaurante) -> Unit) {
-        Log.d("RestauranteViewHolder", "Cargando imagen desde URL: ${restaurante.imagen}")
-
         Glide.with(itemView.context)
             .load(restaurante.imagen)
             .into(ivRestaurante)

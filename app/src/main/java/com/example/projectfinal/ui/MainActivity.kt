@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projectfinal.databinding.PortadaBinding
+import com.example.projectfinal.ui.auth.IniciarActivity
+import com.example.projectfinal.ui.auth.RegistrarActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
