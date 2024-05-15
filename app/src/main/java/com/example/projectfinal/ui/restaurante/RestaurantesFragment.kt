@@ -151,7 +151,6 @@ class RestaurantesFragment : Fragment() {
             }
             restauranteAdapter = RestauranteAdapter(
                 onFavoritoChangeListener = { restaurante, isChecked ->
-                    Log.e("che", isChecked.toString())
                     esChecked(restaurante, isChecked)
 
                 },

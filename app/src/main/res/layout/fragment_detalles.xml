@@ -82,7 +82,6 @@
         android:text="777777777"
         android:textColor="#0099CC"
         android:textSize="18sp"
-        android:autoLink="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toEndOf="@+id/tvTitTel"

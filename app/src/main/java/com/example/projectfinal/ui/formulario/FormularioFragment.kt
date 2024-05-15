@@ -14,21 +14,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Reserva
 import com.example.projectfinal.databinding.FragmentAnadirReservaBinding
 import com.example.projectfinal.ui.reserva.ReservaViewModel
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 
 
 @AndroidEntryPoint
 class FormularioFragment : Fragment() {
-    val args: FormularioFragmentArgs by navArgs()
+    private val args: FormularioFragmentArgs by navArgs()
     private lateinit var binding: FragmentAnadirReservaBinding
     private val viewModel: ReservaViewModel by activityViewModels()
 
@@ -58,7 +56,8 @@ class FormularioFragment : Fragment() {
             binding.tfHora.setText(args.hora)
             binding.tfEditTextObservacion.setText(args.observaciones)
             binding.tfEditTextNombre.setText(args.nombreUsuario)
-            binding.cantidad.text = args.personas.toString()
+            valor = args.personas
+            binding.cantidad.text = valor.toString()
         } else {
             binding.cantidad.text = args.personas.toString()
         }
@@ -154,10 +153,9 @@ class FormularioFragment : Fragment() {
                     FirebaseAuth.getInstance().currentUser?.email ?: "",
                     binding.tfEditTextNombre.text.toString(),
                     observaciones,
-                    valor,
-                    args.restauranteNombre
+                    valor, args.restauranteNombre,args.horaApertura,args.horaCierre
                 )
-
+                Log.e("reservilla", reserva.toString())
 
                 if (args.isEdit) {
                     viewModel.actualizarReserva(reserva)
@@ -177,7 +175,7 @@ class FormularioFragment : Fragment() {
                     builder.setPositiveButton("Aceptar") { dialog, _ ->
 
                         dialog.dismiss()
-                        requireActivity().supportFragmentManager.popBackStack()
+                        findNavController().navigate(R.id.action_formularioFragment_to_restaurantesFragment)
                     }
                     val dialog: AlertDialog = builder.create()
                     dialog.show()
@@ -187,20 +185,29 @@ class FormularioFragment : Fragment() {
     }
 
     private fun isValidTime(selectedTime: String, horaApertura: String, horaCierre: String): Boolean {
+        if (selectedTime.isEmpty()) {
+            return false
+        }
+        Log.d("FormularioFragment", "Hora de apertura: $horaApertura")
+        Log.d("FormularioFragment", "Hora de cierre: $horaCierre")
+        Log.d("FormularioFragment", "Hora seleccionada: $selectedTime")
         val horaSeleccionada = convertirAMinutos(selectedTime)
         val aperturra = convertirAMinutos(horaApertura)
         val cierre = convertirAMinutos(horaCierre)
 
-        return if (cierre < aperturra) {
+        if (cierre < aperturra) {
             // el rango de tiempo atraviesa la medianoche
-            horaSeleccionada >= aperturra || horaSeleccionada <= cierre
+            return horaSeleccionada >= aperturra || horaSeleccionada <= cierre
         } else {
             // el rango de tiempo está dentro del mismo día
-            horaSeleccionada in aperturra..cierre
+            return horaSeleccionada in aperturra..cierre
         }
     }
 
     fun convertirAMinutos(hora: String): Int {
+        if (hora.isEmpty()) {
+            return 0
+        }
         val partes = hora.split(":")
         var horas = partes[0].toInt()
         val minutos = partes[1].toInt()

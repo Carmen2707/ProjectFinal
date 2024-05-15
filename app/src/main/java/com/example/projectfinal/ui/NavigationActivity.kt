@@ -52,13 +52,15 @@ class NavigationActivity : AppCompatActivity() {
             val currentDestinationId = navController.currentDestination?.id
             // Obtener el ID del fragmento de inicio (home)
             val homeFragmentId = R.id.restaurantesFragment
-
+            val reservaFragmentId = R.id.misReservasFragment
+            val favoritosFragmentId = R.id.favoritosFragment
             // Si el fragmento actual es el fragmento de inicio (home), cerrar la actividad
-            if (currentDestinationId == homeFragmentId) {
+            if (currentDestinationId == homeFragmentId || currentDestinationId == reservaFragmentId || currentDestinationId == favoritosFragmentId) {
                 finishAffinity()
             } else {
                 // Si no, navegar hacia atrás hacia home
-                navController.navigate(R.id.restaurantesFragment)
+                navController.navigateUp()
+                //finishAffinity()
             }
         }
     }

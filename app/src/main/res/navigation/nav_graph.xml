@@ -55,6 +55,9 @@
         <argument
             android:name="horaCierre"
             app:argType="string" />
+        <action
+            android:id="@+id/action_formularioFragment_to_restaurantesFragment"
+            app:destination="@id/restaurantesFragment" />
     </fragment>
     <fragment
         android:id="@+id/misReservasFragment"

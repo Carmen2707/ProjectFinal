@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellow"
+    android:clickable="false"
     tools:context=".ui.formulario.FormularioFragment">
 
     <ImageButton
@@ -43,6 +44,7 @@
         android:layout_height="550dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/rectangle_3"
+        android:clickable="false"
         app:layout_constraintTop_toBottomOf="@+id/tvTitulo">
 
         <TextView

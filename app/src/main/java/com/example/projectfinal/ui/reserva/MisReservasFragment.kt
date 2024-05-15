@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.ui.auth.UsuarioViewModel
 import com.example.projectfinal.databinding.FragmentMisReservasBinding
 import com.example.projectfinal.util.UiState
@@ -60,9 +61,10 @@ class MisReservasFragment : Fragment() {
         adapter.setOnItemClickListener(object : ReservaAdapter.OnItemClickListener {
             override fun onEditarClick(position: Int) {
                 val reserva = adapter.getItemAtPosition(position)
+                Log.e("reser", reserva.toString())
                 val action =
                     MisReservasFragmentDirections.actionMisReservasFragmentToFormularioFragment(
-                        restauranteNombre = reserva.restaurante,
+                        restauranteNombre = reserva.restaurante.toString(),
                         id = reserva.id,
                         nombreUsuario = reserva.nombreUsuario,
                         personas = reserva.personas,
@@ -88,8 +90,7 @@ class MisReservasFragment : Fragment() {
                         if (success) {
                             adapter.notifyItemRemoved(position)
                         } else {
-                            // Maneja el caso de que la eliminación falle, si es necesario
-                            // Por ejemplo, puedes mostrar un mensaje de error
+
                         }
                     }
                     dialog.dismiss()
