@@ -2,10 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellow"
-    tools:context=".ui.restaurante.RestaurantesFragment">
+    tools:context=".ui.admin.ReservasActivity">
+    <ImageButton
+        android:id="@+id/btnVolver"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:src="@drawable/btnvolver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvRestaurantes"
@@ -13,42 +24,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:fontFamily="@font/dunkin"
-        android:text="Nuestros restaurantes"
+        android:text="Titulo restaurante"
         android:textColor="@color/black"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@id/rvCategorias"
+        app:layout_constraintBottom_toTopOf="@id/rvReservas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCategorias"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/rvRestaurantes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRestaurantes" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRestaurantes"
-
-        android:layout_width="0dp"
+        android:id="@+id/rvReservas"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvCategorias" />
-
-    <ImageButton
-        android:id="@+id/btnPerfil"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@null"
-        android:src="@drawable/exit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@id/tvRestaurantes" />
 </androidx.constraintlayout.widget.ConstraintLayout>

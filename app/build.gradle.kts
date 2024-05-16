@@ -79,6 +79,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:24.11.1")
     //mapas
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("androidx.activity:activity:1.8.0")
     //Dagger Hilt
     val hiltVersion = "2.48.1"
     kapt("com.google.dagger:hilt-compiler:${hiltVersion}")

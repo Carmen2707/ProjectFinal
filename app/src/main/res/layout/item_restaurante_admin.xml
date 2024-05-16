@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/viewContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="18dp"
+    android:layout_marginVertical="16dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/ivRestaurante"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+
+            android:src="@drawable/pizza"
+            app:layout_constraintBottom_toTopOf="@id/tvNombreRestaurante"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tvNombreRestaurante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/rocko"
+            android:text="La Ristobottega"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tvDireccionRestaurante"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivRestaurante" />
+
+        <TextView
+            android:id="@+id/tvDireccionRestaurante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/rocko"
+            android:text="C. Cañón, 3, Distrito Centro, 29015 Málaga"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/tvHorarioRestaurante"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNombreRestaurante" />
+
+        <TextView
+            android:id="@+id/tvHorarioRestaurante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/rocko"
+            android:text="Todos los días de"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/tvContactoRestaurante"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDireccionRestaurante" />
+
+        <TextView
+            android:id="@+id/tvContactoRestaurante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/rocko"
+            android:text="952 06 11 56"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHorarioRestaurante" />
+
+        <TextView
+            android:id="@+id/tvApertura"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:fontFamily="@font/rocko"
+            android:text="9:00"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@id/textView3"
+            app:layout_constraintStart_toEndOf="@+id/tvHorarioRestaurante"
+            app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:fontFamily="@font/rocko"
+            android:text="a"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@id/tvCierre"
+            app:layout_constraintStart_toEndOf="@+id/tvApertura"
+            app:layout_constraintTop_toTopOf="@+id/tvHorarioRestaurante" />
+
+        <TextView
+            android:id="@+id/tvCierre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:fontFamily="@font/rocko"
+            android:text="13:00"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

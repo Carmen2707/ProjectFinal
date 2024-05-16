@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import com.example.projectfinal.databinding.ActivityIniciarBinding
 import com.example.projectfinal.ui.MainActivity
 import com.example.projectfinal.ui.NavigationActivity
 import com.example.projectfinal.ui.ProviderType
+import com.example.projectfinal.ui.admin.AdminActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -39,11 +41,18 @@ class IniciarActivity : AppCompatActivity() {
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                irPortada(it.result?.user?.email ?: "", ProviderType.BASIC)
-                                guardarPreferencias(email, password)
-                                val intent = Intent(this, NavigationActivity::class.java)
-                                startActivity(intent)
-
+                                if (email == "admin@admin.com"){
+                                    irPortada(it.result?.user?.email ?: "", ProviderType.BASIC)
+                                    guardarPreferencias(email, password)
+                                    val intent = Intent(this, AdminActivity::class.java)
+                                    startActivity(intent)
+                                    Log.e("admin", "hhaha")
+                                } else {
+                                    irPortada(it.result?.user?.email ?: "", ProviderType.BASIC)
+                                    guardarPreferencias(email, password)
+                                    val intent = Intent(this, NavigationActivity::class.java)
+                                    startActivity(intent)
+                                }
                             } else {
                                 alerta()
                             }

@@ -134,7 +134,12 @@ class RestaurantesFragment : Fragment() {
                 findNavController().navigate(R.id.action_restaurantesFragment_to_mainActivity)
                 dialog.dismiss()
             }
-
+            builder.setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            builder.setCancelable(false)
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
 
         }
         // Restaurar la posición del RecyclerView si está guardada
