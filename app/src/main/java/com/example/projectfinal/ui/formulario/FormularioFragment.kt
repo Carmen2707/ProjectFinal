@@ -29,14 +29,7 @@ class FormularioFragment : Fragment() {
     private val args: FormularioFragmentArgs by navArgs()
     private lateinit var binding: FragmentAnadirReservaBinding
     private val viewModel: ReservaViewModel by activityViewModels()
-
     private var valor = 1
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,7 +67,6 @@ class FormularioFragment : Fragment() {
         binding.btnDisminuir.setOnClickListener {
             if (valor > 1) {
                 binding.cantidad.text = (--valor).toString()
-            } else {
             }
         }
 
@@ -85,14 +77,11 @@ class FormularioFragment : Fragment() {
             val day = c.get(Calendar.DAY_OF_MONTH)
 
             c.add(Calendar.DAY_OF_MONTH, 1)
-
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
                 { view, year, monthOfYear, dayOfMonth ->
-
                     val dat = (dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
                     binding.tfFecha.setText(dat)
-
                 },
                 year,
                 month,
@@ -136,23 +125,15 @@ class FormularioFragment : Fragment() {
             timePickerDialog.show()
         }
 
-
-
-
-
-
-
         binding.btnGuardar.setOnClickListener {
             if (validate()) {
-                val observaciones = binding.tfEditTextObservacion.text.toString()
-
                 val reserva = Reserva(
                     args.id,
                     binding.tfFecha.text.toString(),
                     binding.tfHora.text.toString(),
                     FirebaseAuth.getInstance().currentUser?.email ?: "",
                     binding.tfEditTextNombre.text.toString(),
-                    observaciones,
+                    binding.tfEditTextObservacion.text.toString(),
                     valor, args.restauranteNombre,args.horaApertura,args.horaCierre
                 )
                 Log.e("reservilla", reserva.toString())
@@ -175,7 +156,7 @@ class FormularioFragment : Fragment() {
                     builder.setPositiveButton("Aceptar") { dialog, _ ->
 
                         dialog.dismiss()
-                        findNavController().navigate(R.id.action_formularioFragment_to_restaurantesFragment)
+                        findNavController().popBackStack()
                     }
                     val dialog: AlertDialog = builder.create()
                     dialog.show()
@@ -251,12 +232,6 @@ class FormularioFragment : Fragment() {
         return isValid
     }
 
-
-    /**
-     * Display/hides TextInputLayout error.
-     *
-     * @param msg the message, or null to hide
-     */
     private fun toggleTextInputLayoutError(
         @NonNull textInputLayout: TextInputLayout,
         msg: String?

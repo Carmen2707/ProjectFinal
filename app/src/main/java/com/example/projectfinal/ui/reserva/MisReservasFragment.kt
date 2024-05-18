@@ -40,16 +40,10 @@ class MisReservasFragment : Fragment() {
         }
         viewModelReserva.reserva.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
-                is UiState.Loading -> {
-
-                }
-
                 is UiState.Success -> {
                     // Actualizar el adaptador con la lista de reservas
                     adapter.updateList(uiState.data.toMutableList())
                 }
-
-
                 else -> {}
             }
         }

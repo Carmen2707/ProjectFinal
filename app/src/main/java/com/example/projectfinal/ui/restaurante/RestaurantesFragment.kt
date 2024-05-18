@@ -103,7 +103,6 @@ class RestaurantesFragment : Fragment() {
             Log.e("Navigation", "No se puede navegar desde el fragmento actual")
 
         }
-
     }
 
 

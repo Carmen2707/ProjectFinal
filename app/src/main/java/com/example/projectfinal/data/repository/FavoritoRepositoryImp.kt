@@ -55,6 +55,8 @@ class FavoritoRepositoryImp(private val database: FirebaseFirestore) : FavoritoR
             "horaCierre" to restaurante.horaCierre,
             "nombre" to restaurante.nombre,
             "imagen" to restaurante.imagen,
+            "imagenes" to restaurante.imagenes,
+            "web" to restaurante.web,
             "favorito" to restaurante.favorito
         )
 

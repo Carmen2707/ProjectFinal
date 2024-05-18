@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.projectfinal.data.model.Reserva
+import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.data.model.Usuario
 import com.example.projectfinal.data.repository.ReservaRepository
 import com.example.projectfinal.util.UiState
@@ -16,8 +17,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ReservaViewModel @Inject constructor(val repository: ReservaRepository) : ViewModel() {
     private val _reserva = MutableLiveData<UiState<List<Reserva>>>()
+    private val _reservas = MutableLiveData<UiState<List<Reserva>>>()
     val reserva: LiveData<UiState<List<Reserva>>> get() = _reserva
-    private val db = Firebase.firestore
+    val reservasAdmin: LiveData<UiState<List<Reserva>>> get() = _reservas
     fun cargarReservas(usuario: Usuario?) {
         repository.cargarReservas(usuario) { result ->
             if (result is UiState.Success) {
@@ -34,33 +36,35 @@ class ReservaViewModel @Inject constructor(val repository: ReservaRepository) : 
     fun borrarReserva(position: Int, callback: (Boolean) -> Unit) {
         val uiState = reserva.value
         if (uiState is UiState.Success) {
-            val reservas = uiState.data.toMutableList()
-            if (position in reservas.indices) {
-                val reservaAEliminar = reservas[position]
-                db.collection("reservas").document(reservaAEliminar.id)
-                    .delete()
-                    .addOnSuccessListener {
-                        // Operación de eliminación exitosa
-                        reservas.removeAt(position) // Eliminar el elemento de la lista local
-                        _reserva.value =
-                            UiState.Success(reservas) // Actualizar el estado con la lista modificada
-                        callback(true)
+            val reservas = uiState.data
+            repository.borrarReserva(position, reservas) { success ->
+                    if (success) {
+                        val nuevasReservas = reservas.toMutableList()
+                        nuevasReservas.removeAt(position)
+                        _reserva.value = UiState.Success(nuevasReservas)
                     }
-                    .addOnFailureListener { exception ->
-                        // Error al eliminar la reserva
-                        Log.e("ReservaViewModel", "Error al eliminar reserva", exception)
-                        callback(false)
-                    }
+                    callback(success)
+                }
             } else {
-                // La posición está fuera de los límites de la lista de reservas
                 callback(false)
             }
+    }
+    fun borrarReservaAdmin(position: Int, callback: (Boolean) -> Unit) {
+        val uiState = reservasAdmin.value
+        if (uiState is UiState.Success) {
+            val reservas = uiState.data
+            repository.borrarReserva(position, reservas) { success ->
+                if (success) {
+                    val nuevasReservas = reservas.toMutableList()
+                    nuevasReservas.removeAt(position)
+                    _reservas.value = UiState.Success(nuevasReservas)
+                }
+                callback(success)
+            }
         } else {
-            // El UiState actual no es un estado de éxito
             callback(false)
         }
     }
-
 
     fun addReserva(reserva: Reserva) {
         repository.addReserva(reserva)
@@ -68,5 +72,16 @@ class ReservaViewModel @Inject constructor(val repository: ReservaRepository) : 
 
     fun actualizarReserva(reserva: Reserva) {
         repository.updateReserva(reserva)
+    }
+
+    fun cargarTodasReservasAdmin(restaurante: Restaurante?) {
+        repository.cargarTodasReservasAdmin(restaurante) { result ->
+            if (result is UiState.Success) {
+                _reservas.value = result
+            } else if (result is UiState.Failure) {
+                Log.e("ReservaViewModel", "Error al cargar reservas:")
+            }
+
+        }
     }
 }

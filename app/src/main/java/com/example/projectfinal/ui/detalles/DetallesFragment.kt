@@ -85,7 +85,7 @@ class DetallesFragment : Fragment(), OnMapReadyCallback {
         binding.btnWeb.setOnClickListener {
             val webUrl = args.objRestaurante.web
 
-            if (webUrl != null && webUrl.isNotEmpty()) {
+            if (!webUrl.isNullOrEmpty()) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(webUrl))
                 startActivity(intent)
             } else {

@@ -72,7 +72,11 @@
         android:id="@+id/favoritosFragment"
         android:name="com.example.projectfinal.ui.favorito.FavoritosFragment"
         android:label="fragment_favoritos"
-        tools:layout="@layout/fragment_favoritos" />
+        tools:layout="@layout/fragment_favoritos" >
+        <action
+            android:id="@+id/action_favoritosFragment_to_detallesFragment"
+            app:destination="@id/detallesFragment" />
+    </fragment>
     <activity
         android:id="@+id/iniciarActivity"
         android:name="com.example.projectfinal.ui.auth.IniciarActivity"

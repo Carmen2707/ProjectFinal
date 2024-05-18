@@ -19,7 +19,7 @@ class FavoritosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val checkBox: CheckBox = itemView.findViewById(R.id.cbFavorito)
     private val tvApertura: TextView = itemView.findViewById(R.id.tvApertura)
     private val tvCierre: TextView = itemView.findViewById(R.id.tvCierre)
-    fun bind(restaurante: Restaurante) {
+    fun bind(restaurante: Restaurante, onClickListener: (Restaurante) -> Unit) {
         Glide.with(itemView.context)
             .load(restaurante.imagen)
             .into(ivRestaurante)
@@ -31,5 +31,8 @@ class FavoritosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         tvCierre.text = restaurante.horaCierre
         // Actualizar el estado del CheckBox
         checkBox.isChecked = restaurante.favorito == true
+        itemView.setOnClickListener {
+            onClickListener(restaurante)
+        }
     }
 }

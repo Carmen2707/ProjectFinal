@@ -24,7 +24,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
 @AndroidEntryPoint
-
 class AdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdminBinding
     private val viewModel: RestauranteViewModel by viewModels()

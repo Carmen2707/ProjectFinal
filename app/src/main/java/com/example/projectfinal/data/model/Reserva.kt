@@ -1,5 +1,7 @@
 package com.example.projectfinal.data.model
 
+import java.io.Serializable
+
 data class Reserva(
     var id: String = "",
     var fecha: String = "",
@@ -11,7 +13,7 @@ data class Reserva(
     var restaurante: String = "",
     var horaApertura: String = "",
     var horaCierre: String = ""
-) {
+) : Serializable {
     constructor() : this("", "", "", "", "",null, 0, "")
 }
 

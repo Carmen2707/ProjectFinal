@@ -2,6 +2,7 @@ package com.example.projectfinal.data.repository
 
 import android.util.Log
 import com.example.projectfinal.data.model.Reserva
+import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.data.model.Usuario
 import com.example.projectfinal.util.FireStoreCollection
 import com.example.projectfinal.util.FireStoreDocumentField
@@ -36,6 +37,30 @@ class ReservaRepositoyImp(val database: FirebaseFirestore) : ReservaRepository {
         } else {
             result.invoke(UiState.Failure("Usuario nulo, no se pueden obtener reservas"))
             Log.e("ReservaRepository", "Usuario nulo, no se pueden obtener reservas")
+        }
+    }
+
+    override fun cargarTodasReservasAdmin(restaurante: Restaurante?, result: (UiState<List<Reserva>>) -> Unit) {
+        if (restaurante != null) {
+            database.collection(FireStoreCollection.RESERVA)
+                .whereEqualTo(FireStoreDocumentField.RESTAURANTE_ID, restaurante.nombre)
+                .orderBy(FireStoreDocumentField.DATE, Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    val reservas = arrayListOf<Reserva>()
+                    for (document in querySnapshot) {
+                        val reserva = document.toObject(Reserva::class.java)
+                        reservas.add(reserva)
+                    }
+                    result.invoke(UiState.Success(reservas))
+                    Log.d("ReservaRepository", "Reservas obtenidas con éxito: $reservas")
+                }
+                .addOnFailureListener { exception ->
+                    result.invoke(UiState.Failure(exception.localizedMessage ?: "Error desconocido al obtener reservas"))
+                    Log.e("ReservaRepository", "Error al obtener reservas", exception)
+                }
+        } else {
+            result.invoke(UiState.Failure("Restaurante nulo, no se pueden obtener reservas"))
         }
     }
 
