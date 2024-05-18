@@ -9,8 +9,6 @@ import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.data.model.Usuario
 import com.example.projectfinal.data.repository.ReservaRepository
 import com.example.projectfinal.util.UiState
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -38,17 +36,18 @@ class ReservaViewModel @Inject constructor(val repository: ReservaRepository) : 
         if (uiState is UiState.Success) {
             val reservas = uiState.data
             repository.borrarReserva(position, reservas) { success ->
-                    if (success) {
-                        val nuevasReservas = reservas.toMutableList()
-                        nuevasReservas.removeAt(position)
-                        _reserva.value = UiState.Success(nuevasReservas)
-                    }
-                    callback(success)
+                if (success) {
+                    val nuevasReservas = reservas.toMutableList()
+                    nuevasReservas.removeAt(position)
+                    _reserva.value = UiState.Success(nuevasReservas)
                 }
-            } else {
-                callback(false)
+                callback(success)
             }
+        } else {
+            callback(false)
+        }
     }
+
     fun borrarReservaAdmin(position: Int, callback: (Boolean) -> Unit) {
         val uiState = reservasAdmin.value
         if (uiState is UiState.Success) {

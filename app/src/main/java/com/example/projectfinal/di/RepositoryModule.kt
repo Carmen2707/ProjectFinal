@@ -7,14 +7,12 @@ import com.example.projectfinal.data.repository.ReservaRepository
 import com.example.projectfinal.data.repository.ReservaRepositoyImp
 import com.example.projectfinal.data.repository.UsuarioRepository
 import com.example.projectfinal.data.repository.UsuarioRepositoryImp
-import com.example.projectfinal.ui.reserva.ReservaViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 

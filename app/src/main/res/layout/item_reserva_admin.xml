@@ -28,6 +28,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tvTitUsuarioCorreo"
             android:layout_width="wrap_content"
@@ -41,6 +42,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTituloUsuario" />
+
         <TextView
             android:id="@+id/tvTitResponsable"
             android:layout_width="wrap_content"
@@ -54,6 +56,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTitUsuarioCorreo" />
+
         <TextView
             android:id="@+id/tvCorreo"
             android:layout_width="wrap_content"
@@ -136,7 +139,7 @@
             android:textStyle="bold"
 
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTituloFecha"/>
+            app:layout_constraintTop_toBottomOf="@id/tvTituloFecha" />
 
         <TextView
             android:id="@+id/tvHora"
@@ -164,6 +167,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTituloHora" />
+
         <TextView
             android:id="@+id/tvPersonas"
             android:layout_width="wrap_content"
@@ -176,6 +180,7 @@
             app:layout_constraintHorizontal_bias="0.023"
             app:layout_constraintStart_toEndOf="@+id/tvTituloPersonas"
             app:layout_constraintTop_toTopOf="@id/tvTituloPersonas" />
+
         <TextView
             android:id="@+id/tvTituloObservaciones"
             android:layout_width="wrap_content"
@@ -200,6 +205,7 @@
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@id/tvTituloObservaciones"
             app:layout_constraintTop_toTopOf="@id/tvTituloObservaciones" />
+
         <ImageButton
             android:id="@+id/btnBorrar"
             android:layout_width="wrap_content"

@@ -8,7 +8,8 @@ import com.example.projectfinal.data.model.Restaurante
 
 class FavoritosAdapter(
     private var favoritos: MutableList<Restaurante> = mutableListOf(),
-    private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit, private val onItemSelected: (restaurante: Restaurante) -> Unit
+    private val onFavoritoChangeListener: (Restaurante, Boolean) -> Unit,
+    private val onItemSelected: (restaurante: Restaurante) -> Unit
 ) :
     RecyclerView.Adapter<FavoritosViewHolder>() {
 

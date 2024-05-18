@@ -40,7 +40,10 @@ class ReservaRepositoyImp(val database: FirebaseFirestore) : ReservaRepository {
         }
     }
 
-    override fun cargarTodasReservasAdmin(restaurante: Restaurante?, result: (UiState<List<Reserva>>) -> Unit) {
+    override fun cargarTodasReservasAdmin(
+        restaurante: Restaurante?,
+        result: (UiState<List<Reserva>>) -> Unit
+    ) {
         if (restaurante != null) {
             database.collection(FireStoreCollection.RESERVA)
                 .whereEqualTo(FireStoreDocumentField.RESTAURANTE_ID, restaurante.nombre)
@@ -56,7 +59,11 @@ class ReservaRepositoyImp(val database: FirebaseFirestore) : ReservaRepository {
                     Log.d("ReservaRepository", "Reservas obtenidas con éxito: $reservas")
                 }
                 .addOnFailureListener { exception ->
-                    result.invoke(UiState.Failure(exception.localizedMessage ?: "Error desconocido al obtener reservas"))
+                    result.invoke(
+                        UiState.Failure(
+                            exception.localizedMessage ?: "Error desconocido al obtener reservas"
+                        )
+                    )
                     Log.e("ReservaRepository", "Error al obtener reservas", exception)
                 }
         } else {

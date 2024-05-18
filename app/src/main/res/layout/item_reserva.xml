@@ -115,7 +115,7 @@
             android:textStyle="bold"
 
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTituloFecha"/>
+            app:layout_constraintTop_toBottomOf="@id/tvTituloFecha" />
 
         <TextView
             android:id="@+id/tvHora"

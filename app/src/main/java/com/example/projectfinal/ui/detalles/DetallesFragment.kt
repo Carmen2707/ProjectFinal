@@ -6,19 +6,17 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentDetallesBinding
-import com.example.projectfinal.databinding.FragmentFavoritosBinding
-import com.example.projectfinal.ui.formulario.FormularioFragmentArgs
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -35,7 +33,6 @@ class DetallesFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private lateinit var googleMap: GoogleMap
     private val args: DetallesFragmentArgs by navArgs()
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,7 +53,7 @@ class DetallesFragment : Fragment(), OnMapReadyCallback {
                     restauranteNombre = args.restauranteNombre,
                     horaApertura = restaurante.horaApertura,
                     horaCierre = restaurante.horaCierre,
-                    personas = 1 ,
+                    personas = 1,
                     observaciones = "",
                     fecha = "",
                     hora = "",
@@ -90,7 +87,8 @@ class DetallesFragment : Fragment(), OnMapReadyCallback {
                 startActivity(intent)
             } else {
                 // Manejar el caso en el que la URL es nula o vacía
-                Toast.makeText(requireContext(), "La URL no está disponible", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "La URL no está disponible", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
         mapView = binding.mapView
@@ -125,10 +123,17 @@ class DetallesFragment : Fragment(), OnMapReadyCallback {
                     val restauranteLocation = LatLng(address.latitude, address.longitude)
 
                     // Mover la cámara del mapa a la ubicación del restaurante
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(restauranteLocation, 15f))
+                    googleMap.moveCamera(
+                        CameraUpdateFactory.newLatLngZoom(
+                            restauranteLocation,
+                            15f
+                        )
+                    )
 
                     // Agregar un marcador en la ubicación del restaurante
-                    googleMap.addMarker(MarkerOptions().position(restauranteLocation).title(args.restauranteNombre))
+                    googleMap.addMarker(
+                        MarkerOptions().position(restauranteLocation).title(args.restauranteNombre)
+                    )
                 } else {
                     // Manejar el caso en que no se encuentren resultados de geocodificación
                     // Aquí puedes mostrar un mensaje al usuario indicando que la dirección no es válida

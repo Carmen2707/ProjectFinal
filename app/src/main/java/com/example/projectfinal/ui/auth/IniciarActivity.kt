@@ -41,7 +41,7 @@ class IniciarActivity : AppCompatActivity() {
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                if (email == "admin@admin.com"){
+                                if (email == "admin@admin.com") {
                                     irPortada(it.result?.user?.email ?: "", ProviderType.BASIC)
                                     guardarPreferencias(email, password)
                                     val intent = Intent(this, AdminActivity::class.java)

@@ -4,38 +4,28 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
-import com.example.projectfinal.databinding.ActivityAdminBinding
 import com.example.projectfinal.databinding.ActivityReservasBinding
-import com.example.projectfinal.ui.categoria.CategoriaAdapter
-import com.example.projectfinal.ui.reserva.MisReservasFragmentDirections
-import com.example.projectfinal.ui.reserva.ReservaAdapter
 import com.example.projectfinal.ui.reserva.ReservaViewModel
 import com.example.projectfinal.util.UiState
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.Serializable
+
 @AndroidEntryPoint
 class ReservasActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReservasBinding
     private lateinit var reservasAdminAdapter: ReservasAdminAdapter
     private lateinit var layoutManager: RecyclerView.LayoutManager
     private val viewModelReserva: ReservaViewModel by viewModels()
-   private lateinit var restaurante: Restaurante
+    private lateinit var restaurante: Restaurante
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -47,7 +37,7 @@ class ReservasActivity : AppCompatActivity() {
             insets
         }
 
-        restaurante= (intent.getSerializableExtra("restaurante") as? Restaurante)!!
+        restaurante = (intent.getSerializableExtra("restaurante") as? Restaurante)!!
 
         viewModelReserva.cargarTodasReservasAdmin(restaurante)
         viewModelReserva.reservasAdmin.observe(this) { uiState ->
@@ -63,10 +53,12 @@ class ReservasActivity : AppCompatActivity() {
                         reservasAdminAdapter.notifyDataSetChanged()
                     }
                 }
+
                 is UiState.Failure -> {
                     binding.tvNoReservas.visibility = View.VISIBLE
                     binding.rvReservas.visibility = View.GONE
                 }
+
                 else -> {}
             }
         }
@@ -82,13 +74,15 @@ class ReservasActivity : AppCompatActivity() {
         }
 
 
-        reservasAdminAdapter.setOnItemClickListener(object : ReservasAdminAdapter.OnItemClickListener {
+        reservasAdminAdapter.setOnItemClickListener(object :
+            ReservasAdminAdapter.OnItemClickListener {
             override fun onEditarClick(position: Int) {
                 val reserva = reservasAdminAdapter.getItemAtPosition(position)
 
-                val intent = Intent(this@ReservasActivity, FormularioAdminActivity::class.java).apply {
-                    putExtra("reserva", reserva)
-                }
+                val intent =
+                    Intent(this@ReservasActivity, FormularioAdminActivity::class.java).apply {
+                        putExtra("reserva", reserva)
+                    }
                 startActivity(intent)
             }
 
@@ -117,6 +111,7 @@ class ReservasActivity : AppCompatActivity() {
 
         })
     }
+
     private fun cargarTodasReservasAdmin() {
         viewModelReserva.cargarTodasReservasAdmin(restaurante)
     }

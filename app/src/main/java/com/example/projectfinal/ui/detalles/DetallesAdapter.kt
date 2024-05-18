@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
-class DetallesAdapter( val imagenes: List<String>
+
+class DetallesAdapter(
+    val imagenes: List<String>
 ) :
     RecyclerView.Adapter<DetallesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetallesViewHolder {

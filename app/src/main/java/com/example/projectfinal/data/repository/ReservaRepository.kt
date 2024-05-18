@@ -6,7 +6,11 @@ import com.example.projectfinal.data.model.Usuario
 import com.example.projectfinal.util.UiState
 
 interface ReservaRepository {
-    fun cargarTodasReservasAdmin(restaurante: Restaurante?, result:(UiState<List<Reserva>>) -> Unit)
+    fun cargarTodasReservasAdmin(
+        restaurante: Restaurante?,
+        result: (UiState<List<Reserva>>) -> Unit
+    )
+
     fun addReserva(reserva: Reserva)
     fun updateReserva(reserva: Reserva)
 

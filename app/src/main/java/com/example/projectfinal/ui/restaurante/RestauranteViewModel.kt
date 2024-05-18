@@ -188,7 +188,7 @@ class RestauranteViewModel @Inject constructor(
                     categoria,
                     imagenes,
                     web
-                    )
+                )
 
                 if (isFavorito(restaurante)) {
                     restaurante.favorito = true
@@ -205,8 +205,6 @@ class RestauranteViewModel @Inject constructor(
         }
 
     }
-
-
 
 
 }

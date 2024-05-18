@@ -2,13 +2,10 @@ package com.example.projectfinal.ui.admin
 
 import android.view.View
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Reserva
-import com.example.projectfinal.data.model.Restaurante
 
 class ReservasAdminViewHolder(
     view: View

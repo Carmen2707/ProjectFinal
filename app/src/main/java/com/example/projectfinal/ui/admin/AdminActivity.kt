@@ -13,11 +13,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinal.R
-import com.example.projectfinal.data.model.Categorias
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.ActivityAdminBinding
 import com.example.projectfinal.ui.MainActivity
-import com.example.projectfinal.ui.NavigationActivity
 import com.example.projectfinal.ui.restaurante.RestauranteViewModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -75,7 +73,7 @@ class AdminActivity : AppCompatActivity() {
 
             adminAdapter.submitList(restaurantes)
             getData(restaurantes)
-            for (restaurante in restaurantes){
+            for (restaurante in restaurantes) {
                 nombreList.add(restaurante.nombre)
                 categoriaList.add(restaurante.categoria)
             }
@@ -86,19 +84,20 @@ class AdminActivity : AppCompatActivity() {
         nombreList = arrayListOf()
         categoriaList = arrayListOf()
         binding.buscador.clearFocus()
-        binding.buscador.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.buscador.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.buscador.clearFocus()
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-               searchList.clear()
+                searchList.clear()
                 val searchText = newText!!.toLowerCase(Locale.getDefault())
-                if (searchText.isNotEmpty()){
-                    dataList.forEach{
+                if (searchText.isNotEmpty()) {
+                    dataList.forEach {
                         if (it.nombre.toLowerCase(Locale.getDefault()).contains(searchText) ||
-                                    it.categoria.toLowerCase(Locale.getDefault()).contains(searchText)){
+                            it.categoria.toLowerCase(Locale.getDefault()).contains(searchText)
+                        ) {
                             searchList.add(it)
                         }
                     }

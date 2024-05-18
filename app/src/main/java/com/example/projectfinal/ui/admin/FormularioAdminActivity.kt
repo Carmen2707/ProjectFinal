@@ -1,64 +1,56 @@
-package com.example.projectfinal.ui.formulario
+package com.example.projectfinal.ui.admin
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Reserva
-import com.example.projectfinal.databinding.FragmentAnadirReservaBinding
+import com.example.projectfinal.databinding.ActivityFormularioAdminBinding
 import com.example.projectfinal.ui.reserva.ReservaViewModel
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 
-
 @AndroidEntryPoint
-class FormularioFragment : Fragment() {
-    private val args: FormularioFragmentArgs by navArgs()
-    private lateinit var binding: FragmentAnadirReservaBinding
-    private val viewModel: ReservaViewModel by activityViewModels()
+class FormularioAdminActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityFormularioAdminBinding
     private var valor = 1
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentAnadirReservaBinding.inflate(inflater, container, false)
-        // Retorna la vista inflada por el binding
-        return binding.root
-    }
+    private val viewModel: ReservaViewModel by viewModels()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        binding = ActivityFormularioAdminBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding = FragmentAnadirReservaBinding.bind(view)
-
-        if (args.isEdit) {
-            // Estamos editando una reserva existente
-            binding.tfFecha.setText(args.fecha)
-            binding.tfHora.setText(args.hora)
-            binding.tfEditTextObservacion.setText(args.observaciones)
-            binding.tfEditTextNombre.setText(args.nombreUsuario)
-            valor = args.personas
+        val reserva = intent.getSerializableExtra("reserva") as? Reserva
+        if (reserva != null) {
+            binding.tfFecha.setText(reserva.fecha)
+            binding.tfHora.setText(reserva.hora)
+            binding.tfEditTextObservacion.setText(reserva.observaciones)
+            binding.tfEditTextNombre.setText(reserva.nombreUsuario)
+            valor = reserva.personas
             binding.cantidad.text = valor.toString()
-        } else {
-            binding.cantidad.text = args.personas.toString()
-        }
+            binding.tvTitulo.text = reserva.restaurante
 
-        binding.tvTitulo.text = args.restauranteNombre
+
+        }
         binding.btnCerrar.setOnClickListener {
-            findNavController().popBackStack()
+            finish()
         }
-
         binding.btnAumentar.setOnClickListener {
             binding.cantidad.text = (++valor).toString()
         }
@@ -66,6 +58,7 @@ class FormularioFragment : Fragment() {
         binding.btnDisminuir.setOnClickListener {
             if (valor > 1) {
                 binding.cantidad.text = (--valor).toString()
+            } else {
             }
         }
 
@@ -77,7 +70,7 @@ class FormularioFragment : Fragment() {
 
             c.add(Calendar.DAY_OF_MONTH, 1)
             val datePickerDialog = DatePickerDialog(
-                requireContext(),
+                this,
                 { view, year, monthOfYear, dayOfMonth ->
                     val dat = (dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
                     binding.tfFecha.setText(dat)
@@ -86,7 +79,6 @@ class FormularioFragment : Fragment() {
                 month,
                 day
             )
-
             datePickerDialog.datePicker.minDate = c.timeInMillis
             datePickerDialog.show()
         }
@@ -97,23 +89,25 @@ class FormularioFragment : Fragment() {
             val minute = c.get(Calendar.MINUTE)
 
             val timePickerDialog = TimePickerDialog(
-                requireContext(),
+                this,
                 { _, hourOfDay, minute ->
                     val selectedHour = hourOfDay.toString().padStart(2, '0')
                     val selectedMinute = minute.toString().padStart(2, '0')
                     val selectedTime = "$selectedHour:$selectedMinute"
 
                     // Validar si la hora seleccionada está dentro del horario de apertura y cierre
-                    if (isValidTime(selectedTime, args.horaApertura, args.horaCierre)) {
-                        binding.tfHora.setText(selectedTime)
-                    } else {
-                        val builder = AlertDialog.Builder(requireContext())
-                        builder.setMessage("El restaurante está cerrado en este horario. Por favor, elija otra hora.")
-                        builder.setPositiveButton("Aceptar") { dialog, _ ->
-                            dialog.dismiss()
+                    if (reserva != null) {
+                        if (isValidTime(selectedTime, reserva.horaApertura, reserva.horaCierre)) {
+                            binding.tfHora.setText(selectedTime)
+                        } else {
+                            val builder = AlertDialog.Builder(this)
+                            builder.setMessage("El restaurante está cerrado en este horario. Por favor, elija otra hora.")
+                            builder.setPositiveButton("Aceptar") { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            val dialog: AlertDialog = builder.create()
+                            dialog.show()
                         }
-                        val dialog: AlertDialog = builder.create()
-                        dialog.show()
                     }
                 },
                 hour,
@@ -126,36 +120,25 @@ class FormularioFragment : Fragment() {
 
         binding.btnGuardar.setOnClickListener {
             if (validate()) {
-                val reserva = Reserva(
-                    args.id,
-                    binding.tfFecha.text.toString(),
-                    binding.tfHora.text.toString(),
-                    FirebaseAuth.getInstance().currentUser?.email ?: "",
-                    binding.tfEditTextNombre.text.toString(),
-                    binding.tfEditTextObservacion.text.toString(),
-                    valor, args.restauranteNombre, args.horaApertura, args.horaCierre
-                )
-                Log.e("reservilla", reserva.toString())
+                val reservaActualizada = reserva?.let { it1 ->
+                    Reserva(
+                        it1.id,
+                        binding.tfFecha.text.toString(),
+                        binding.tfHora.text.toString(),
+                        reserva.usuario,
+                        binding.tfEditTextNombre.text.toString(),
+                        binding.tfEditTextObservacion.text.toString(),
+                        valor, reserva.restaurante, reserva.horaApertura, reserva.horaCierre
+                    )
+                }
+                if (reservaActualizada != null) {
+                    viewModel.actualizarReserva(reservaActualizada)
 
-                if (args.isEdit) {
-                    viewModel.actualizarReserva(reserva)
-                    val builder = AlertDialog.Builder(requireContext())
+                    val builder = AlertDialog.Builder(this)
                     builder.setMessage("Reserva actualizada correctamente")
                     builder.setPositiveButton("Aceptar") { dialog, _ ->
-
                         dialog.dismiss()
-                        requireActivity().supportFragmentManager.popBackStack()
-                    }
-                    val dialog: AlertDialog = builder.create()
-                    dialog.show()
-                } else {
-                    viewModel.addReserva(reserva = reserva)
-                    val builder = AlertDialog.Builder(requireContext())
-                    builder.setMessage("Reserva realizada correctamente")
-                    builder.setPositiveButton("Aceptar") { dialog, _ ->
-
-                        dialog.dismiss()
-                        findNavController().popBackStack()
+                        finish()
                     }
                     val dialog: AlertDialog = builder.create()
                     dialog.show()
@@ -242,5 +225,4 @@ class FormularioFragment : Fragment() {
         textInputLayout.error = msg
         textInputLayout.isErrorEnabled = msg != null
     }
-
 }

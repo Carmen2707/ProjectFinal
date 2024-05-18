@@ -131,7 +131,7 @@
                 android:id="@+id/etPasswordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
-                android:inputType="textVisiblePassword"/>
+                android:inputType="textVisiblePassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox

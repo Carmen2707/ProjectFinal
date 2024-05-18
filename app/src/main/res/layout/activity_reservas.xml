@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/yellow"
     tools:context=".ui.admin.ReservasActivity">
+
     <ImageButton
         android:id="@+id/btnVolver"
         android:layout_width="0dp"
@@ -46,6 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:textColor="@color/black" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReservas"
         android:layout_width="match_parent"

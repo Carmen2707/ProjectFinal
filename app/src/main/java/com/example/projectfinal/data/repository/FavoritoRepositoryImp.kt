@@ -42,7 +42,8 @@ class FavoritoRepositoryImp(private val database: FirebaseFirestore) : FavoritoR
         usuarioId: String,
         result: (UiState<Unit>) -> Unit
     ) {
-        val document = database.collection(FireStoreCollection.FAVORITOS).document(restaurante.id.toString() + usuarioId)
+        val document = database.collection(FireStoreCollection.FAVORITOS)
+            .document(restaurante.id.toString() + usuarioId)
 
         val favorito = hashMapOf(
             "id" to restaurante.id,
@@ -81,9 +82,10 @@ class FavoritoRepositoryImp(private val database: FirebaseFirestore) : FavoritoR
     override fun eliminarFavorito(
         restaurante: Restaurante, userId: String
     ) {
-         database.collection("favoritos").document(restaurante.id.toString()+ userId).delete() }
-
+        database.collection("favoritos").document(restaurante.id.toString() + userId).delete()
     }
+
+}
 
 
 

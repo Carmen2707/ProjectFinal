@@ -14,6 +14,6 @@ data class Reserva(
     var horaApertura: String = "",
     var horaCierre: String = ""
 ) : Serializable {
-    constructor() : this("", "", "", "", "",null, 0, "")
+    constructor() : this("", "", "", "", "", null, 0, "")
 }
 
