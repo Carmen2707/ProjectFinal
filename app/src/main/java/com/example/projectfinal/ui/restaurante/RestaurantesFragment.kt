@@ -147,14 +147,14 @@ class RestaurantesFragment : Fragment() {
 
         binding.rvRestaurantes.layoutManager = LinearLayoutManager(context)
 
-        viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
+     /*   viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
             for (restaurante in restaurantes) {
-                restaurante.favorito =
-                    viewModel.isFavorito(restaurante) // Método para verificar si el restaurante está en la lista de favoritos
+                restaurante.favorito = viewModel.isFavorito(restaurante) // Método para verificar si el restaurante está en la lista de favoritos
                 Log.e("fav", restaurante.favorito.toString())
             }
             restauranteAdapter = RestauranteAdapter(
                 onFavoritoChangeListener = { restaurante, isChecked ->
+                    Log.e("che", isChecked.toString())
                     esChecked(restaurante, isChecked)
 
                 },
@@ -188,9 +188,32 @@ class RestaurantesFragment : Fragment() {
         savedInstanceState?.getInt("recyclerViewPosition")?.let { position ->
             recyclerViewPosition = position
             (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(position)
-        }
-    }
+        }*/
+        restauranteAdapter = RestauranteAdapter(
+            onFavoritoChangeListener = { restaurante, isChecked ->
+                esChecked(restaurante, isChecked)
+            },
+            onItemSelected = { restaurante ->
+                onItemSelected(restaurante)
+            }
+        )
+        binding.rvRestaurantes.adapter = restauranteAdapter
 
+        viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
+            restauranteAdapter.submitList(restaurantes)
+            (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(recyclerViewPosition)
+        }
+
+        viewModelUsuario.getSession().observe(viewLifecycleOwner) { usuario ->
+            viewModel.cargarFragmentFavoritos(usuario)
+        }
+
+        // Configurar el adaptador de categorías
+        categoriaAdapter = CategoriaAdapter(categorias) { position -> actualizarCategorias(position) }
+        binding.rvCategorias.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvCategorias.adapter = categoriaAdapter
+        categoriaAdapter.resetearCategorias()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -199,5 +222,6 @@ class RestaurantesFragment : Fragment() {
         binding = FragmentRestaurantesBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
 }

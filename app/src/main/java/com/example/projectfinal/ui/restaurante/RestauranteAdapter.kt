@@ -23,11 +23,12 @@ class RestauranteAdapter(
     override fun onBindViewHolder(holder: RestauranteViewHolder, position: Int) {
         val restaurante = currentList[position]
         holder.render(restaurante, onItemSelected)
-
+       holder.checkBox.setOnCheckedChangeListener(null)
         holder.checkBox.isChecked = restaurante.favorito == true
 
 
         holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            restaurante.favorito = isChecked
             onFavoritoChangeListener(restaurante, isChecked)
         }
     }
@@ -35,11 +36,11 @@ class RestauranteAdapter(
     companion object {
         val RESTAURANTE_COMPARATOR = object : DiffUtil.ItemCallback<Restaurante>() {
             override fun areItemsTheSame(oldItem: Restaurante, newItem: Restaurante): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(oldItem: Restaurante, newItem: Restaurante): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem == newItem
             }
 
         }

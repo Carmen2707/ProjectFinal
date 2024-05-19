@@ -78,7 +78,6 @@ class RestauranteViewModel @Inject constructor(
     }
 
     fun addFavoritos(restaurante: Restaurante) {
-        // dao.modificarFavorito(restaurante.nombre, true)
         viewModelScope.launch {
             repository.addFavorito(restaurante, userId) { result ->
                 if (result is UiState.Success) {
@@ -132,7 +131,7 @@ class RestauranteViewModel @Inject constructor(
         val listaRestaurantes = _restaurantesBD.value
 
         // Verificar si la lista de restaurantes no es nula y no está vacía
-        if (!listaRestaurantes.isNullOrEmpty()) {
+        if (listaRestaurantes != null && listaRestaurantes.isNotEmpty()) {
             // Iterar sobre cada restaurante en la lista de restaurantes
             for (restaurante in listaRestaurantes) {
                 // Verificar si el restaurante tiene alguna de las categorías seleccionadas

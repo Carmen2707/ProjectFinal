@@ -32,7 +32,7 @@ class RestauranteViewHolder(
         tvApertura.text = restaurante.horaApertura
         tvCierre.text = restaurante.horaCierre
         // Actualizar el estado del CheckBox
-        checkBox.isChecked = restaurante.favorito == true
+      //  checkBox.isChecked = restaurante.favorito == true
         itemView.setOnClickListener {
             onClickListener(restaurante)
         }
