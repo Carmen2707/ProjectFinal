@@ -60,7 +60,7 @@ class RegistrarActivity : AppCompatActivity() {
     }
 
     private fun irPortada(email: String, providerType: ProviderType) {
-        val intent = Intent(this, MainActivity::class.java).apply {
+        Intent(this, MainActivity::class.java).apply {
             putExtra("email", email)
             putExtra("provider", providerType.name)
             startActivity(intent)
@@ -97,12 +97,6 @@ class RegistrarActivity : AppCompatActivity() {
         return isValid
     }
 
-
-    /**
-     * Display/hides TextInputLayout error.
-     *
-     * @param msg the message, or null to hide
-     */
     private fun toggleTextInputLayoutError(
         @NonNull textInputLayout: TextInputLayout,
         msg: String?

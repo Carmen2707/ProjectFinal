@@ -38,7 +38,6 @@ class NavigationActivity : AppCompatActivity() {
                 R.id.navigation_favoritos -> findNavController(R.id.frame_layout).navigate(R.id.favoritosFragment)
                 R.id.navigation_mis_reservas -> findNavController(R.id.frame_layout).navigate(R.id.misReservasFragment)
 
-                // Agregar más casos según sea necesario para otras opciones del menú
                 else -> {
 
                 }
@@ -47,9 +46,9 @@ class NavigationActivity : AppCompatActivity() {
         }
 
         onBackPressedDispatcher.addCallback(this) {
-            // Obtener el ID del fragmento actual
+
             val currentDestinationId = navController.currentDestination?.id
-            // Obtener el ID del fragmento de inicio (home)
+
             val homeFragmentId = R.id.restaurantesFragment
             val reservaFragmentId = R.id.misReservasFragment
             val favoritosFragmentId = R.id.favoritosFragment

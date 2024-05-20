@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 enum class ProviderType {
-    BASIC, GOOGLE
+    BASIC
 }
 
 @AndroidEntryPoint
