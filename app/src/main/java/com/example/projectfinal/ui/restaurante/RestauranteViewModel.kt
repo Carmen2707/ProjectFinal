@@ -45,8 +45,7 @@ class RestauranteViewModel @Inject constructor(
     fun isFavorito(restaurante: Restaurante): Boolean {
         val favoritosState = _listaFavoritos.value
         return if (favoritosState is UiState.Success) {
-            val favoritos = favoritosState.data
-            favoritos.any { it.id == restaurante.id }
+       favoritosState.data.any { it.id == restaurante.id }
         } else {
             false
         }
@@ -80,10 +79,7 @@ class RestauranteViewModel @Inject constructor(
     fun addFavoritos(restaurante: Restaurante) {
         viewModelScope.launch {
             repository.addFavorito(restaurante, userId) { result ->
-                if (result is UiState.Success) {
-                    // Manejar el éxito según sea necesario
-                } else if (result is UiState.Failure) {
-                    // Manejar el error si es necesario
+                if (result is UiState.Failure) {
                     Log.e("RestauranteViewModel", "Error al agregar restaurante a favoritos")
                 }
             }
@@ -144,7 +140,6 @@ class RestauranteViewModel @Inject constructor(
 
         _listaFiltrados.postValue(restaurantesFiltrados)
     }
-
 
     fun obtenerDatos() {
         val listaRestaurantes = mutableListOf<Restaurante>()

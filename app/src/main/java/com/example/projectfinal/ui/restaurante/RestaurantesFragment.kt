@@ -17,6 +17,7 @@ import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentRestaurantesBinding
 import com.example.projectfinal.ui.auth.UsuarioViewModel
 import com.example.projectfinal.ui.categoria.CategoriaAdapter
+import com.example.projectfinal.util.UiState
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -85,6 +86,7 @@ class RestaurantesFragment : Fragment() {
         (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(
             recyclerViewPosition
         )
+        viewModel.cargarFavoritos()
     }
 
 
@@ -200,8 +202,13 @@ class RestaurantesFragment : Fragment() {
         binding.rvRestaurantes.adapter = restauranteAdapter
 
         viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
-            restauranteAdapter.submitList(restaurantes)
-            (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(recyclerViewPosition)
+            restauranteAdapter.submitList(restaurantes) {
+
+
+                (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(
+                    recyclerViewPosition
+                )
+            }
         }
 
         viewModelUsuario.getSession().observe(viewLifecycleOwner) { usuario ->
