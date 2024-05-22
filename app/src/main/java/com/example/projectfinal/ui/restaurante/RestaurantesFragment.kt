@@ -17,6 +17,7 @@ import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.FragmentRestaurantesBinding
 import com.example.projectfinal.ui.auth.UsuarioViewModel
 import com.example.projectfinal.ui.categoria.CategoriaAdapter
+import com.example.projectfinal.ui.detalles.DetallesFragmentDirections
 import com.example.projectfinal.util.UiState
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -127,19 +128,27 @@ class RestaurantesFragment : Fragment() {
         binding = FragmentRestaurantesBinding.bind(view)
 
         binding.btnPerfil.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setMessage("¿Seguro que quieres cerrar sesión?")
-            builder.setPositiveButton("Si") { dialog, _ ->
-                FirebaseAuth.getInstance().signOut()
-                findNavController().navigate(R.id.action_restaurantesFragment_to_mainActivity)
-                dialog.dismiss()
+            val currentDestinationId = findNavController().currentDestination?.id
+            val restauranteFragmentId = R.id.restaurantesFragment
+
+            if (currentDestinationId == restauranteFragmentId) {
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setMessage("¿Seguro que quieres cerrar sesión?")
+                builder.setPositiveButton("Si") { dialog, _ ->
+                    FirebaseAuth.getInstance().signOut()
+                    findNavController().navigate(R.id.action_restaurantesFragment_to_mainActivity)
+                    dialog.dismiss()
+                }
+                builder.setNegativeButton("Cancelar") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                builder.setCancelable(false)
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+            } else {
+                Log.e("Navigation", "No se puede navegar desde el fragmento actual")
             }
-            builder.setNegativeButton("Cancelar") { dialog, _ ->
-                dialog.dismiss()
-            }
-            builder.setCancelable(false)
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
+
 
         }
         // Restaurar la posición del RecyclerView si está guardada
@@ -201,7 +210,7 @@ class RestaurantesFragment : Fragment() {
         )
         binding.rvRestaurantes.adapter = restauranteAdapter
 
-        viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
+       /* viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
             restauranteAdapter.submitList(restaurantes) {
 
 
@@ -209,7 +218,18 @@ class RestaurantesFragment : Fragment() {
                     recyclerViewPosition
                 )
             }
+        }*/
+        viewModel.restaurantesBD.observe(viewLifecycleOwner) { restaurantes ->
+            restaurantes.forEach { restaurante ->
+                restaurante.favorito = viewModel.isFavorito(restaurante)
+            }
+            restauranteAdapter.submitList(restaurantes) {
+                (binding.rvRestaurantes.layoutManager as LinearLayoutManager).scrollToPosition(
+                    recyclerViewPosition
+                )
+            }
         }
+
 
         viewModelUsuario.getSession().observe(viewLifecycleOwner) { usuario ->
             viewModel.cargarFragmentFavoritos(usuario)

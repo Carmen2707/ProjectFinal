@@ -44,7 +44,6 @@ class AdminActivity : AppCompatActivity() {
         }
 
         binding.btnCerrarSesion.setOnClickListener {
-            Log.d("AdminActivity", "Cerrar Sesion button clicked")
             val builder = AlertDialog.Builder(this@AdminActivity)
             builder.setMessage("¿Seguro que quieres cerrar sesión?")
             builder.setPositiveButton("Si") { dialog, _ ->

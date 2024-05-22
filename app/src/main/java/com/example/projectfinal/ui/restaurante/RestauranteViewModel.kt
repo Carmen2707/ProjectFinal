@@ -57,6 +57,7 @@ class RestauranteViewModel @Inject constructor(
             repository.cargarFavoritos(usuario) { result ->
                 if (result is UiState.Success) {
                     _listaFavoritos.value = result
+                    Log.d("RestauranteViewModel", "Favoritos cargados correctamente")
                 } else if (result is UiState.Failure) {
                     // Manejar el estado de fallo si es necesario
                     Log.e("RestauranteViewModel", "Error al cargar favoritos:")

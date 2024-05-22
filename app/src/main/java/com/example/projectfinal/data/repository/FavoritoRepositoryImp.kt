@@ -82,7 +82,7 @@ class FavoritoRepositoryImp(private val database: FirebaseFirestore) : FavoritoR
     override fun eliminarFavorito(
         restaurante: Restaurante, userId: String
     ) {
-        database.collection("favoritos").document(restaurante.id.toString() + userId).delete()
+        database.collection(FireStoreCollection.FAVORITOS).document(restaurante.id.toString() + userId).delete()
     }
 
 }

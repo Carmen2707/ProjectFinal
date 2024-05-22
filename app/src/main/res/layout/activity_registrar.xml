@@ -166,7 +166,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etTextPassword"
                 android:layout_width="match_parent"
-                android:layout_height="62dp" />
+                android:layout_height="62dp"
+                android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
