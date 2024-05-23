@@ -4,17 +4,17 @@
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/yellow</item>
         <item name="colorSecondary">?android:attr/colorPressedHighlight</item>
-        <item name="colorOnSecondary">@color/colorPrimary</item>
-        <!-- Primary brand color. -->
 
+        <!-- Primary brand color. -->
+        <item name="colorPrimaryFixed">@color/yellow</item>
         <item name="colorPrimaryVariant">@color/yellow</item>
-        <item name="colorOnPrimary">@color/white</item>
+
         <!-- Secondary brand color. -->
 
         <item name="colorSecondaryVariant">@color/yellow</item>
-
+        <item name="colorSecondaryFixed">@color/yellow</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
     </style>
 

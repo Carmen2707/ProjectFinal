@@ -85,6 +85,27 @@ class FavoritoRepositoryImp(private val database: FirebaseFirestore) : FavoritoR
         database.collection(FireStoreCollection.FAVORITOS).document(restaurante.id.toString() + userId).delete()
     }
 
+    override fun crearRestaurante(restaurante: Restaurante) {
+        val document = database.collection("restaurantes")
+            .document(restaurante.nombre)
+
+        val restauranteNuevo = hashMapOf(
+            "id" to restaurante.id,
+            "nombre" to restaurante.nombre,
+            "direccion" to restaurante.direccion,
+            "horario" to restaurante.horario,
+            "horaApertura" to restaurante.horaApertura,
+            "horaCierre" to restaurante.horaCierre,
+            "contacto" to restaurante.contacto,
+            "imagen" to restaurante.imagen,
+            "categoria" to restaurante.categoria,
+            "carousel" to restaurante.imagenes,
+            "web" to restaurante.web
+        )
+        document.set(restauranteNuevo)
+
+    }
+
 }
 
 

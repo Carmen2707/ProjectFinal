@@ -11,4 +11,6 @@ interface FavoritoRepository {
 
     fun eliminarFavorito(restaurante: Restaurante, userId: String)
 
+    fun crearRestaurante(restaurante: Restaurante)
+
 }

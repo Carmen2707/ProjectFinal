@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.projectfinal.data.model.Categorias
+import com.example.projectfinal.data.model.Reserva
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.data.model.Usuario
 import com.example.projectfinal.data.repository.FavoritoRepository
@@ -35,7 +36,14 @@ class RestauranteViewModel @Inject constructor(
     val listaFavoritos: LiveData<UiState<List<Restaurante>>>
         get() = _listaFavoritos
     private var userId = FirebaseAuth.getInstance().currentUser?.email ?: ""
+    private val _imageUrl = MutableLiveData<String>()
+    val imageUrl: LiveData<String> = _imageUrl
 
+    private val _imageUrl1 = MutableLiveData<String>()
+    val imageUrl1: LiveData<String> = _imageUrl1
+
+    private val _imageUrl2 = MutableLiveData<String>()
+    val imageUrl2: LiveData<String> = _imageUrl2
 
     init {
         obtenerDatos()
@@ -202,4 +210,17 @@ class RestauranteViewModel @Inject constructor(
     }
 
 
+    fun crearRestaurante(restaurante: Restaurante) {
+        repository.crearRestaurante(restaurante)
+
+    }
+    fun setRestaurantImageUrl(imageUrl: String) {
+        _imageUrl.value = imageUrl
+    }
+    fun setRestaurantImageUrl1(imageUrl: String) {
+        _imageUrl1.value = imageUrl
+    }
+    fun setRestaurantImageUrl2(imageUrl: String) {
+        _imageUrl2.value = imageUrl
+    }
 }

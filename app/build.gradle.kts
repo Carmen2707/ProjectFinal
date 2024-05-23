@@ -64,19 +64,20 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.1.1")
     implementation("com.google.firebase:firebase-firestore-ktx:24.11.0")
     implementation("com.google.firebase:firebase-database-ktx:20.3.1")
-
+    implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
     //glide y coil
     implementation("com.github.bumptech.glide:glide:4.13.0")
     implementation("io.coil-kt:coil:2.6.0")
+    implementation("com.squareup.picasso:picasso:2.71828")
 
     //Gson
     implementation("com.google.code.gson:gson:2.8.9")
 
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
-    implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
+
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
-    implementation("com.google.firebase:firebase-firestore:24.11.1")
+
     //mapas
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("androidx.activity:activity:1.8.0")
@@ -85,11 +86,9 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:${hiltVersion}")
     implementation("com.google.dagger:hilt-android:${hiltVersion}")
     implementation("com.google.dagger:hilt-android:2.46")
-    // Room
-    val room_version = "2.6.1"
-    implementation("androidx.room:room-runtime:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
+
+
+    implementation("androidx.activity:activity-ktx:1.9.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

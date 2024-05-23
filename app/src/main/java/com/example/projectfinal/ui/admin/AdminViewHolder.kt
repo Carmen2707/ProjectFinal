@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
+import com.squareup.picasso.Picasso
 
 class AdminViewHolder(
     view: View
@@ -20,9 +21,13 @@ class AdminViewHolder(
     private val tvCierre: TextView = view.findViewById(R.id.tvCierre)
 
     fun render(restaurante: Restaurante, onClickListener: (Restaurante) -> Unit) {
-        Glide.with(itemView.context)
+      /*  Glide.with(itemView.context)
             .load(restaurante.imagen)
+            .into(ivRestaurante)*/
+        Picasso.get()
+            .load(restaurante.imagen)  // uri puede ser la URI de la imagen seleccionada
             .into(ivRestaurante)
+
         tvNombreRestaurante.text = restaurante.nombre
         tvDireccionRestaurante.text = restaurante.direccion
         tvHorarioRestaurante.text = restaurante.horario

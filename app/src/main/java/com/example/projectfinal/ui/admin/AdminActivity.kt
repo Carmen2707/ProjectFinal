@@ -60,6 +60,10 @@ class AdminActivity : AppCompatActivity() {
             dialog.show()
         }
 
+        binding.btnIrRest.setOnClickListener {
+            val intent = Intent(this, AnadirRestauranteActivity::class.java)
+            startActivity(intent)
+        }
         layoutManager = LinearLayoutManager(this)
         binding.rvRestaurantes.layoutManager = layoutManager
         adminAdapter = AdminAdapter(
