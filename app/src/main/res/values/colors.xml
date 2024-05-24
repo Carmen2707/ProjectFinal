@@ -7,7 +7,7 @@
     <color name="gray">#B1B1B1</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
+    <color name="yellow_light">#FFECA7</color>
     <color name="yellow">#FFCC17</color>
     <color name="yellow_dark">#C69F13</color>
     <color name="app_reservas_color">#FFFFFF</color>
