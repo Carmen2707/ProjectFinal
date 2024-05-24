@@ -89,7 +89,6 @@
             android:button="@drawable/checkbox"
             android:scaleX="0.50"
             android:scaleY="0.50"
-            style="@style/checkbox"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
