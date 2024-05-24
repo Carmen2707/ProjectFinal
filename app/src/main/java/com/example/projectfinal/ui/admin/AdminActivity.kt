@@ -31,7 +31,10 @@ class AdminActivity : AppCompatActivity() {
     private lateinit var dataList: ArrayList<Restaurante>
     private lateinit var nombreList: ArrayList<String>
     private lateinit var categoriaList: ArrayList<String>
-
+    override fun onResume() {
+        super.onResume()
+        viewModel.obtenerDatos()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
