@@ -18,12 +18,12 @@
             android:id="@+id/tvTituloUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
             android:layout_margin="5dp"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/rocko"
             android:text="Usuario:"
             android:textColor="@color/black"
+            android:textSize="18sp"
             android:textStyle="bold"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -76,15 +76,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="14dp"
             android:layout_marginStart="4dp"
+            android:layout_marginTop="14dp"
             android:fontFamily="@font/rocko"
             android:text="Reserva:"
-            android:textSize="18sp"
             android:textColor="@color/black"
+            android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/tvTitResponsable"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitResponsable" />
 
         <TextView
             android:id="@+id/tvResponsable"

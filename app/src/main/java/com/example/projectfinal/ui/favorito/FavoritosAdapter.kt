@@ -12,7 +12,6 @@ class FavoritosAdapter(
     private val onItemSelected: (restaurante: Restaurante) -> Unit
 ) :
     RecyclerView.Adapter<FavoritosViewHolder>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritosViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_restaurante, parent, false)

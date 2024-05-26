@@ -15,7 +15,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:background="@null"
-        android:src="@drawable/btnvolver"
+        android:src="@drawable/volver"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,9 +26,9 @@
         android:layout_marginTop="34dp"
         android:fontFamily="@font/dunkin"
         android:text="Titulo restaurante"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="22sp"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,17 +37,17 @@
         android:id="@+id/tvNoReservas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No se ha encontrado ninguna reserva para este restaurante"
-        android:visibility="gone"
-        android:textSize="18sp"
-        android:padding="30dp"
-        android:textAlignment="center"
         android:fontFamily="@font/rocko"
-        app:layout_constraintTop_toTopOf="parent"
+        android:padding="30dp"
+        android:text="No se ha encontrado ninguna reserva para este restaurante"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/black" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReservas"

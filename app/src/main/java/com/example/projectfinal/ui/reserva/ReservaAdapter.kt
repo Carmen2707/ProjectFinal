@@ -11,7 +11,6 @@ class ReservaAdapter :
     private var reservas: MutableList<Reserva> = mutableListOf()
     private var listener: OnItemClickListener? = null
 
-
     interface OnItemClickListener {
         fun onEditarClick(position: Int)
         fun onBorrarClick(position: Int)
@@ -30,7 +29,6 @@ class ReservaAdapter :
 
     override fun onBindViewHolder(holder: ReservaViewHolder, position: Int) {
         holder.render(reservas[position])
-
         holder.btnEditar.setOnClickListener {
             listener?.onEditarClick(position)
         }

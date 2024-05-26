@@ -29,8 +29,8 @@
 
         android:layout_marginTop="20dp"
         android:fontFamily="@font/dunkin"
-        android:textAlignment="center"
         android:text="Titulo restaurante"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

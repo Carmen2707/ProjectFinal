@@ -2,8 +2,8 @@ package com.example.projectfinal.ui.admin
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -17,6 +17,7 @@ import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.ActivityAdminBinding
 import com.example.projectfinal.ui.MainActivity
 import com.example.projectfinal.ui.restaurante.RestauranteViewModel
+import com.example.projectfinal.util.UiState
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
@@ -35,6 +36,7 @@ class AdminActivity : AppCompatActivity() {
         super.onResume()
         viewModel.obtenerDatos()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -74,9 +76,41 @@ class AdminActivity : AppCompatActivity() {
                 onItemSelected(restaurante)
             }
         )
+        adminAdapter.setOnItemClickListener(object :
+            AdminAdapter.OnItemClickListener {
+            override fun onBorrarClick(position: Int) {
+                val builder = AlertDialog.Builder(this@AdminActivity)
+                builder.setMessage("¿Seguro que quieres eliminar este restaurante?")
+                builder.setPositiveButton("Eliminar") { dialog, _ ->
+                    viewModel.borrarRestaurante(position)
+                    dialog.dismiss()
+                }
+                builder.setNegativeButton("Cancelar") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                builder.setCancelable(false)
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+            }
+
+        })
+        viewModel.restaurantesAdmin.observe(this) { uiState ->
+            when (uiState) {
+                is UiState.Success -> {
+                    adminAdapter.submitList(uiState.data)
+                }
+
+                is UiState.Loading -> {
+                }
+
+                is UiState.Failure -> {
+                    Toast.makeText(this, "Ha ocurrido un error.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         binding.rvRestaurantes.adapter = adminAdapter
         viewModel.restaurantesBD.observe(this) { restaurantes ->
-
             adminAdapter.submitList(restaurantes)
             getData(restaurantes)
             for (restaurante in restaurantes) {
@@ -116,10 +150,7 @@ class AdminActivity : AppCompatActivity() {
                 adminAdapter.notifyDataSetChanged()
                 return false
             }
-
         })
-
-
     }
 
     private fun getData(restaurantes: List<Restaurante>) {

@@ -16,7 +16,6 @@ class DetallesAdapter(
     }
 
     override fun getItemCount(): Int = imagenes.size
-
     override fun onBindViewHolder(holder: DetallesViewHolder, position: Int) {
         holder.bind(imagenes[position])
     }

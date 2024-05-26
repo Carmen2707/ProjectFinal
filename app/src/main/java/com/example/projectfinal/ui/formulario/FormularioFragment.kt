@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +33,6 @@ class FormularioFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAnadirReservaBinding.inflate(inflater, container, false)
-        // Retorna la vista inflada por el binding
         return binding.root
     }
 
@@ -86,7 +84,6 @@ class FormularioFragment : Fragment() {
                 month,
                 day
             )
-
             datePickerDialog.datePicker.minDate = c.timeInMillis
             datePickerDialog.show()
         }
@@ -120,7 +117,6 @@ class FormularioFragment : Fragment() {
                 minute,
                 true
             )
-
             timePickerDialog.show()
         }
 
@@ -135,14 +131,11 @@ class FormularioFragment : Fragment() {
                     binding.tfEditTextObservacion.text.toString(),
                     valor, args.restauranteNombre, args.horaApertura, args.horaCierre
                 )
-                Log.e("reservilla", reserva.toString())
-
                 if (args.isEdit) {
                     viewModel.actualizarReserva(reserva)
                     val builder = AlertDialog.Builder(requireContext())
                     builder.setMessage("Reserva actualizada correctamente")
                     builder.setPositiveButton("Aceptar") { dialog, _ ->
-
                         dialog.dismiss()
                         requireActivity().supportFragmentManager.popBackStack()
                     }
@@ -153,7 +146,6 @@ class FormularioFragment : Fragment() {
                     val builder = AlertDialog.Builder(requireContext())
                     builder.setMessage("Reserva realizada correctamente")
                     builder.setPositiveButton("Aceptar") { dialog, _ ->
-
                         dialog.dismiss()
                         findNavController().popBackStack()
                     }
@@ -172,9 +164,6 @@ class FormularioFragment : Fragment() {
         if (selectedTime.isEmpty()) {
             return false
         }
-        Log.d("FormularioFragment", "Hora de apertura: $horaApertura")
-        Log.d("FormularioFragment", "Hora de cierre: $horaCierre")
-        Log.d("FormularioFragment", "Hora seleccionada: $selectedTime")
         val horaSeleccionada = convertirAMinutos(selectedTime)
         val aperturra = convertirAMinutos(horaApertura)
         val cierre = convertirAMinutos(horaCierre)
@@ -199,14 +188,12 @@ class FormularioFragment : Fragment() {
         if (horas == 24) {
             horas = 0
         }
-
         return horas * 60 + minutos
     }
 
     fun validate(): Boolean {
         var isValid = true
 
-        // Verificar si el campo de nombre está vacío
         val nombre = binding.tfEditTextNombre.text.toString()
         if (TextUtils.isEmpty(nombre)) {
             toggleTextInputLayoutError(binding.tfNombre, "Campo obligatorio")
@@ -215,7 +202,6 @@ class FormularioFragment : Fragment() {
             toggleTextInputLayoutError(binding.tfNombre, null)
         }
 
-        // Verificar si el campo de fecha está vacío
         val fecha = binding.tfFecha.text.toString()
         if (TextUtils.isEmpty(fecha)) {
             toggleTextInputLayoutError(binding.textInputLayoutFecha, "Campo obligatorio")
@@ -242,5 +228,4 @@ class FormularioFragment : Fragment() {
         textInputLayout.error = msg
         textInputLayout.isErrorEnabled = msg != null
     }
-
 }

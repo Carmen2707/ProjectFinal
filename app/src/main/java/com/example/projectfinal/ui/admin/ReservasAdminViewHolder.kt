@@ -19,13 +19,11 @@ class ReservasAdminViewHolder(
     val btnEditar: ImageButton = view.findViewById(R.id.btnEditar)
     val btnBorrar: ImageButton = view.findViewById(R.id.btnBorrar)
     fun render(reserva: Reserva) {
-
         tvFecha.text = reserva.fecha
         tvHora.text = reserva.hora
         tvNumPersonas.text = reserva.personas.toString()
         tvObservaciones.text = reserva.observaciones
         tvCorreo.text = reserva.usuario
         tvResponsable.text = reserva.nombreUsuario
-
     }
 }

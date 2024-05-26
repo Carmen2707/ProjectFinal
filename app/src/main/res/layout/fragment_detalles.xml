@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellow"
     android:clickable="false"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     tools:context=".ui.detalles.DetallesFragment">
 
@@ -16,7 +16,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:background="@null"
-        android:src="@drawable/btnvolver"
+        android:src="@drawable/volver"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,9 +66,9 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/dunkin"
         android:text="TextViewTextViewTextViewTextView"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="22sp"
-        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/carouselRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,11 +121,11 @@
         android:id="@+id/tvTitApertura"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/rocko"
+        android:text="Hora de apertura:"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:layout_marginTop="8dp"
-        android:text="Hora de apertura:"
         app:layout_constraintStart_toStartOf="@+id/tvTitTel"
         app:layout_constraintTop_toBottomOf="@+id/tvTitTel" />
 
@@ -134,10 +134,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/rocko"
         android:text="Hora de cierre:"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:fontFamily="@font/rocko"
         app:layout_constraintStart_toStartOf="@+id/tvTitApertura"
         app:layout_constraintTop_toBottomOf="@+id/tvTitApertura" />
 
@@ -146,10 +146,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:fontFamily="@font/rocko"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:fontFamily="@font/rocko"
         app:layout_constraintStart_toEndOf="@+id/tvTitApertura"
         app:layout_constraintTop_toTopOf="@+id/tvTitApertura" />
 
@@ -158,10 +158,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:fontFamily="@font/rocko"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:fontFamily="@font/rocko"
         app:layout_constraintStart_toEndOf="@+id/tvTitCierre"
         app:layout_constraintTop_toTopOf="@+id/tvTitCierre" />
 

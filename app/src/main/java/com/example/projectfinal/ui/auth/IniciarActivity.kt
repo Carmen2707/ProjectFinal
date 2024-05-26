@@ -4,22 +4,16 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.projectfinal.R
 import com.example.projectfinal.databinding.ActivityIniciarBinding
 import com.example.projectfinal.ui.MainActivity
 import com.example.projectfinal.ui.NavigationActivity
 import com.example.projectfinal.ui.ProviderType
 import com.example.projectfinal.ui.admin.AdminActivity
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 
 class IniciarActivity : AppCompatActivity() {
     private lateinit var prefs: SharedPreferences
@@ -45,7 +39,6 @@ class IniciarActivity : AppCompatActivity() {
                                     guardarPreferencias(email, password)
                                     val intent = Intent(this, AdminActivity::class.java)
                                     startActivity(intent)
-                                    Log.e("admin", "hhaha")
                                 } else {
                                     irPortada(it.result?.user?.email ?: "", ProviderType.BASIC)
                                     guardarPreferencias(email, password)
@@ -125,7 +118,7 @@ class IniciarActivity : AppCompatActivity() {
     private fun alerta() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Ee ha producido un error autenticando al usuario")
+        builder.setMessage("Correo electrónico o contraseña incorrectos. Por favor, inténtelo de nuevo.")
         builder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()

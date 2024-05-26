@@ -21,7 +21,6 @@ class ReservasAdminAdapter(
     interface OnItemClickListener {
         fun onEditarClick(position: Int)
         fun onBorrarClick(position: Int)
-
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {

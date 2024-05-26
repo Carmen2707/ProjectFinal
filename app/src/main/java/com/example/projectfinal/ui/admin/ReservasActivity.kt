@@ -2,7 +2,6 @@ package com.example.projectfinal.ui.admin
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -88,8 +87,6 @@ class ReservasActivity : AppCompatActivity() {
 
 
             override fun onBorrarClick(position: Int) {
-
-                Log.d("MiFragmento", "Botón Borrar clickeado en la posición: $position")
                 val builder = AlertDialog.Builder(this@ReservasActivity)
                 builder.setMessage("¿Seguro que quieres eliminar esta reserva?")
                 builder.setPositiveButton("Eliminar") { dialog, _ ->
@@ -106,9 +103,7 @@ class ReservasActivity : AppCompatActivity() {
                 builder.setCancelable(false)
                 val dialog: AlertDialog = builder.create()
                 dialog.show()
-
             }
-
         })
     }
 

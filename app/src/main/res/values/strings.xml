@@ -29,7 +29,6 @@
     </string-array>
 
 
-
     <string name="prefs_file">com.example.projectfinal.PREFERENCE_FILE_KEY</string>
     <string name="token">744489394218-jqob7nakc4r7ntf3qu39mdegiot6k8ir.apps.googleusercontent.com</string>
     <!-- Strings used for fragments for navigation -->

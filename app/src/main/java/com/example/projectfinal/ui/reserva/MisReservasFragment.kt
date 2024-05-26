@@ -21,16 +21,11 @@ class MisReservasFragment : Fragment() {
     val viewModelReserva: ReservaViewModel by viewModels()
     private val viewModelUsuario: UsuarioViewModel by viewModels()
     val adapter = ReservaAdapter()
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMisReservasBinding.bind(view)
-        // Obtener el usuario actualmente autenticado
         viewModelUsuario.getSession().observe(viewLifecycleOwner) { usuario ->
             usuario?.let {
-                Log.d("MisReservasFragment", "Usuario autenticado: $usuario")
-
                 viewModelReserva.cargarReservas(usuario)
 
             } ?: run {
@@ -51,14 +46,12 @@ class MisReservasFragment : Fragment() {
         binding.rvReservas.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        // Configura un Listener para los botones en cada elemento del RecyclerView
         adapter.setOnItemClickListener(object : ReservaAdapter.OnItemClickListener {
             override fun onEditarClick(position: Int) {
                 val reserva = adapter.getItemAtPosition(position)
-                Log.e("reser", reserva.toString())
                 val action =
                     MisReservasFragmentDirections.actionMisReservasFragmentToFormularioFragment(
-                        restauranteNombre = reserva.restaurante.toString(),
+                        restauranteNombre = reserva.restaurante,
                         id = reserva.id,
                         nombreUsuario = reserva.nombreUsuario,
                         personas = reserva.personas,
@@ -70,21 +63,16 @@ class MisReservasFragment : Fragment() {
                         isEdit = true
                     )
                 findNavController().navigate(action)
-
             }
 
 
             override fun onBorrarClick(position: Int) {
-                // Lógica para el clic en el botón de borrar
-                Log.d("MiFragmento", "Botón Borrar clickeado en la posición: $position")
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setMessage("¿Seguro que quieres eliminar esta reserva?")
                 builder.setPositiveButton("Eliminar") { dialog, _ ->
                     viewModelReserva.borrarReserva(position) { success ->
                         if (success) {
                             adapter.notifyItemRemoved(position)
-                        } else {
-
                         }
                     }
                     dialog.dismiss()
@@ -95,22 +83,15 @@ class MisReservasFragment : Fragment() {
                 builder.setCancelable(false)
                 val dialog: AlertDialog = builder.create()
                 dialog.show()
-
             }
-
         })
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentMisReservasBinding.inflate(inflater, container, false)
-        // Retorna la vista inflada por el binding
         return binding.root
     }
-
-
 }

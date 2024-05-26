@@ -47,13 +47,12 @@ class RegistrarActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     private fun alerta() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Se ha producido un error autenticando al usuario")
+        builder.setMessage("Se ha producido un error generando al usuario")
         builder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
@@ -89,6 +88,12 @@ class RegistrarActivity : AppCompatActivity() {
         val contrasena = binding.etTextPassword.text.toString()
         if (TextUtils.isEmpty(contrasena)) {
             toggleTextInputLayoutError(binding.etPassword, "Campo obligatorio")
+            isValid = false
+        } else if (contrasena.length < 8) {
+            toggleTextInputLayoutError(
+                binding.etPassword,
+                "La contraseña debe tener al menos 8 caracteres"
+            )
             isValid = false
         } else {
             toggleTextInputLayoutError(binding.etPassword, null)

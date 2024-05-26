@@ -29,7 +29,6 @@ class FavoritoRepositoryImp(private val database: FirebaseFirestore) : FavoritoR
                             exception.localizedMessage ?: "Error desconocido al obtener Favoritos"
                         )
                     )
-                    Log.e("FavoritoRepository", "Error al obtener Favoritos", exception)
                 }
         } else {
             result.invoke(UiState.Failure("Usuario nulo, no se pueden obtener Favoritos"))
@@ -73,39 +72,15 @@ class FavoritoRepositoryImp(private val database: FirebaseFirestore) : FavoritoR
                             ?: "Error desconocido al añadir restaurante a favoritos"
                     )
                 )
-                Log.e("FavoritoRepository", "Error al añadir restaurante a favoritos", exception)
             }
-
-
     }
 
     override fun eliminarFavorito(
         restaurante: Restaurante, userId: String
     ) {
-        database.collection(FireStoreCollection.FAVORITOS).document(restaurante.id.toString() + userId).delete()
+        database.collection(FireStoreCollection.FAVORITOS)
+            .document(restaurante.id.toString() + userId).delete()
     }
-
-    override fun crearRestaurante(restaurante: Restaurante) {
-        val document = database.collection("restaurantes")
-            .document(restaurante.nombre)
-
-        val restauranteNuevo = hashMapOf(
-            "id" to restaurante.id,
-            "nombre" to restaurante.nombre,
-            "direccion" to restaurante.direccion,
-            "horario" to restaurante.horario,
-            "horaApertura" to restaurante.horaApertura,
-            "horaCierre" to restaurante.horaCierre,
-            "contacto" to restaurante.contacto,
-            "imagen" to restaurante.imagen,
-            "categoria" to restaurante.categoria,
-            "carousel" to restaurante.imagenes,
-            "web" to restaurante.web
-        )
-        document.set(restauranteNuevo)
-
-    }
-
 }
 
 

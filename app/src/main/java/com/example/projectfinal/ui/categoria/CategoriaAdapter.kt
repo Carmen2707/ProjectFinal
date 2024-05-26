@@ -22,7 +22,6 @@ class CategoriaAdapter(
     override fun onBindViewHolder(holder: CategoriasViewHolder, position: Int) {
         holder.render(
             categorias[position], onItemSelected
-
         )
     }
 

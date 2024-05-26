@@ -37,28 +37,21 @@ class NavigationActivity : AppCompatActivity() {
                 R.id.navigation_home -> findNavController(R.id.frame_layout).navigate(R.id.restaurantesFragment)
                 R.id.navigation_favoritos -> findNavController(R.id.frame_layout).navigate(R.id.favoritosFragment)
                 R.id.navigation_mis_reservas -> findNavController(R.id.frame_layout).navigate(R.id.misReservasFragment)
-
                 else -> {
-
                 }
             }
             true
         }
 
         onBackPressedDispatcher.addCallback(this) {
-
             val currentDestinationId = navController.currentDestination?.id
-
             val homeFragmentId = R.id.restaurantesFragment
             val reservaFragmentId = R.id.misReservasFragment
             val favoritosFragmentId = R.id.favoritosFragment
-            // Si el fragmento actual es el fragmento de inicio (home), cerrar la actividad
             if (currentDestinationId == homeFragmentId || currentDestinationId == reservaFragmentId || currentDestinationId == favoritosFragmentId) {
                 finishAffinity()
             } else {
-                // Si no, navegar hacia atrás hacia home
                 navController.navigateUp()
-                //finishAffinity()
             }
         }
     }

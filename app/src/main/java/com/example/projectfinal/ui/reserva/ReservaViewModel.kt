@@ -23,11 +23,8 @@ class ReservaViewModel @Inject constructor(val repository: ReservaRepository) : 
             if (result is UiState.Success) {
                 _reserva.value = result
             } else if (result is UiState.Failure) {
-                // Manejar el estado de fallo si es necesario
                 Log.e("ReservaViewModel", "Error al cargar reservas:")
             }
-
-
         }
     }
 
@@ -80,7 +77,6 @@ class ReservaViewModel @Inject constructor(val repository: ReservaRepository) : 
             } else if (result is UiState.Failure) {
                 Log.e("ReservaViewModel", "Error al cargar reservas:")
             }
-
         }
     }
 }

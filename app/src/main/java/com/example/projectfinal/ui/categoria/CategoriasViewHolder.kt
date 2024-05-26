@@ -44,7 +44,7 @@ class CategoriasViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             }
 
             Categorias.Japones -> {
-                tvNombreCategoria.text = "Japones"
+                tvNombreCategoria.text = "Japonés"
                 ivCategorias.setImageDrawable(
                     ContextCompat.getDrawable(ivCategorias.context, R.drawable.sushi)
                 )
@@ -84,8 +84,6 @@ class CategoriasViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     ContextCompat.getDrawable(ivCategorias.context, R.drawable.vegetarian)
                 )
             }
-
-            else -> {}
         }
     }
 }

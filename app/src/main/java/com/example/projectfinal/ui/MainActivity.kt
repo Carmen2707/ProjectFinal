@@ -9,7 +9,6 @@ import com.example.projectfinal.ui.auth.IniciarActivity
 import com.example.projectfinal.ui.auth.RegistrarActivity
 import dagger.hilt.android.AndroidEntryPoint
 
-
 enum class ProviderType {
     BASIC
 }

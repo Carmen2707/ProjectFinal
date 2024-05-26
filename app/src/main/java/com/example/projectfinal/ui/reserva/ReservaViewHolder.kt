@@ -15,14 +15,11 @@ class ReservaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val tvObservaciones: TextView = view.findViewById(R.id.tvObservaciones)
     val btnEditar: ImageButton = view.findViewById(R.id.btnEditar)
     val btnBorrar: ImageButton = view.findViewById(R.id.btnBorrar)
-
-
     fun render(reserva: Reserva) {
         tvNombreRestaurante.text = reserva.restaurante
         tvFecha.text = reserva.fecha
         tvHora.text = reserva.hora
         tvNumPersonas.text = reserva.personas.toString()
         tvObservaciones.text = reserva.observaciones
-
     }
 }

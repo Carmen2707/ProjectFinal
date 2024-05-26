@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/yellow"
+    android:fitsSystemWindows="true"
     tools:context=".ui.admin.AnadirRestauranteActivity">
+
     <ImageButton
         android:id="@+id/btnCerrar"
         android:layout_width="wrap_content"
@@ -36,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="18dp"
             android:fontFamily="@font/rocko"
             android:text="Nombre del restaurante:"
             android:textColor="@color/black"
@@ -104,7 +105,7 @@
             android:id="@+id/spinner"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-           android:layout_marginTop="4dp"
+            android:layout_marginTop="4dp"
             android:backgroundTint="@color/yellow"
             android:entries="@array/categorias_array"
             app:layout_constraintEnd_toEndOf="parent"
@@ -131,9 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rocko"
-                android:inputType="text"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp" />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -319,11 +318,11 @@
             android:id="@+id/btnPortada"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:fontFamily="@font/rocko"
             android:text="Portada"
             android:textColor="@color/black"
             android:textSize="15sp"
-            android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.121"
@@ -344,11 +343,11 @@
             android:id="@+id/btnEjemplo1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:fontFamily="@font/rocko"
             android:text="Añadir"
-            android:textSize="15sp"
-            android:layout_marginBottom="4dp"
             android:textColor="@color/black"
+            android:textSize="15sp"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -370,11 +369,11 @@
             android:id="@+id/btnEjemplo2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:fontFamily="@font/rocko"
             android:text="Añadir"
-            android:textSize="15sp"
-            android:layout_marginBottom="4dp"
             android:textColor="@color/black"
+            android:textSize="15sp"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -6,12 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.projectfinal.data.model.Categorias
-import com.example.projectfinal.data.model.Reserva
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.data.model.Usuario
 import com.example.projectfinal.data.repository.FavoritoRepository
+import com.example.projectfinal.data.repository.RestauranteRepository
 import com.example.projectfinal.data.repository.UsuarioRepository
-
+import com.example.projectfinal.util.FireStoreCollection
 import com.example.projectfinal.util.UiState
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -23,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RestauranteViewModel @Inject constructor(
     val repository: FavoritoRepository,
-    val repositoryUsuario: UsuarioRepository
+    val repositoryUsuario: UsuarioRepository,
+    val repositoryRestaurante: RestauranteRepository
 ) : ViewModel() {
 
     val _restaurantesBD = MutableLiveData<List<Restaurante>>()
@@ -36,14 +37,8 @@ class RestauranteViewModel @Inject constructor(
     val listaFavoritos: LiveData<UiState<List<Restaurante>>>
         get() = _listaFavoritos
     private var userId = FirebaseAuth.getInstance().currentUser?.email ?: ""
-    private val _imageUrl = MutableLiveData<String>()
-    val imageUrl: LiveData<String> = _imageUrl
-
-    private val _imageUrl1 = MutableLiveData<String>()
-    val imageUrl1: LiveData<String> = _imageUrl1
-
-    private val _imageUrl2 = MutableLiveData<String>()
-    val imageUrl2: LiveData<String> = _imageUrl2
+    private val _restaurantesAdmin = MutableLiveData<UiState<List<Restaurante>>>()
+    val restaurantesAdmin: LiveData<UiState<List<Restaurante>>> get() = _restaurantesAdmin
 
     init {
         obtenerDatos()
@@ -53,7 +48,7 @@ class RestauranteViewModel @Inject constructor(
     fun isFavorito(restaurante: Restaurante): Boolean {
         val favoritosState = _listaFavoritos.value
         return if (favoritosState is UiState.Success) {
-       favoritosState.data.any { it.id == restaurante.id }
+            favoritosState.data.any { it.id == restaurante.id }
         } else {
             false
         }
@@ -67,7 +62,6 @@ class RestauranteViewModel @Inject constructor(
                     _listaFavoritos.value = result
                     Log.d("RestauranteViewModel", "Favoritos cargados correctamente")
                 } else if (result is UiState.Failure) {
-                    // Manejar el estado de fallo si es necesario
                     Log.e("RestauranteViewModel", "Error al cargar favoritos:")
                 }
             }
@@ -81,7 +75,6 @@ class RestauranteViewModel @Inject constructor(
             } else if (result is UiState.Failure) {
                 Log.e("ReservaViewModel", "Error al cargar reservas:")
             }
-
         }
     }
 
@@ -100,31 +93,25 @@ class RestauranteViewModel @Inject constructor(
             restaurante.favorito = isChecked
             if (isChecked) {
                 addFavoritos(restaurante)
-
             } else {
                 eliminarFavorito(restaurante)
-
             }
-
         }
     }
 
     fun eliminarFavorito(restaurante: Restaurante) {
-
         viewModelScope.launch {
             repository.eliminarFavorito(restaurante, userId)
             val currentList = when (val currentState = _listaFavoritos.value) {
                 is UiState.Success -> {
                     val dataList = currentState.data
                     dataList.toMutableList().apply {
-                        // Eliminar el restaurante de la lista si existe
                         removeAll { it.id == restaurante.id }
                     }
                 }
 
-                else -> listOf() // En cualquier otro caso, devuelve una lista vacía
+                else -> listOf()
             }
-
             _listaFavoritos.value = UiState.Success(currentList)
         }
     }
@@ -134,10 +121,7 @@ class RestauranteViewModel @Inject constructor(
         val restaurantesFiltrados = mutableListOf<Restaurante>()
 
         val listaRestaurantes = _restaurantesBD.value
-
-        // Verificar si la lista de restaurantes no es nula y no está vacía
         if (listaRestaurantes != null && listaRestaurantes.isNotEmpty()) {
-            // Iterar sobre cada restaurante en la lista de restaurantes
             for (restaurante in listaRestaurantes) {
                 // Verificar si el restaurante tiene alguna de las categorías seleccionadas
                 if (categoriasSeleccionadas.any { it.javaClass.simpleName == restaurante.categoria }) {
@@ -146,7 +130,6 @@ class RestauranteViewModel @Inject constructor(
                 }
             }
         }
-
         _listaFiltrados.postValue(restaurantesFiltrados)
     }
 
@@ -166,7 +149,7 @@ class RestauranteViewModel @Inject constructor(
         var restaurante: Restaurante
 
         val db = Firebase.firestore
-        db.collection("restaurantes").get().addOnSuccessListener { result ->
+        db.collection(FireStoreCollection.RESTAURANTES).get().addOnSuccessListener { result ->
             for (document in result) {
                 id = document.data.get("id") as Long
                 nombre = document.data.get("nombre") as String
@@ -192,35 +175,38 @@ class RestauranteViewModel @Inject constructor(
                     imagenes,
                     web
                 )
-
                 if (isFavorito(restaurante)) {
                     restaurante.favorito = true
                 }
                 listaRestaurantes.add(restaurante)
-
-
             }
             viewModelScope.launch {
                 _restaurantesBD.postValue(listaRestaurantes)
+                _restaurantesAdmin.postValue(UiState.Success(listaRestaurantes))
             }
         }.addOnFailureListener { error ->
             Log.e("FirebaseError", error.message.toString())
         }
-
     }
-
 
     fun crearRestaurante(restaurante: Restaurante) {
-        repository.crearRestaurante(restaurante)
+        repositoryRestaurante.crearRestaurante(restaurante)
+    }
 
-    }
-    fun setRestaurantImageUrl(imageUrl: String) {
-        _imageUrl.value = imageUrl
-    }
-    fun setRestaurantImageUrl1(imageUrl: String) {
-        _imageUrl1.value = imageUrl
-    }
-    fun setRestaurantImageUrl2(imageUrl: String) {
-        _imageUrl2.value = imageUrl
+    fun borrarRestaurante(position: Int) {
+        val uiState = restaurantesAdmin.value
+        if (uiState is UiState.Success) {
+            val restaurantes = uiState.data.toMutableList()
+            if (position in restaurantes.indices) {
+                viewModelScope.launch {
+                    repositoryRestaurante.borrarRestaurante(position, restaurantes) { success ->
+                        if (success) {
+                            restaurantes.removeAt(position)
+                            _restaurantesAdmin.value = UiState.Success(restaurantes)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

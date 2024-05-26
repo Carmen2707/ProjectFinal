@@ -32,11 +32,9 @@ class ReservaRepositoyImp(val database: FirebaseFirestore) : ReservaRepository {
                             exception.localizedMessage ?: "Error desconocido al obtener reservas"
                         )
                     )
-                    Log.e("ReservaRepository", "Error al obtener reservas", exception)
                 }
         } else {
             result.invoke(UiState.Failure("Usuario nulo, no se pueden obtener reservas"))
-            Log.e("ReservaRepository", "Usuario nulo, no se pueden obtener reservas")
         }
     }
 
@@ -64,7 +62,6 @@ class ReservaRepositoyImp(val database: FirebaseFirestore) : ReservaRepository {
                             exception.localizedMessage ?: "Error desconocido al obtener reservas"
                         )
                     )
-                    Log.e("ReservaRepository", "Error al obtener reservas", exception)
                 }
         } else {
             result.invoke(UiState.Failure("Restaurante nulo, no se pueden obtener reservas"))
@@ -72,7 +69,7 @@ class ReservaRepositoyImp(val database: FirebaseFirestore) : ReservaRepository {
     }
 
     override fun addReserva(reserva: Reserva) {
-        val document = database.collection("reservas").document()
+        val document = database.collection(FireStoreCollection.RESERVA).document()
         reserva.id = document.id
         document
             .set(reserva)
@@ -85,8 +82,7 @@ class ReservaRepositoyImp(val database: FirebaseFirestore) : ReservaRepository {
     }
 
     override fun updateReserva(reserva: Reserva) {
-        val document = database.collection("reservas").document(reserva.id)
-        Log.e("id", reserva.id)
+        val document = database.collection(FireStoreCollection.RESERVA).document(reserva.id)
         document
             .set(reserva)
             .addOnSuccessListener {
@@ -95,7 +91,6 @@ class ReservaRepositoyImp(val database: FirebaseFirestore) : ReservaRepository {
             .addOnFailureListener { exception ->
                 Log.e("ReservaRepository", "Error al actualizar la reserva", exception)
             }
-
     }
 
 
@@ -106,21 +101,18 @@ class ReservaRepositoyImp(val database: FirebaseFirestore) : ReservaRepository {
     ) {
         if (position in reservas.indices) {
             val reservaAEliminar = reservas[position]
-            database.collection("reservas").document(reservaAEliminar.id)
+            database.collection(FireStoreCollection.RESERVA).document(reservaAEliminar.id)
                 .delete()
                 .addOnSuccessListener {
-                    // Operación de eliminación exitosa
                     val nuevasReservas = reservas.toMutableList()
-                    nuevasReservas.removeAt(position) // Eliminar el elemento de la lista local
+                    nuevasReservas.removeAt(position)
                     callback(true)
                 }
                 .addOnFailureListener { exception ->
-                    // Error al eliminar la reserva
                     Log.e("ReservaRepository", "Error al eliminar reserva", exception)
                     callback(false)
                 }
         } else {
-            // La posición está fuera de los límites de la lista de reservas
             callback(false)
         }
     }

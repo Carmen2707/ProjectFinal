@@ -3,6 +3,7 @@ package com.example.projectfinal.util
 object FireStoreCollection {
     val RESERVA = "reservas"
     val FAVORITOS = "favoritos"
+    val RESTAURANTES = "restaurantes"
 }
 
 object FireStoreDocumentField {

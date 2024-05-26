@@ -1,34 +1,21 @@
 package com.example.projectfinal.ui.admin
 
+import android.Manifest
 import android.app.Activity
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.Manifest
-import android.app.TimePickerDialog
-import android.provider.Settings
-import android.text.TextUtils
-import android.content.Context
-import android.database.Cursor
-import android.net.Uri
-import android.provider.MediaStore
 import androidx.activity.viewModels
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.view.get
-import androidx.navigation.fragment.findNavController
-import com.example.projectfinal.R
+import androidx.core.content.ContextCompat
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.ActivityAnadirRestauranteBinding
 import com.example.projectfinal.ui.restaurante.RestauranteViewModel
@@ -36,7 +23,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
 import java.util.Calendar
 import java.util.UUID
 
@@ -46,6 +32,7 @@ class AnadirRestauranteActivity : AppCompatActivity() {
     private val viewModel: RestauranteViewModel by viewModels()
     private val listaImagenesEjemplos = mutableListOf<String>()
     private lateinit var restaurante: Restaurante
+
     companion object {
         const val REQUEST_CODE_IMAGES = 1001
     }
@@ -55,9 +42,7 @@ class AnadirRestauranteActivity : AppCompatActivity() {
 
         binding = ActivityAnadirRestauranteBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        restaurante = Restaurante(
-
-        )
+        restaurante = Restaurante()
         binding.btnPortada.setOnClickListener { requestPermission() }
         binding.btnEjemplo1.setOnClickListener { requestPermission1() }
         binding.btnEjemplo2.setOnClickListener { requestPermission2() }
@@ -71,9 +56,6 @@ class AnadirRestauranteActivity : AppCompatActivity() {
                 val contacto = binding.tfEditTextContactoRest.text.toString().toLongOrNull()
                 val categoria = binding.spinner.selectedItem.toString()
                 val web = binding.tfEditTextWeb.text.toString()
-
-                viewModel.imageUrl1.value?.let { it1 -> listaImagenesEjemplos.add(it1) }
-                viewModel.imageUrl2.value?.let { it1 -> listaImagenesEjemplos.add(it1) }
                 val listaImg = listaImagenesEjemplos
                 val idRestaurante = System.currentTimeMillis()
 
@@ -94,7 +76,6 @@ class AnadirRestauranteActivity : AppCompatActivity() {
                 val builder = AlertDialog.Builder(this)
                 builder.setMessage("Restaurante creado correctamente")
                 builder.setPositiveButton("Aceptar") { dialog, _ ->
-
                     dialog.dismiss()
                     finish()
                 }
@@ -109,9 +90,11 @@ class AnadirRestauranteActivity : AppCompatActivity() {
             val minute = c.get(Calendar.MINUTE)
 
             val timePickerDialog = TimePickerDialog(
-               this,
+                this,
                 { _, hourOfDay, minute ->
-                    binding.tfHoraApertura.setText("$hourOfDay:$minute")
+                    val selectedHour = hourOfDay.toString().padStart(2, '0')
+                    val selectedMinute = minute.toString().padStart(2, '0')
+                    binding.tfHoraApertura.setText("$selectedHour:$selectedMinute")
                 },
                 hour,
                 minute,
@@ -127,7 +110,9 @@ class AnadirRestauranteActivity : AppCompatActivity() {
             val timePickerDialog = TimePickerDialog(
                 this,
                 { _, hourOfDay, minute ->
-                    binding.tfHoraCierre.setText("$hourOfDay:$minute")
+                    val selectedHour = hourOfDay.toString().padStart(2, '0')
+                    val selectedMinute = minute.toString().padStart(2, '0')
+                    binding.tfHoraCierre.setText("$selectedHour:$selectedMinute")
                 },
                 hour,
                 minute,
@@ -135,11 +120,14 @@ class AnadirRestauranteActivity : AppCompatActivity() {
             )
             timePickerDialog.show()
         }
+        binding.btnCerrar.setOnClickListener {
+            finish()
+        }
     }
+
     fun validate(): Boolean {
         var isValid = true
 
-        // Verificar si el campo de nombre está vacío
         val nombre = binding.tfEditTextNombreRest.text.toString()
         if (TextUtils.isEmpty(nombre)) {
             toggleTextInputLayoutError(binding.tfNombreRest, "Campo obligatorio")
@@ -204,10 +192,16 @@ class AnadirRestauranteActivity : AppCompatActivity() {
             ) == PackageManager.PERMISSION_GRANTED -> {
                 pickPhotoFromGallery()
             }
+
             shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_IMAGES) -> {
                 // Mostrar una explicación al usuario de por qué necesitas el permiso
-                Toast.makeText(this, "El permiso para acceder a imágenes es necesario.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "El permiso para acceder a imágenes es necesario.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+
             else -> ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
@@ -215,26 +209,27 @@ class AnadirRestauranteActivity : AppCompatActivity() {
             )
         }
     }
+
     private val startForActivityGallery = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data = result.data
             data?.data?.let { uri ->
-                // Verificar que la URI no sea nula
                 uri?.let {
                     uploadImageToFirebaseStorage(uri)
-                    // Cargar la imagen en Picasso
                     Picasso.get().load(uri).into(binding.imgPortada)
                 }
             }
         }
     }
+
     private fun pickPhotoFromGallery() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         startForActivityGallery.launch(intent)
     }
+
     private fun uploadImageToFirebaseStorage(uri: Uri) {
         val storage = FirebaseStorage.getInstance()
         val storageRef = storage.reference
@@ -244,13 +239,15 @@ class AnadirRestauranteActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 imagesRef.downloadUrl.addOnSuccessListener { uri ->
                     val downloadUrl = uri.toString()
-                    // Asignar la URL de descarga al campo de imagen del restaurante
                     restaurante.imagen = downloadUrl
                 }
             }
             .addOnFailureListener { exception ->
-                // Manejar errores en la carga de la imagen
-                Toast.makeText(this, "Error al cargar la imagen en Firebase Storage: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Error al cargar la imagen en Firebase Storage: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
 
@@ -262,10 +259,15 @@ class AnadirRestauranteActivity : AppCompatActivity() {
             ) == PackageManager.PERMISSION_GRANTED -> {
                 pickPhotoFromGallery1()
             }
+
             shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_IMAGES) -> {
-                // Mostrar una explicación al usuario de por qué necesitas el permiso
-                Toast.makeText(this, "El permiso para acceder a imágenes es necesario.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "El permiso para acceder a imágenes es necesario.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+
             else -> ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
@@ -281,15 +283,14 @@ class AnadirRestauranteActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val data = result.data
             data?.data?.let { uri ->
-                // Verificar que la URI no sea nula
                 uri.let {
                     uploadImageToFirebaseStorage1(uri)
-                    // Cargar la imagen en Picasso
                     Picasso.get().load(uri).into(binding.imgEjemplo1)
                 }
             }
         }
     }
+
     private fun pickPhotoFromGallery1() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
@@ -309,9 +310,14 @@ class AnadirRestauranteActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error al cargar la imagen en Firebase Storage: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Error al cargar la imagen en Firebase Storage: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
+
     private fun requestPermission2() {
         when {
             ContextCompat.checkSelfPermission(
@@ -320,10 +326,15 @@ class AnadirRestauranteActivity : AppCompatActivity() {
             ) == PackageManager.PERMISSION_GRANTED -> {
                 pickPhotoFromGallery2()
             }
+
             shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_IMAGES) -> {
-                // Mostrar una explicación al usuario de por qué necesitas el permiso
-                Toast.makeText(this, "El permiso para acceder a imágenes es necesario.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "El permiso para acceder a imágenes es necesario.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+
             else -> ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
@@ -339,19 +350,38 @@ class AnadirRestauranteActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val data = result.data
             data?.data?.let { uri ->
-                // Verificar que la URI no sea nula
                 uri.let {
-                    uploadImageToFirebaseStorage1(uri)
-                    // Cargar la imagen en Picasso
+                    uploadImageToFirebaseStorage2(uri)
                     Picasso.get().load(uri).into(binding.imgEjemplo2)
                 }
             }
-
         }
     }
+
     private fun pickPhotoFromGallery2() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         startForActivityGallery2.launch(intent)
+    }
+
+    private fun uploadImageToFirebaseStorage2(uri: Uri) {
+        val storage = FirebaseStorage.getInstance()
+        val storageRef = storage.reference
+        val imagesRef = storageRef.child("images/${UUID.randomUUID()}")
+
+        imagesRef.putFile(uri)
+            .addOnSuccessListener {
+                imagesRef.downloadUrl.addOnSuccessListener { uri ->
+                    val downloadUrl = uri.toString()
+                    listaImagenesEjemplos.add(downloadUrl)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(
+                    this,
+                    "Error al cargar la imagen en Firebase Storage: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
     }
 }

@@ -19,14 +19,11 @@ class RestauranteAdapter(
     }
 
     override fun getItemCount(): Int = currentList.size
-
     override fun onBindViewHolder(holder: RestauranteViewHolder, position: Int) {
         val restaurante = currentList[position]
         holder.render(restaurante, onItemSelected)
-       holder.checkBox.setOnCheckedChangeListener(null)
+        holder.checkBox.setOnCheckedChangeListener(null)
         holder.checkBox.isChecked = restaurante.favorito == true
-
-
         holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
             restaurante.favorito = isChecked
             onFavoritoChangeListener(restaurante, isChecked)
@@ -45,6 +42,4 @@ class RestauranteAdapter(
 
         }
     }
-
-
 }

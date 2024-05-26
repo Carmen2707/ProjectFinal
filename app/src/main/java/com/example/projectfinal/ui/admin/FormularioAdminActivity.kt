@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.NonNull
@@ -45,8 +44,6 @@ class FormularioAdminActivity : AppCompatActivity() {
             valor = reserva.personas
             binding.cantidad.text = valor.toString()
             binding.tvTitulo.text = reserva.restaurante
-
-
         }
         binding.btnCerrar.setOnClickListener {
             finish()
@@ -114,7 +111,6 @@ class FormularioAdminActivity : AppCompatActivity() {
                 minute,
                 true
             )
-
             timePickerDialog.show()
         }
 
@@ -133,7 +129,6 @@ class FormularioAdminActivity : AppCompatActivity() {
                 }
                 if (reservaActualizada != null) {
                     viewModel.actualizarReserva(reservaActualizada)
-
                     val builder = AlertDialog.Builder(this)
                     builder.setMessage("Reserva actualizada correctamente")
                     builder.setPositiveButton("Aceptar") { dialog, _ ->
@@ -155,19 +150,16 @@ class FormularioAdminActivity : AppCompatActivity() {
         if (selectedTime.isEmpty()) {
             return false
         }
-        Log.d("FormularioFragment", "Hora de apertura: $horaApertura")
-        Log.d("FormularioFragment", "Hora de cierre: $horaCierre")
-        Log.d("FormularioFragment", "Hora seleccionada: $selectedTime")
         val horaSeleccionada = convertirAMinutos(selectedTime)
-        val aperturra = convertirAMinutos(horaApertura)
+        val apertura = convertirAMinutos(horaApertura)
         val cierre = convertirAMinutos(horaCierre)
 
-        if (cierre < aperturra) {
+        if (cierre < apertura) {
             // el rango de tiempo atraviesa la medianoche
-            return horaSeleccionada >= aperturra || horaSeleccionada <= cierre
+            return horaSeleccionada >= apertura || horaSeleccionada <= cierre
         } else {
             // el rango de tiempo está dentro del mismo día
-            return horaSeleccionada in aperturra..cierre
+            return horaSeleccionada in apertura..cierre
         }
     }
 
@@ -182,14 +174,12 @@ class FormularioAdminActivity : AppCompatActivity() {
         if (horas == 24) {
             horas = 0
         }
-
         return horas * 60 + minutos
     }
 
     fun validate(): Boolean {
         var isValid = true
 
-        // Verificar si el campo de nombre está vacío
         val nombre = binding.tfEditTextNombre.text.toString()
         if (TextUtils.isEmpty(nombre)) {
             toggleTextInputLayoutError(binding.tfNombre, "Campo obligatorio")
@@ -198,7 +188,6 @@ class FormularioAdminActivity : AppCompatActivity() {
             toggleTextInputLayoutError(binding.tfNombre, null)
         }
 
-        // Verificar si el campo de fecha está vacío
         val fecha = binding.tfFecha.text.toString()
         if (TextUtils.isEmpty(fecha)) {
             toggleTextInputLayoutError(binding.textInputLayoutFecha, "Campo obligatorio")
@@ -214,7 +203,6 @@ class FormularioAdminActivity : AppCompatActivity() {
         } else {
             toggleTextInputLayoutError(binding.textInputLayoutHora, null)
         }
-
         return isValid
     }
 

@@ -17,7 +17,6 @@ data class Restaurante(
     var web: String? = null,
     var favorito: Boolean? = null,
 ) : Serializable {
-    // Constructor sin argumentos requerido por Firestore
     constructor() : this(
         id = 0,
         nombre = "",

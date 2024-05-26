@@ -34,20 +34,16 @@ class DetallesFragment : Fragment(), OnMapReadyCallback {
     private lateinit var googleMap: GoogleMap
     private val args: DetallesFragmentArgs by navArgs()
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Configurar el RecyclerView
         setupCarouselRecyclerView()
 
-        // Configurar el botón para hacer reservas
         binding.btnHacerReserva.setOnClickListener {
             val currentDestinationId = findNavController().currentDestination?.id
             val detallesFragmentId = R.id.detallesFragment
 
             if (currentDestinationId == detallesFragmentId) {
-
                 val restaurante = args.objRestaurante
                 val action = DetallesFragmentDirections.actionDetallesFragmentToFormularioFragment(
                     restauranteNombre = args.restauranteNombre,
@@ -86,7 +82,6 @@ class DetallesFragment : Fragment(), OnMapReadyCallback {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(webUrl))
                 startActivity(intent)
             } else {
-                // Manejar el caso en el que la URL es nula o vacía
                 Toast.makeText(requireContext(), "La URL no está disponible", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -109,8 +104,6 @@ class DetallesFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap) {
         p0?.let { googleMap ->
             this.googleMap = googleMap
-
-            // Obtener la dirección del restaurante desde los argumentos del fragmento
             val direccionRestaurante = args.objRestaurante.direccion
 
             // Geocodificar la dirección para obtener las coordenadas de latitud y longitud
@@ -122,24 +115,17 @@ class DetallesFragment : Fragment(), OnMapReadyCallback {
                     val address: Address = addressList[0]
                     val restauranteLocation = LatLng(address.latitude, address.longitude)
 
-                    // Mover la cámara del mapa a la ubicación del restaurante
                     googleMap.moveCamera(
                         CameraUpdateFactory.newLatLngZoom(
                             restauranteLocation,
                             15f
                         )
                     )
-
-                    // Agregar un marcador en la ubicación del restaurante
                     googleMap.addMarker(
                         MarkerOptions().position(restauranteLocation).title(args.restauranteNombre)
                     )
-                } else {
-                    // Manejar el caso en que no se encuentren resultados de geocodificación
-                    // Aquí puedes mostrar un mensaje al usuario indicando que la dirección no es válida
                 }
             } catch (e: IOException) {
-                // Manejar errores de geocodificación
                 e.printStackTrace()
             }
         }

@@ -13,8 +13,6 @@ interface ReservaRepository {
 
     fun addReserva(reserva: Reserva)
     fun updateReserva(reserva: Reserva)
-
     fun cargarReservas(usuario: Usuario?, result: (UiState<List<Reserva>>) -> Unit)
-
     fun borrarReserva(position: Int, reservas: List<Reserva>, callback: (Boolean) -> Unit)
 }
