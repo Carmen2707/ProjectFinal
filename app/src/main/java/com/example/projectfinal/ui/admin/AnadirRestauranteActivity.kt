@@ -5,9 +5,11 @@ import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.projectfinal.R
 import com.example.projectfinal.data.model.Restaurante
 import com.example.projectfinal.databinding.ActivityAnadirRestauranteBinding
 import com.example.projectfinal.ui.restaurante.RestauranteViewModel
@@ -32,6 +35,9 @@ class AnadirRestauranteActivity : AppCompatActivity() {
     private val viewModel: RestauranteViewModel by viewModels()
     private val listaImagenesEjemplos = mutableListOf<String>()
     private lateinit var restaurante: Restaurante
+    private var idPortada: Boolean = false
+    private var idEjemplo1: Boolean = false
+    private var idEjemplo2: Boolean = false
 
     companion object {
         const val REQUEST_CODE_IMAGES = 1001
@@ -39,7 +45,6 @@ class AnadirRestauranteActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityAnadirRestauranteBinding.inflate(layoutInflater)
         setContentView(binding.root)
         restaurante = Restaurante()
@@ -173,6 +178,18 @@ class AnadirRestauranteActivity : AppCompatActivity() {
         } else {
             toggleTextInputLayoutError(binding.tfWeb, null)
         }
+
+        if (!idPortada || !idEjemplo1 || !idEjemplo2) {
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("Inserta una foto para crear el restaurante.")
+            builder.setPositiveButton("Aceptar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+            isValid = false
+        }
+
         return isValid
     }
 
@@ -219,6 +236,7 @@ class AnadirRestauranteActivity : AppCompatActivity() {
                 uri?.let {
                     uploadImageToFirebaseStorage(uri)
                     Picasso.get().load(uri).into(binding.imgPortada)
+                    idPortada = true
                 }
             }
         }
@@ -286,6 +304,7 @@ class AnadirRestauranteActivity : AppCompatActivity() {
                 uri.let {
                     uploadImageToFirebaseStorage1(uri)
                     Picasso.get().load(uri).into(binding.imgEjemplo1)
+                    idEjemplo1 = true
                 }
             }
         }
@@ -353,6 +372,7 @@ class AnadirRestauranteActivity : AppCompatActivity() {
                 uri.let {
                     uploadImageToFirebaseStorage2(uri)
                     Picasso.get().load(uri).into(binding.imgEjemplo2)
+                    idEjemplo2 = true
                 }
             }
         }
